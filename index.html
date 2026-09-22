@@ -8,10 +8,6 @@
 
   <style>
 
-    /* ========================================
-       RESET
-    ======================================== */
-
     * {
       box-sizing: border-box;
       margin: 0;
@@ -29,7 +25,6 @@
       min-height: 100vh;
       overflow-x: hidden;
     }
-
 
     /* ========================================
        BACKGROUND
@@ -58,7 +53,6 @@
     .grid-bg {
       position: absolute;
       inset: 0;
-
       opacity: 0.12;
 
       background-image:
@@ -77,32 +71,26 @@
 
     .orb {
       position: absolute;
-
       width: 330px;
       height: 330px;
-
       border-radius: 50%;
-
       filter: blur(100px);
-
       opacity: 0.23;
 
-      animation: floatingOrb 9s ease-in-out infinite alternate;
+      animation:
+        floatingOrb 9s ease-in-out infinite alternate;
     }
 
     .orb.one {
       background: #783cff;
-
       top: -120px;
       left: -120px;
     }
 
     .orb.two {
       background: #ff2299;
-
       right: -130px;
       bottom: -120px;
-
       animation-delay: 2s;
     }
 
@@ -118,24 +106,18 @@
 
     }
 
-
     /* ========================================
        HEADER
     ======================================== */
 
     header {
       position: sticky;
-
       top: 0;
-
       z-index: 100;
-
       height: 72px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
 
       padding: 0 7%;
@@ -150,9 +132,7 @@
 
     .logo {
       font-size: 22px;
-
       font-weight: 900;
-
       letter-spacing: 2px;
     }
 
@@ -165,13 +145,11 @@
         );
 
       -webkit-background-clip: text;
-
       color: transparent;
     }
 
     nav {
       display: flex;
-
       gap: 10px;
     }
 
@@ -198,8 +176,13 @@
 
       background:
         rgba(255,255,255,0.12);
-    }
 
+      border-color:
+        rgba(180,100,255,0.4);
+
+      box-shadow:
+        0 8px 25px rgba(120,60,255,0.12);
+    }
 
     /* ========================================
        HERO
@@ -209,9 +192,7 @@
       min-height: 500px;
 
       display: flex;
-
       align-items: center;
-
       justify-content: center;
 
       text-align: center;
@@ -222,13 +203,11 @@
 
     .hero-content {
       width: 100%;
-
       max-width: 900px;
     }
 
     .spider {
       font-size: 68px;
-
       margin-bottom: 20px;
 
       animation:
@@ -238,7 +217,9 @@
     @keyframes spiderFloat {
 
       50% {
-        transform: translateY(-12px) rotate(3deg);
+        transform:
+          translateY(-12px)
+          rotate(3deg);
       }
 
     }
@@ -281,7 +262,6 @@
 
     .search-box {
       width: min(680px, 95%);
-
       margin: auto;
     }
 
@@ -323,18 +303,14 @@
         0 0 35px rgba(130,70,255,0.18);
     }
 
-
     /* ========================================
        QUICK BUTTONS
     ======================================== */
 
     .quick-links {
       display: flex;
-
       justify-content: center;
-
       align-items: center;
-
       flex-wrap: wrap;
 
       gap: 12px;
@@ -363,6 +339,10 @@
       cursor: pointer;
 
       transition: 0.25s;
+
+      text-decoration: none;
+
+      display: inline-block;
     }
 
     .quick-btn:hover {
@@ -375,8 +355,10 @@
 
       box-shadow:
         0 10px 30px rgba(0,0,0,0.25);
-    }
 
+      border-color:
+        rgba(180,100,255,0.35);
+    }
 
     /* ========================================
        SECTIONS
@@ -384,7 +366,6 @@
 
     section {
       width: min(1200px, 90%);
-
       margin:
         0 auto 95px;
     }
@@ -405,10 +386,8 @@
 
     .section-heading p {
       color: #777;
-
       font-size: 14px;
     }
-
 
     /* ========================================
        FEATURED GAMES
@@ -495,7 +474,6 @@
 
     .featured-card:hover .featured-art {
       transform: scale(1.08);
-
       filter: brightness(1.15);
     }
 
@@ -547,15 +525,12 @@
 
     .featured-overlay h3 {
       font-size: 26px;
-
       margin-bottom: 6px;
     }
 
     .featured-overlay p {
       color: #aaa;
-
       font-size: 14px;
-
       margin-bottom: 15px;
     }
 
@@ -586,10 +561,62 @@
 
     .featured-play:hover {
       transform: scale(1.05);
-
       filter: brightness(1.15);
     }
 
+    /* ========================================
+       GAME PAGE BUTTON
+    ======================================== */
+
+    .view-games {
+      margin-top: 25px;
+
+      display: flex;
+      justify-content: center;
+    }
+
+    .view-games-btn {
+      padding: 14px 25px;
+
+      border: 1px solid
+        rgba(180,100,255,0.35);
+
+      border-radius: 13px;
+
+      color: white;
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(116,61,255,0.25),
+          rgba(212,61,255,0.20)
+        );
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      text-decoration: none;
+
+      transition: .25s;
+    }
+
+    .view-games-btn:hover {
+      transform:
+        translateY(-4px)
+        scale(1.03);
+
+      background:
+        linear-gradient(
+          90deg,
+          rgba(116,61,255,0.38),
+          rgba(212,61,255,0.32)
+        );
+
+      box-shadow:
+        0 12px 35px
+        rgba(130,70,255,0.18);
+    }
 
     /* ========================================
        CATEGORY BAR
@@ -634,7 +661,6 @@
         rgba(170,100,255,0.4);
     }
 
-
     /* ========================================
        GAME GRID
     ======================================== */
@@ -647,7 +673,6 @@
 
       gap: 18px;
     }
-
 
     /* ========================================
        GAME CARD
@@ -724,9 +749,8 @@
       opacity: 1;
     }
 
-
     /* ========================================
-       ORIGINAL GAME ART
+       GAME ART
     ======================================== */
 
     .game-art {
@@ -763,7 +787,6 @@
 
     .game-card:hover .game-art {
       transform: scale(1.055);
-
       filter: brightness(1.12);
     }
 
@@ -793,9 +816,6 @@
       transform:
         translateX(120%);
     }
-
-
-    /* DIFFERENT GAME ART */
 
     .art-subway {
       background:
@@ -894,7 +914,6 @@
           #29133d
         );
     }
-
 
     /* ========================================
        GAME INFO
@@ -999,7 +1018,6 @@
         scale(.97);
     }
 
-
     /* ========================================
        GENERAL CARDS
     ======================================== */
@@ -1043,7 +1061,6 @@
 
     .card-icon {
       font-size: 35px;
-
       margin-bottom: 14px;
     }
 
@@ -1086,7 +1103,6 @@
         rgba(255,255,255,0.16);
     }
 
-
     /* ========================================
        NO RESULTS
     ======================================== */
@@ -1107,7 +1123,6 @@
 
       border-radius: 18px;
     }
-
 
     /* ========================================
        FOOTER
@@ -1130,64 +1145,11 @@
       color: #aaa;
     }
 
-
-    /* ========================================
-       MOBILE
-    ======================================== */
-
-    @media (max-width: 1000px) {
+    @media (max-width: 1100px) {
 
       .game-grid {
         grid-template-columns:
-          repeat(2, 1fr);
-      }
-
-      .featured-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .card-grid {
-        grid-template-columns: 1fr;
-      }
-
-    }
-
-    @media (max-width: 600px) {
-
-      header {
-        padding: 0 18px;
-      }
-
-      nav {
-        display: none;
-      }
-
-      .hero {
-        padding-top: 60px;
-      }
-
-      .hero h1 {
-        letter-spacing: -2px;
-      }
-
-      .game-grid {
-        grid-template-columns: 1fr;
-      }
-
-      section {
-        width: 92%;
-      }
-
-      .section-heading {
-        display: block;
-      }
-
-      .section-heading p {
-        margin-top: 6px;
-      }
-
-      .featured-card {
-        min-height: 250px;
+          repeat(3, 1fr);
       }
 
     }
@@ -1198,9 +1160,7 @@
       *::before,
       *::after {
         animation-duration: .01ms !important;
-
         animation-iteration-count: 1 !important;
-
         transition-duration: .01ms !important;
       }
 
@@ -1213,10 +1173,6 @@
 <body>
 
 
-  <!-- ========================================
-       BACKGROUND
-  ======================================== -->
-
   <div class="background">
 
     <div class="grid-bg"></div>
@@ -1228,9 +1184,7 @@
   </div>
 
 
-  <!-- ========================================
-       HEADER
-  ======================================== -->
+  <!-- HEADER -->
 
   <header>
 
@@ -1244,7 +1198,7 @@
         Featured
       </button>
 
-      <button onclick="scrollToId('games')">
+      <button onclick="goToGames()">
         Games
       </button>
 
@@ -1264,9 +1218,7 @@
   <main>
 
 
-    <!-- ========================================
-         HERO
-    ======================================== -->
+    <!-- HERO -->
 
     <div class="hero">
 
@@ -1301,9 +1253,7 @@
     </div>
 
 
-    <!-- ========================================
-         QUICK LINKS
-    ======================================== -->
+    <!-- QUICK LINKS -->
 
     <div class="quick-links">
 
@@ -1323,7 +1273,7 @@
 
       <button
         class="quick-btn"
-        onclick="scrollToId('games')"
+        onclick="goToGames()"
       >
         🎮 Games
       </button>
@@ -1338,9 +1288,7 @@
     </div>
 
 
-    <!-- ========================================
-         FEATURED
-    ======================================== -->
+    <!-- FEATURED -->
 
     <section id="featured">
 
@@ -1436,12 +1384,24 @@
 
       </div>
 
+
+      <!-- NEW GAMES PAGE BUTTON -->
+
+      <div class="view-games">
+
+        <a
+          href="games.html"
+          class="view-games-btn"
+        >
+          🎮 VIEW ALL GAMES →
+        </a>
+
+      </div>
+
     </section>
 
 
-    <!-- ========================================
-         GAME LIBRARY
-    ======================================== -->
+    <!-- GAME LIBRARY PREVIEW -->
 
     <section id="games">
 
@@ -1454,15 +1414,13 @@
           </h2>
 
           <p>
-            Find something to play.
+            A small preview of the collection.
           </p>
 
         </div>
 
       </div>
 
-
-      <!-- CATEGORIES -->
 
       <div class="categories">
 
@@ -1522,12 +1480,22 @@
         id="gameGrid"
       ></div>
 
+
+      <div class="view-games">
+
+        <a
+          href="games.html"
+          class="view-games-btn"
+        >
+          🕹️ OPEN FULL GAME ZONE →
+        </a>
+
+      </div>
+
     </section>
 
 
-    <!-- ========================================
-         MEDIA
-    ======================================== -->
+    <!-- MEDIA -->
 
     <section id="media">
 
@@ -1626,9 +1594,7 @@
     </section>
 
 
-    <!-- ========================================
-         APPS
-    ======================================== -->
+    <!-- APPS -->
 
     <section id="apps">
 
@@ -1728,9 +1694,7 @@
   </main>
 
 
-  <!-- ========================================
-       FOOTER
-  ======================================== -->
+  <!-- FOOTER -->
 
   <footer>
 
@@ -1747,7 +1711,6 @@
 
   <script>
 
-
     /* ========================================
        GAME DATA
     ======================================== */
@@ -1756,134 +1719,87 @@
 
       {
         title: "Subway Surfers",
-
         description:
           "Run, dodge obstacles and collect coins.",
-
         icon: "🏄",
-
         category: "arcade",
-
         art: "art-subway",
-
         link:
           "https://play.gameograf.com/"
       },
 
-
       {
         title: "Stickman Swing",
-
         description:
           "Swing through levels using timing and momentum.",
-
         icon: "🪢",
-
         category: "action",
-
         art: "art-stickman",
-
         link:
           "https://eyzi.net/action/stickman-swing"
       },
 
-
       {
         title: "FNAF",
-
         description:
           "The original Five Nights at Freddy's.",
-
         icon: "🐻",
-
         category: "horror",
-
         art: "art-fnaf",
-
         link:
           "https://play.google.com/store/apps/details?id=com.scottgames.fivenightsatfreddys"
       },
 
-
       {
         title: "Minecraft",
-
         description:
           "Build, explore and survive your own world.",
-
         icon: "⛏️",
-
         category: "sandbox",
-
         art: "art-minecraft",
-
         link:
           "https://www.minecraft.net/en-us/"
       },
 
-
       {
         title: "Geometry Dash",
-
         description:
           "Jump, fly and survive challenging levels.",
-
         icon: "🟦",
-
         category: "platformer",
-
         art: "art-geometry",
-
         link:
           "https://gdbrowser.com/"
       },
 
-
       {
         title: "Stickman Swing 2",
-
         description:
           "Another swinging challenge.",
-
         icon: "🕸️",
-
         category: "action",
-
         art: "art-swing",
-
         link:
           "https://www.y8.com/games/stickman_swing"
       },
 
-
       {
         title: "More Games",
-
         description:
           "More games can be added to Spider Portal.",
-
         icon: "🎮",
-
         category: "arcade",
-
         art: "art-more",
-
         link: "#"
       },
 
-
       {
         title: "Coming Soon",
-
         description:
           "A new game will be added here.",
-
         icon: "❓",
-
         category: "arcade",
-
         art: "art-more",
-
         link: "#"
       }
 
@@ -1904,39 +1820,42 @@
 
       gameGrid.innerHTML = "";
 
-      let visibleGames = games.filter(game => {
+      const visibleGames =
+        games.filter(game => {
 
-        const matchesCategory =
-          category === "all" ||
-          game.category === category;
+          const matchesCategory =
+            category === "all" ||
+            game.category === category;
 
-        const searchText =
-          (
-            game.title +
-            " " +
-            game.description +
-            " " +
-            game.category
-          ).toLowerCase();
+          const searchText =
+            (
+              game.title +
+              " " +
+              game.description +
+              " " +
+              game.category
+            ).toLowerCase();
 
-        const matchesSearch =
-          searchText.includes(
-            search.toLowerCase()
+          const matchesSearch =
+            searchText.includes(
+              search.toLowerCase()
+            );
+
+          return (
+            matchesCategory &&
+            matchesSearch
           );
 
-        return (
-          matchesCategory &&
-          matchesSearch
-        );
-
-      });
+        });
 
 
       if (visibleGames.length === 0) {
 
         gameGrid.innerHTML = `
-          <div class="no-results"
-               style="display:block">
+          <div
+            class="no-results"
+            style="display:block"
+          >
             🔎 No games found.
           </div>
         `;
@@ -2084,6 +2003,18 @@
         game.link,
         "_blank"
       );
+
+    }
+
+
+    /* ========================================
+       GO TO FULL GAMES PAGE
+    ======================================== */
+
+    function goToGames() {
+
+      window.location.href =
+        "games.html";
 
     }
 

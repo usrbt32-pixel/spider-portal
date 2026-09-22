@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Game • Spider Portal</title>
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 20% 10%,
+          rgba(255,0,153,.18),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 15%,
+          rgba(120,0,255,.20),
+          transparent 32%
+        ),
+        #09070f;
+
+      color: white;
+
+      min-height: 100vh;
+    }
+
+
+    header {
+
+      height: 76px;
+
+      padding: 0 44px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      background: rgba(9,7,15,.85);
+
+      backdrop-filter: blur(18px);
+
+      border-bottom:
+        1px solid rgba(255,255,255,.08);
+    }
+
+
+    .logo {
+
+      font-size: 24px;
+
+      font-weight: 900;
+
+      letter-spacing: -1px;
+    }
+
+
+    .logo span {
+
+      background:
+        linear-gradient(
+          90deg,
+          #ff2ca8,
+          #9d4dff
+        );
+
+      -webkit-background-clip: text;
+
+      color: transparent;
+    }
+
+
+    .back {
+
+      color: white;
+
+      text-decoration: none;
+
+      padding: 12px 18px;
+
+      border-radius: 12px;
+
+      background:
+        rgba(255,255,255,.06);
+
+      border:
+        1px solid rgba(255,255,255,.10);
+
+      font-size: 14px;
+
+      font-weight: 800;
+
+      transition: .2s ease;
+    }
+
+
+    .back:hover {
+
+      background:
+        rgba(255,255,255,.12);
+
+      transform:
+        translateY(-2px);
+    }
+
+
+    .launcher {
+
+      width: 1100px;
+
+      margin: 55px auto 90px;
+
+      padding: 35px;
+
+      border-radius: 28px;
+
+      background:
+        rgba(255,255,255,.045);
+
+      border:
+        1px solid rgba(255,255,255,.09);
+
+      box-shadow:
+        0 30px 80px rgba(0,0,0,.35);
+    }
+
+
+    .crumb {
+
+      color: #80798b;
+
+      font-size: 13px;
+
+      margin-bottom: 22px;
+    }
+
+
+    .game-preview {
+
+      height: 380px;
+
+      border-radius: 22px;
+
+      overflow: hidden;
+
+      position: relative;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      background:
+        linear-gradient(
+          135deg,
+          #ff2ca8,
+          #7d38ff
+        );
+
+      border:
+        1px solid rgba(255,255,255,.10);
+    }
+
+
+    .game-preview::after {
+
+      content: "";
+
+      position: absolute;
+
+      inset: 0;
+
+      background:
+        radial-gradient(
+          circle,
+          rgba(255,255,255,.18),
+          transparent 35%
+        );
+    }
+
+
+    .preview-icon {
+
+      position: relative;
+
+      z-index: 2;
+
+      font-size: 120px;
+
+      filter:
+        drop-shadow(
+          0 20px 30px
+          rgba(0,0,0,.35)
+        );
+    }
+
+
+    .game-info {
+
+      padding-top: 30px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      gap: 40px;
+    }
+
+
+    .details {
+
+      max-width: 700px;
+    }
+
+
+    .category {
+
+      color: #ff5db8;
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1.5px;
+
+      margin-bottom: 10px;
+    }
+
+
+    h1 {
+
+      font-size: 48px;
+
+      letter-spacing: -2px;
+
+      margin-bottom: 12px;
+    }
+
+
+    .description {
+
+      color: #9d96a8;
+
+      font-size: 16px;
+
+      line-height: 1.6;
+    }
+
+
+    .actions {
+
+      display: flex;
+
+      align-items: center;
+    }
+
+
+    .play {
+
+      border: none;
+
+      cursor: pointer;
+
+      text-decoration: none;
+
+      color: white;
+
+      font-size: 17px;
+
+      font-weight: 900;
+
+      padding: 17px 30px;
+
+      border-radius: 14px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ff2ca8,
+          #913cff
+        );
+
+      box-shadow:
+        0 12px 30px
+        rgba(170,40,255,.25);
+
+      transition: .2s ease;
+    }
+
+
+    .play:hover {
+
+      transform:
+        translateY(-3px)
+        scale(1.02);
+
+      box-shadow:
+        0 18px 40px
+        rgba(170,40,255,.35);
+    }
+
+
+    .notice {
+
+      margin-top: 30px;
+
+      padding: 17px 20px;
+
+      border-radius: 14px;
+
+      background:
+        rgba(255,255,255,.04);
+
+      border:
+        1px solid rgba(255,255,255,.07);
+
+      color: #77717f;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+    }
+
+
+    footer {
+
+      border-top:
+        1px solid rgba(255,255,255,.08);
+
+      padding: 35px 50px;
+
+      text-align: center;
+
+      color: #77717f;
+
+      font-size: 14px;
+    }
+
+  </style>
+</head>
+
+<body>
+
+
+  <header>
+
+    <div class="logo">
+      <span>SPIDER</span> PORTAL
+    </div>
+
+
+    <a
+      href="games.html"
+      class="back"
+    >
+      ← Game Library
+    </a>
+
+  </header>
+
+
+  <main class="launcher">
+
+    <div class="crumb">
+      🕷️ Spider Portal / Game Launcher
+    </div>
+
+
+    <div class="game-preview">
+
+      <div
+        class="preview-icon"
+        id="previewIcon"
+      >
+        🎮
+      </div>
+
+    </div>
+
+
+    <div class="game-info">
+
+      <div class="details">
+
+        <div
+          class="category"
+          id="gameCategory"
+        >
+          GAME
+        </div>
+
+
+        <h1 id="gameTitle">
+          Loading...
+        </h1>
+
+
+        <p
+          class="description"
+          id="gameDescription"
+        >
+          Loading game information...
+        </p>
+
+      </div>
+
+
+      <div class="actions">
+
+        <a
+          id="playButton"
+          class="play"
+          href="#"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ▶ PLAY NOW
+        </a>
+
+      </div>
+
+    </div>
+
+
+    <div class="notice">
+      Clicking PLAY NOW opens the selected game's available
+      webpage in a new tab.
+    </div>
+
+  </main>
+
+
+  <footer>
+    🕷️ Spider Portal • Game Launcher
+  </footer>
+
+
+  <script>
+
+    const games = {
+
+      "Subway Surfers": {
+        category: "Arcade • Endless Runner",
+        icon: "🚇",
+        description:
+          "Run, dodge obstacles, and keep moving in this endless arcade adventure.",
+        link:
+          "https://play.gameograf.com/"
+      },
+
+
+      "Stickman Swing": {
+        category: "Action",
+        icon: "🕴️",
+        description:
+          "Swing your way through challenging levels and avoid the obstacles.",
+        link:
+          "https://eyzi.net/action/stickman-swing"
+      },
+
+
+      "Five Nights at Freddy's": {
+        category: "Horror",
+        icon: "🐻",
+        description:
+          "A horror survival game set inside a mysterious restaurant.",
+        link:
+          "https://play.google.com/store/apps/details?id=com.scottgames.fivenightsatfreddys"
+      },
+
+
+      "Minecraft": {
+        category: "Sandbox",
+        icon: "⛏️",
+        description:
+          "Explore, build, craft, and create your own blocky world.",
+        link:
+          "https://www.minecraft.net/en-us/"
+      },
+
+
+      "Geometry Dash": {
+        category: "Platformer • Rhythm",
+        icon: "🟨",
+        description:
+          "Jump, fly, and survive challenging rhythm-based levels.",
+        link:
+          "https://gdbrowser.com/"
+      },
+
+
+      "Stickman Swing 2": {
+        category: "Action",
+        icon: "🪢",
+        description:
+          "Swing through another collection of stickman obstacle courses.",
+        link:
+          "https://www.y8.com/games/stickman_swing"
+      },
+
+
+      "Flappy Bird": {
+        category: "Arcade",
+        icon: "🐦",
+        description:
+          "Guide the bird through the pipes and try to keep your score climbing.",
+        link:
+          "https://flappybird.io/"
+      },
+
+
+      "Temple Run": {
+        category: "Arcade",
+        icon: "🏃",
+        description:
+          "Run through dangerous paths while collecting coins and avoiding obstacles.",
+        link:
+          "https://www.coolmathgames.com/0-temple-run-2"
+      },
+
+
+      "Platform Adventure": {
+        category: "Platformer",
+        icon: "🧱",
+        description:
+          "A new platforming adventure coming to Spider Portal.",
+        link: "#"
+      },
+
+
+      "Puzzle Challenge": {
+        category: "Puzzle",
+        icon: "🧩",
+        description:
+          "Test your brain with a collection of upcoming puzzle challenges.",
+        link: "#"
+      },
+
+
+      "Action Arena": {
+        category: "Action",
+        icon: "⚔️",
+        description:
+          "A fast-paced action experience coming soon.",
+        link: "#"
+      },
+
+
+      "More Games": {
+        category: "Arcade",
+        icon: "🎮",
+        description:
+          "More games are being prepared for the Spider Portal library.",
+        link: "#"
+      },
+
+
+      "Coming Soon": {
+        category: "Coming Soon",
+        icon: "✨",
+        description:
+          "Something new is coming to Spider Portal.",
+        link: "#"
+      }
+
+    };
+
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const gameName =
+      params.get("game");
+
+
+    const game =
+      games[gameName];
+
+
+    if (game) {
+
+      document.title =
+        gameName + " • Spider Portal";
+
+
+      document.getElementById(
+        "gameTitle"
+      ).textContent =
+        gameName;
+
+
+      document.getElementById(
+        "gameCategory"
+      ).textContent =
+        game.category;
+
+
+      document.getElementById(
+        "gameDescription"
+      ).textContent =
+        game.description;
+
+
+      document.getElementById(
+        "previewIcon"
+      ).textContent =
+        game.icon;
+
+
+      const playButton =
+        document.getElementById(
+          "playButton"
+        );
+
+
+      if (game.link === "#") {
+
+        playButton.textContent =
+          "COMING SOON";
+
+        playButton.removeAttribute(
+          "target"
+        );
+
+        playButton.onclick = function(event) {
+
+          event.preventDefault();
+
+          alert(
+            "🕷️ This game is coming soon!"
+          );
+
+        };
+
+      } else {
+
+        playButton.href =
+          game.link;
+
+      }
+
+    } else {
+
+      document.getElementById(
+        "gameTitle"
+      ).textContent =
+        "Game Not Found";
+
+
+      document.getElementById(
+        "gameCategory"
+      ).textContent =
+        "SPIDER PORTAL";
+
+
+      document.getElementById(
+        "gameDescription"
+      ).textContent =
+        "We couldn't find that game. Head back to the Game Library and choose another one.";
+
+
+      document.getElementById(
+        "previewIcon"
+      ).textContent =
+        "🕷️";
+
+
+      document.getElementById(
+        "playButton"
+      ).style.display =
+        "none";
+
+    }
+
+  </script>
+
+</body>
+</html>

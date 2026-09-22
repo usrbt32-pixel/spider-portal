@@ -1,1 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Games • Spider Portal</title>
 
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255, 0, 153, 0.18), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(125, 0, 255, 0.20), transparent 32%),
+        #09070f;
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.12;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: linear-gradient(to bottom, black, transparent);
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 42px;
+      background: rgba(9, 7, 15, 0.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .logo span {
+      background: linear-gradient(90deg, #ff2ca8, #9d4dff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .back-button {
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.06);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .back-button:hover {
+      background: rgba(255,255,255,0.12);
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+
+    .hero {
+      position: relative;
+      padding: 90px 50px 55px;
+      max-width: 1250px;
+      margin: auto;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 35, 165, 0.10);
+      border: 1px solid rgba(255, 35, 165, 0.25);
+      color: #ff5fbd;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: 64px;
+      line-height: 0.95;
+      letter-spacing: -4px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(90deg, #ff36ad, #9d55ff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      color: #aaa3b5;
+      font-size: 18px;
+      max-width: 650px;
+      line-height: 1.6;
+      margin-bottom: 35px;
+    }
+
+    /* SEARCH */
+
+    .search-box {
+      width: 650px;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      padding: 17px 20px;
+      border-radius: 15px;
+      border: 1px solid rgba(255,255,255,0.10);
+      outline: none;
+      background: rgba(255,255,255,0.07);
+      color: white;
+      font-size: 16px;
+      transition: 0.2s ease;
+    }
+
+    .search-box input::placeholder {
+      color: #807989;
+    }
+
+    .search-box input:focus {
+      border-color: rgba(255, 48, 173, 0.55);
+      box-shadow: 0 0 25px rgba(255, 48, 173, 0.12);
+    }
+
+    /* FILTERS */
+
+    .controls {
+      max-width: 1250px;
+      margin: 10px auto 35px;
+      padding: 0 50px;
+    }
+
+    .controls h2 {
+      font-size: 27px;
+      margin-bottom: 18px;
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+    }
+
+    .filter {
+      border: 1px solid rgba(255,255,255,0.09);
+      background: rgba(255,255,255,0.05);
+      color: #c8c3ce;
+      padding: 10px 17px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    .filter:hover {
+      background: rgba(255,255,255,0.10);
+      color: white;
+    }
+
+    .filter.active {
+      background: linear-gradient(90deg, #ff2ca8, #963cff);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 8px 25px rgba(175, 45, 255, 0.20);
+    }
+
+    /* GAME GRID */
+
+    .games-container {
+      max-width: 1250px;
+      margin: auto;
+      padding: 0 50px 80px;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+    }
+
+    .game-card {
+      position: relative;
+      min-height: 285px;
+      border-radius: 20px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #12101a;
+      transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+    }
+
+    .game-card:hover {
+      transform: translateY(-8px) scale(1.015);
+      border-color: rgba(255, 56, 180, 0.45);
+      box-shadow: 0 20px 55px rgba(0,0,0,0.45);
+    }
+
+    .game-art {
+      height: 190px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-art::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, transparent 40%, rgba(10,7,15,0.9));
+    }
+
+    .game-card:hover .game-art::before {
+      transform: translateX(110%);
+    }
+
+    .game-art::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        100deg,
+        transparent,
+        rgba(255,255,255,0.18),
+        transparent
+      );
+      transform: translateX(0);
+      transition: transform 0.7s ease;
+      z-index: 3;
+    }
+
+    /* ART */
+
+    .art-subway {
+      background:
+        radial-gradient(circle at 50% 25%, rgba(255,255,255,0.25), transparent 18%),
+        linear-gradient(135deg, #ff7a00, #ff207e 50%, #5420ff);
+    }
+
+    .art-stickman {
+      background:
+        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.18), transparent 15%),
+        linear-gradient(135deg, #00c6ff, #0072ff 55%, #231557);
+    }
+
+    .art-fnaf {
+      background:
+        radial-gradient(circle at 50% 35%, rgba(255,255,255,0.12), transparent 15%),
+        linear-gradient(135deg, #111, #292929 45%, #100013);
+    }
+
+    .art-minecraft {
+      background:
+        linear-gradient(135deg, #3e9b35, #2775d6 55%, #171b3d);
+    }
+
+    .art-geometry {
+      background:
+        radial-gradient(circle at 70% 25%, rgba(255,255,255,0.2), transparent 15%),
+        linear-gradient(135deg, #00d4ff, #7a2cff 55%, #f900a8);
+    }
+
+    .art-swing {
+      background:
+        linear-gradient(135deg, #ff512f, #dd2476 50%, #5918c7);
+    }
+
+    .art-more {
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,0.16), transparent 18%),
+        linear-gradient(135deg, #29213d, #171222 50%, #3d174e);
+    }
+
+    .art-coming {
+      background:
+        radial-gradient(circle at 50% 40%, rgba(255,255,255,0.12), transparent 18%),
+        linear-gradient(135deg, #17131f, #24182d);
+    }
+
+    .game-emoji {
+      position: absolute;
+      z-index: 2;
+      left: 22px;
+      top: 42px;
+      font-size: 64px;
+      filter: drop-shadow(0 8px 15px rgba(0,0,0,0.35));
+    }
+
+    .game-info {
+      padding: 18px 20px 20px;
+      position: relative;
+      margin-top: -5px;
+      z-index: 5;
+    }
+
+    .game-title {
+      font-size: 20px;
+      font-weight: 900;
+      margin-bottom: 6px;
+    }
+
+    .game-category {
+      color: #938c9e;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 800;
+    }
+
+    .play-button {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff2ca8, #8f3cff);
+      box-shadow: 0 8px 22px rgba(170, 40, 255, 0.28);
+      font-size: 15px;
+    }
+
+    /* EMPTY */
+
+    .empty {
+      display: none;
+      text-align: center;
+      padding: 70px 20px;
+      color: #8d8796;
+      font-size: 18px;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 35px 50px;
+      color: #77717f;
+      text-align: center;
+      font-size: 14px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo">
+      <span>SPIDER</span> PORTAL
+    </div>
+
+    <a href="index.html" class="back-button">
+      ← Back to Home
+    </a>
+  </header>
+
+
+  <!-- HERO -->
+  <section class="hero">
+
+    <div class="hero-badge">
+      🎮 SPIDER PORTAL GAME ZONE
+    </div>
+
+    <h1>
+      GAME <span>LIBRARY</span>
+    </h1>
+
+    <p>
+      Browse the Spider Portal game collection. Search for a game,
+      filter by category, and launch it with one click.
+    </p>
+
+    <div class="search-box">
+      <input
+        id="gameSearch"
+        type="text"
+        placeholder="🔎 Search games..."
+        oninput="searchGames()"
+      >
+    </div>
+
+  </section>
+
+
+  <!-- FILTERS -->
+  <section class="controls">
+
+    <h2>Browse Categories</h2>
+
+    <div class="filters">
+
+      <button class="filter active" onclick="filterCategory('all', this)">
+        All
+      </button>
+
+      <button class="filter" onclick="filterCategory('arcade', this)">
+        Arcade
+      </button>
+
+      <button class="filter" onclick="filterCategory('action', this)">
+        Action
+      </button>
+
+      <button class="filter" onclick="filterCategory('horror', this)">
+        Horror
+      </button>
+
+      <button class="filter" onclick="filterCategory('sandbox', this)">
+        Sandbox
+      </button>
+
+      <button class="filter" onclick="filterCategory('platformer', this)">
+        Platformer
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <!-- GAMES -->
+  <main class="games-container">
+
+    <div class="games-grid" id="gamesGrid"></div>
+
+    <div class="empty" id="emptyMessage">
+      No games found.
+    </div>
+
+  </main>
+
+
+  <!-- FOOTER -->
+  <footer>
+    🕷️ Spider Portal • Game Library
+  </footer>
+
+
+  <script>
+
+    const games = [
+
+      {
+        name: "Subway Surfers",
+        category: "arcade",
+        emoji: "🚇",
+        art: "art-subway",
+        link: "https://play.gameograf.com/"
+      },
+
+      {
+        name: "Stickman Swing",
+        category: "action",
+        emoji: "🕴️",
+        art: "art-stickman",
+        link: "https://eyzi.net/action/stickman-swing"
+      },
+
+      {
+        name: "Five Nights at Freddy's",
+        category: "horror",
+        emoji: "🐻",
+        art: "art-fnaf",
+        link: "https://play.google.com/store/apps/details?id=com.scottgames.fivenightsatfreddys"
+      },
+
+      {
+        name: "Minecraft",
+        category: "sandbox",
+        emoji: "⛏️",
+        art: "art-minecraft",
+        link: "https://www.minecraft.net/en-us/"
+      },
+
+      {
+        name: "Geometry Dash",
+        category: "platformer",
+        emoji: "🟨",
+        art: "art-geometry",
+        link: "https://gdbrowser.com/"
+      },
+
+      {
+        name: "Stickman Swing 2",
+        category: "action",
+        emoji: "🪢",
+        art: "art-swing",
+        link: "https://www.y8.com/games/stickman_swing"
+      },
+
+      {
+        name: "More Games",
+        category: "arcade",
+        emoji: "🎮",
+        art: "art-more",
+        link: "#"
+      },
+
+      {
+        name: "Coming Soon",
+        category: "arcade",
+        emoji: "✨",
+        art: "art-coming",
+        link: "#"
+      }
+
+    ];
+
+
+    let currentCategory = "all";
+
+
+    function renderGames() {
+
+      const grid = document.getElementById("gamesGrid");
+      const empty = document.getElementById("emptyMessage");
+      const search = document
+        .getElementById("gameSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+      grid.innerHTML = "";
+
+      const filteredGames = games.filter(game => {
+
+        const matchesCategory =
+          currentCategory === "all" ||
+          game.category === currentCategory;
+
+        const matchesSearch =
+          game.name.toLowerCase().includes(search);
+
+        return matchesCategory && matchesSearch;
+
+      });
+
+
+      if (filteredGames.length === 0) {
+
+        empty.style.display = "block";
+
+        return;
+
+      }
+
+
+      empty.style.display = "none";
+
+
+      filteredGames.forEach(game => {
+
+        const card = document.createElement("div");
+
+        card.className = "game-card";
+
+        card.onclick = () => launchGame(game.link);
+
+
+        card.innerHTML = `
+
+          <div class="game-art ${game.art}">
+
+            <div class="game-emoji">
+              ${game.emoji}
+            </div>
+
+          </div>
+
+          <div class="game-info">
+
+            <div class="game-title">
+              ${escapeHTML(game.name)}
+            </div>
+
+            <div class="game-category">
+              ${escapeHTML(game.category)}
+            </div>
+
+            <div class="play-button">
+              ▶
+            </div>
+
+          </div>
+
+        `;
+
+
+        grid.appendChild(card);
+
+      });
+
+    }
+
+
+    function filterCategory(category, button) {
+
+      currentCategory = category;
+
+
+      document
+        .querySelectorAll(".filter")
+        .forEach(btn => {
+          btn.classList.remove("active");
+        });
+
+
+      button.classList.add("active");
+
+
+      renderGames();
+
+    }
+
+
+    function searchGames() {
+
+      renderGames();
+
+    }
+
+
+    function launchGame(link) {
+
+      if (!link || link === "#") {
+
+        alert("This game is coming soon!");
+
+        return;
+
+      }
+
+      window.open(link, "_blank");
+
+    }
+
+
+    function escapeHTML(text) {
+
+      const div = document.createElement("div");
+
+      div.textContent = text;
+
+      return div.innerHTML;
+
+    }
+
+
+    renderGames();
+
+  </script>
+
+</body>
+</html>

@@ -19,8 +19,8 @@
     body {
       font-family: Arial, Helvetica, sans-serif;
       background:
-        radial-gradient(circle at 15% 10%, rgba(255, 0, 153, 0.18), transparent 30%),
-        radial-gradient(circle at 85% 20%, rgba(125, 0, 255, 0.20), transparent 32%),
+        radial-gradient(circle at 10% 5%, rgba(255, 0, 153, 0.18), transparent 28%),
+        radial-gradient(circle at 90% 10%, rgba(125, 0, 255, 0.20), transparent 30%),
         #09070f;
       color: white;
       min-height: 100vh;
@@ -32,27 +32,32 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      opacity: 0.12;
+      opacity: 0.11;
       background-image:
         linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background-size: 42px 42px;
       mask-image: linear-gradient(to bottom, black, transparent);
     }
 
-    /* HEADER */
+    /* =========================
+       HEADER
+    ========================= */
 
     header {
       position: sticky;
       top: 0;
       z-index: 100;
       height: 76px;
+      padding: 0 44px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 42px;
+
       background: rgba(9, 7, 15, 0.82);
       backdrop-filter: blur(18px);
+
       border-bottom: 1px solid rgba(255,255,255,0.08);
     }
 
@@ -69,13 +74,18 @@
     }
 
     .back-button {
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.06);
+      text-decoration: none;
       color: white;
+
       padding: 12px 18px;
       border-radius: 12px;
-      text-decoration: none;
-      font-weight: 700;
+
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.10);
+
+      font-size: 14px;
+      font-weight: 800;
+
       transition: 0.2s ease;
     }
 
@@ -84,102 +94,297 @@
       transform: translateY(-2px);
     }
 
-    /* HERO */
+    /* =========================
+       HERO
+    ========================= */
 
     .hero {
-      position: relative;
-      padding: 90px 50px 55px;
       max-width: 1250px;
       margin: auto;
+      padding: 85px 50px 55px;
     }
 
     .hero-badge {
       display: inline-block;
+
       padding: 8px 14px;
+      margin-bottom: 20px;
+
       border-radius: 999px;
+
       background: rgba(255, 35, 165, 0.10);
       border: 1px solid rgba(255, 35, 165, 0.25);
-      color: #ff5fbd;
+
+      color: #ff61bd;
+
       font-size: 13px;
-      font-weight: 800;
-      margin-bottom: 20px;
+      font-weight: 900;
+      letter-spacing: 0.4px;
     }
 
     .hero h1 {
-      font-size: 64px;
+      font-size: 66px;
       line-height: 0.95;
       letter-spacing: -4px;
       margin-bottom: 20px;
     }
 
     .hero h1 span {
-      background: linear-gradient(90deg, #ff36ad, #9d55ff);
+      background: linear-gradient(90deg, #ff36ad, #9850ff);
       -webkit-background-clip: text;
       color: transparent;
     }
 
     .hero p {
+      max-width: 700px;
+
       color: #aaa3b5;
       font-size: 18px;
-      max-width: 650px;
       line-height: 1.6;
-      margin-bottom: 35px;
+
+      margin-bottom: 34px;
     }
 
-    /* SEARCH */
+    /* =========================
+       SEARCH
+    ========================= */
 
-    .search-box {
-      width: 650px;
+    .search-wrapper {
+      width: 680px;
       position: relative;
     }
 
-    .search-box input {
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+
+      color: #827b8c;
+      font-size: 18px;
+
+      pointer-events: none;
+    }
+
+    #gameSearch {
       width: 100%;
-      padding: 17px 20px;
+
+      padding: 17px 20px 17px 48px;
+
       border-radius: 15px;
+
       border: 1px solid rgba(255,255,255,0.10);
       outline: none;
-      background: rgba(255,255,255,0.07);
+
+      background: rgba(255,255,255,0.065);
+
       color: white;
       font-size: 16px;
+
       transition: 0.2s ease;
     }
 
-    .search-box input::placeholder {
-      color: #807989;
+    #gameSearch::placeholder {
+      color: #7f7889;
     }
 
-    .search-box input:focus {
+    #gameSearch:focus {
       border-color: rgba(255, 48, 173, 0.55);
-      box-shadow: 0 0 25px rgba(255, 48, 173, 0.12);
+      box-shadow: 0 0 30px rgba(255, 48, 173, 0.12);
     }
 
-    /* FILTERS */
+    /* =========================
+       FEATURED
+    ========================= */
 
-    .controls {
+    .section {
       max-width: 1250px;
-      margin: 10px auto 35px;
-      padding: 0 50px;
+      margin: auto;
+      padding: 0 50px 55px;
     }
 
-    .controls h2 {
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+
+      margin-bottom: 20px;
+    }
+
+    .section-heading h2 {
+      font-size: 28px;
+      letter-spacing: -0.7px;
+    }
+
+    .section-heading p {
+      color: #77717f;
+      font-size: 14px;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 20px;
+    }
+
+    .featured-card {
+      position: relative;
+      height: 255px;
+
+      overflow: hidden;
+      border-radius: 22px;
+
+      border: 1px solid rgba(255,255,255,0.09);
+
+      cursor: pointer;
+
+      transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        border-color 0.25s ease;
+    }
+
+    .featured-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(255, 50, 180, 0.42);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+    }
+
+    .featured-art {
+      position: absolute;
+      inset: 0;
+    }
+
+    .featured-card:hover .featured-art {
+      transform: scale(1.04);
+    }
+
+    .featured-art {
+      transition: transform 0.5s ease;
+    }
+
+    .featured-art.subway {
+      background:
+        radial-gradient(circle at 70% 25%, rgba(255,255,255,0.25), transparent 16%),
+        linear-gradient(135deg, #ff7b00, #ff267d 52%, #5120ff);
+    }
+
+    .featured-art.geometry {
+      background:
+        radial-gradient(circle at 65% 25%, rgba(255,255,255,0.23), transparent 15%),
+        linear-gradient(135deg, #00d4ff, #752dff 55%, #f600a7);
+    }
+
+    .featured-icon {
+      position: absolute;
+      left: 30px;
+      top: 42px;
+
+      font-size: 78px;
+
+      filter: drop-shadow(0 12px 20px rgba(0,0,0,0.4));
+
+      z-index: 2;
+    }
+
+    .featured-content {
+      position: absolute;
+      left: 28px;
+      right: 28px;
+      bottom: 25px;
+      z-index: 5;
+    }
+
+    .featured-content small {
+      display: block;
+
+      color: rgba(255,255,255,0.70);
+
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+
+      font-size: 11px;
+      font-weight: 900;
+
+      margin-bottom: 7px;
+    }
+
+    .featured-content h3 {
       font-size: 27px;
+      margin-bottom: 5px;
+    }
+
+    .featured-content p {
+      color: rgba(255,255,255,0.72);
+      font-size: 13px;
+    }
+
+    .featured-play {
+      position: absolute;
+
+      right: 25px;
+      bottom: 24px;
+
+      width: 47px;
+      height: 47px;
+
+      display: grid;
+      place-items: center;
+
+      border-radius: 50%;
+
+      background: rgba(255,255,255,0.16);
+      backdrop-filter: blur(10px);
+
+      border: 1px solid rgba(255,255,255,0.18);
+
+      z-index: 8;
+
+      transition: 0.2s ease;
+    }
+
+    .featured-card:hover .featured-play {
+      background: white;
+      color: #8e3cff;
+      transform: scale(1.08);
+    }
+
+    /* =========================
+       FILTERS
+    ========================= */
+
+    .browse-section {
+      max-width: 1250px;
+      margin: auto;
+      padding: 5px 50px 25px;
+    }
+
+    .browse-title {
+      font-size: 28px;
       margin-bottom: 18px;
     }
 
     .filters {
       display: flex;
       gap: 10px;
+      flex-wrap: wrap;
     }
 
     .filter {
       border: 1px solid rgba(255,255,255,0.09);
+
       background: rgba(255,255,255,0.05);
-      color: #c8c3ce;
+      color: #aaa3b5;
+
       padding: 10px 17px;
+
       border-radius: 10px;
+
       cursor: pointer;
-      font-weight: 700;
+
+      font-size: 13px;
+      font-weight: 800;
+
       transition: 0.2s ease;
     }
 
@@ -191,32 +396,43 @@
     .filter.active {
       background: linear-gradient(90deg, #ff2ca8, #963cff);
       color: white;
+
       border-color: transparent;
-      box-shadow: 0 8px 25px rgba(175, 45, 255, 0.20);
+
+      box-shadow: 0 8px 25px rgba(175,45,255,0.20);
     }
 
-    /* GAME GRID */
+    /* =========================
+       GAME GRID
+    ========================= */
 
     .games-container {
       max-width: 1250px;
       margin: auto;
-      padding: 0 50px 80px;
+      padding: 0 50px 90px;
     }
 
     .games-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 22px;
+      gap: 20px;
     }
 
     .game-card {
       position: relative;
-      min-height: 285px;
-      border-radius: 20px;
+
+      min-height: 295px;
+
       overflow: hidden;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.08);
+
+      border-radius: 20px;
+
       background: #12101a;
+
+      border: 1px solid rgba(255,255,255,0.08);
+
+      cursor: pointer;
+
       transition:
         transform 0.25s ease,
         border-color 0.25s ease,
@@ -224,64 +440,82 @@
     }
 
     .game-card:hover {
-      transform: translateY(-8px) scale(1.015);
+      transform: translateY(-8px);
+
       border-color: rgba(255, 56, 180, 0.45);
-      box-shadow: 0 20px 55px rgba(0,0,0,0.45);
+
+      box-shadow:
+        0 20px 55px rgba(0,0,0,0.45),
+        0 0 30px rgba(175,45,255,0.07);
     }
 
     .game-art {
-      height: 190px;
       position: relative;
+      height: 190px;
+
       overflow: hidden;
     }
 
     .game-art::after {
       content: "";
+
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(to bottom, transparent 40%, rgba(10,7,15,0.9));
-    }
 
-    .game-card:hover .game-art::before {
-      transform: translateX(110%);
+      background:
+        linear-gradient(
+          to bottom,
+          transparent 35%,
+          rgba(10,7,15,0.94)
+        );
     }
 
     .game-art::before {
       content: "";
+
       position: absolute;
+
       top: 0;
       left: -100%;
+
       width: 50%;
       height: 100%;
+
       background: linear-gradient(
         100deg,
         transparent,
         rgba(255,255,255,0.18),
         transparent
       );
-      transform: translateX(0);
+
       transition: transform 0.7s ease;
-      z-index: 3;
+
+      z-index: 4;
     }
 
-    /* ART */
+    .game-card:hover .game-art::before {
+      transform: translateX(300%);
+    }
+
+    /* =========================
+       GAME ART
+    ========================= */
 
     .art-subway {
       background:
-        radial-gradient(circle at 50% 25%, rgba(255,255,255,0.25), transparent 18%),
-        linear-gradient(135deg, #ff7a00, #ff207e 50%, #5420ff);
+        radial-gradient(circle at 70% 20%, rgba(255,255,255,0.25), transparent 15%),
+        linear-gradient(135deg, #ff7a00, #ff207e 52%, #5420ff);
     }
 
     .art-stickman {
       background:
-        radial-gradient(circle at 70% 30%, rgba(255,255,255,0.18), transparent 15%),
+        radial-gradient(circle at 70% 25%, rgba(255,255,255,0.18), transparent 15%),
         linear-gradient(135deg, #00c6ff, #0072ff 55%, #231557);
     }
 
     .art-fnaf {
       background:
-        radial-gradient(circle at 50% 35%, rgba(255,255,255,0.12), transparent 15%),
+        radial-gradient(circle at 50% 30%, rgba(255,255,255,0.12), transparent 14%),
         linear-gradient(135deg, #111, #292929 45%, #100013);
     }
 
@@ -292,13 +526,41 @@
 
     .art-geometry {
       background:
-        radial-gradient(circle at 70% 25%, rgba(255,255,255,0.2), transparent 15%),
+        radial-gradient(circle at 70% 25%, rgba(255,255,255,0.22), transparent 15%),
         linear-gradient(135deg, #00d4ff, #7a2cff 55%, #f900a8);
     }
 
     .art-swing {
       background:
         linear-gradient(135deg, #ff512f, #dd2476 50%, #5918c7);
+    }
+
+    .art-flappy {
+      background:
+        radial-gradient(circle at 70% 25%, rgba(255,255,255,0.3), transparent 15%),
+        linear-gradient(135deg, #39d353, #0aa6d8 55%, #1e3c72);
+    }
+
+    .art-run {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.20), transparent 15%),
+        linear-gradient(135deg, #ff4b2b, #ff416c 50%, #7420c9);
+    }
+
+    .art-platform {
+      background:
+        linear-gradient(135deg, #00b09b, #96c93d 55%, #1d4d3d);
+    }
+
+    .art-puzzle {
+      background:
+        radial-gradient(circle at 60% 30%, rgba(255,255,255,0.22), transparent 15%),
+        linear-gradient(135deg, #4776e6, #8e54e9 55%, #26125e);
+    }
+
+    .art-action {
+      background:
+        linear-gradient(135deg, #f12711, #f5af19 50%, #7a1648);
     }
 
     .art-more {
@@ -313,67 +575,120 @@
         linear-gradient(135deg, #17131f, #24182d);
     }
 
+    /* =========================
+       GAME CARD CONTENT
+    ========================= */
+
     .game-emoji {
       position: absolute;
-      z-index: 2;
+
       left: 22px;
-      top: 42px;
-      font-size: 64px;
-      filter: drop-shadow(0 8px 15px rgba(0,0,0,0.35));
+      top: 40px;
+
+      font-size: 62px;
+
+      z-index: 3;
+
+      filter:
+        drop-shadow(0 10px 15px rgba(0,0,0,0.40));
     }
 
     .game-info {
-      padding: 18px 20px 20px;
       position: relative;
-      margin-top: -5px;
-      z-index: 5;
+
+      padding: 17px 19px 20px;
+
+      margin-top: -4px;
+
+      z-index: 10;
     }
 
     .game-title {
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 900;
+
+      padding-right: 50px;
+
       margin-bottom: 6px;
     }
 
     .game-category {
-      color: #938c9e;
-      font-size: 13px;
+      color: #8f889a;
+
+      font-size: 11px;
+
       text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: 800;
+      letter-spacing: 1.2px;
+
+      font-weight: 900;
     }
 
     .play-button {
       position: absolute;
+
       right: 18px;
       bottom: 18px;
+
       width: 40px;
       height: 40px;
+
       display: grid;
       place-items: center;
+
       border-radius: 50%;
-      background: linear-gradient(135deg, #ff2ca8, #8f3cff);
-      box-shadow: 0 8px 22px rgba(170, 40, 255, 0.28);
-      font-size: 15px;
+
+      background: linear-gradient(
+        135deg,
+        #ff2ca8,
+        #8f3cff
+      );
+
+      box-shadow:
+        0 8px 22px rgba(170,40,255,0.28);
+
+      font-size: 13px;
+
+      transition: 0.2s ease;
     }
 
-    /* EMPTY */
+    .game-card:hover .play-button {
+      transform: scale(1.08);
+    }
+
+    /* =========================
+       EMPTY STATE
+    ========================= */
 
     .empty {
       display: none;
+
       text-align: center;
-      padding: 70px 20px;
-      color: #8d8796;
+
+      padding: 80px 20px;
+
+      color: #827b8c;
+
       font-size: 18px;
     }
 
-    /* FOOTER */
+    .empty-icon {
+      font-size: 42px;
+      margin-bottom: 12px;
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
 
     footer {
       border-top: 1px solid rgba(255,255,255,0.08);
+
       padding: 35px 50px;
-      color: #77717f;
+
       text-align: center;
+
+      color: #77717f;
+
       font-size: 14px;
     }
   </style>
@@ -382,7 +697,9 @@
 <body>
 
   <!-- HEADER -->
+
   <header>
+
     <div class="logo">
       <span>SPIDER</span> PORTAL
     </div>
@@ -390,10 +707,12 @@
     <a href="index.html" class="back-button">
       ← Back to Home
     </a>
+
   </header>
 
 
   <!-- HERO -->
+
   <section class="hero">
 
     <div class="hero-badge">
@@ -405,51 +724,161 @@
     </h1>
 
     <p>
-      Browse the Spider Portal game collection. Search for a game,
-      filter by category, and launch it with one click.
+      Welcome to the Spider Portal Game Zone.
+      Search through the collection, choose a category,
+      and launch a game.
     </p>
 
-    <div class="search-box">
+    <div class="search-wrapper">
+
+      <div class="search-icon">
+        🔎
+      </div>
+
       <input
         id="gameSearch"
         type="text"
-        placeholder="🔎 Search games..."
+        placeholder="Search games..."
         oninput="searchGames()"
       >
+
     </div>
 
   </section>
 
 
-  <!-- FILTERS -->
-  <section class="controls">
+  <!-- FEATURED -->
 
-    <h2>Browse Categories</h2>
+  <section class="section">
+
+    <div class="section-heading">
+
+      <h2>🔥 Featured Games</h2>
+
+      <p>Jump back into the action</p>
+
+    </div>
+
+
+    <div class="featured-grid">
+
+      <div
+        class="featured-card"
+        onclick="launchGame('https://play.gameograf.com/')"
+      >
+
+        <div class="featured-art subway"></div>
+
+        <div class="featured-icon">
+          🚇
+        </div>
+
+        <div class="featured-content">
+
+          <small>Featured</small>
+
+          <h3>Subway Surfers</h3>
+
+          <p>Arcade • Endless Runner</p>
+
+        </div>
+
+        <div class="featured-play">
+          ▶
+        </div>
+
+      </div>
+
+
+      <div
+        class="featured-card"
+        onclick="launchGame('https://gdbrowser.com/')"
+      >
+
+        <div class="featured-art geometry"></div>
+
+        <div class="featured-icon">
+          🟨
+        </div>
+
+        <div class="featured-content">
+
+          <small>Featured</small>
+
+          <h3>Geometry Dash</h3>
+
+          <p>Platformer • Rhythm</p>
+
+        </div>
+
+        <div class="featured-play">
+          ▶
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- CATEGORY FILTER -->
+
+  <section class="browse-section">
+
+    <h2 class="browse-title">
+      Browse Games
+    </h2>
 
     <div class="filters">
 
-      <button class="filter active" onclick="filterCategory('all', this)">
+      <button
+        class="filter active"
+        onclick="filterCategory('all', this)"
+      >
         All
       </button>
 
-      <button class="filter" onclick="filterCategory('arcade', this)">
+      <button
+        class="filter"
+        onclick="filterCategory('arcade', this)"
+      >
         Arcade
       </button>
 
-      <button class="filter" onclick="filterCategory('action', this)">
+      <button
+        class="filter"
+        onclick="filterCategory('action', this)"
+      >
         Action
       </button>
 
-      <button class="filter" onclick="filterCategory('horror', this)">
+      <button
+        class="filter"
+        onclick="filterCategory('horror', this)"
+      >
         Horror
       </button>
 
-      <button class="filter" onclick="filterCategory('sandbox', this)">
+      <button
+        class="filter"
+        onclick="filterCategory('sandbox', this)"
+      >
         Sandbox
       </button>
 
-      <button class="filter" onclick="filterCategory('platformer', this)">
+      <button
+        class="filter"
+        onclick="filterCategory('platformer', this)"
+      >
         Platformer
+      </button>
+
+      <button
+        class="filter"
+        onclick="filterCategory('puzzle', this)"
+      >
+        Puzzle
       </button>
 
     </div>
@@ -457,25 +886,44 @@
   </section>
 
 
-  <!-- GAMES -->
+  <!-- GAME GRID -->
+
   <main class="games-container">
 
-    <div class="games-grid" id="gamesGrid"></div>
+    <div
+      class="games-grid"
+      id="gamesGrid"
+    ></div>
 
-    <div class="empty" id="emptyMessage">
-      No games found.
+
+    <div
+      class="empty"
+      id="emptyMessage"
+    >
+
+      <div class="empty-icon">
+        🕷️
+      </div>
+
+      No games matched your search.
+
     </div>
 
   </main>
 
 
   <!-- FOOTER -->
+
   <footer>
     🕷️ Spider Portal • Game Library
   </footer>
 
 
   <script>
+
+    /* =========================
+       GAME DATA
+    ========================= */
 
     const games = [
 
@@ -528,6 +976,46 @@
       },
 
       {
+        name: "Flappy Bird",
+        category: "arcade",
+        emoji: "🐦",
+        art: "art-flappy",
+        link: "https://flappybird.io/"
+      },
+
+      {
+        name: "Temple Run",
+        category: "arcade",
+        emoji: "🏃",
+        art: "art-run",
+        link: "https://www.coolmathgames.com/0-temple-run-2"
+      },
+
+      {
+        name: "Platform Adventure",
+        category: "platformer",
+        emoji: "🧱",
+        art: "art-platform",
+        link: "#"
+      },
+
+      {
+        name: "Puzzle Challenge",
+        category: "puzzle",
+        emoji: "🧩",
+        art: "art-puzzle",
+        link: "#"
+      },
+
+      {
+        name: "Action Arena",
+        category: "action",
+        emoji: "⚔️",
+        art: "art-action",
+        link: "#"
+      },
+
+      {
         name: "More Games",
         category: "arcade",
         emoji: "🎮",
@@ -549,30 +1037,46 @@
     let currentCategory = "all";
 
 
+    /* =========================
+       RENDER GAMES
+    ========================= */
+
     function renderGames() {
 
-      const grid = document.getElementById("gamesGrid");
-      const empty = document.getElementById("emptyMessage");
-      const search = document
-        .getElementById("gameSearch")
-        .value
-        .toLowerCase()
-        .trim();
+      const grid =
+        document.getElementById("gamesGrid");
+
+      const empty =
+        document.getElementById("emptyMessage");
+
+      const search =
+        document
+          .getElementById("gameSearch")
+          .value
+          .toLowerCase()
+          .trim();
+
 
       grid.innerHTML = "";
 
-      const filteredGames = games.filter(game => {
 
-        const matchesCategory =
-          currentCategory === "all" ||
-          game.category === currentCategory;
+      const filteredGames =
+        games.filter(game => {
 
-        const matchesSearch =
-          game.name.toLowerCase().includes(search);
+          const matchesCategory =
+            currentCategory === "all" ||
+            game.category === currentCategory;
 
-        return matchesCategory && matchesSearch;
 
-      });
+          const matchesSearch =
+            game.name
+              .toLowerCase()
+              .includes(search);
+
+
+          return matchesCategory && matchesSearch;
+
+        });
 
 
       if (filteredGames.length === 0) {
@@ -589,11 +1093,16 @@
 
       filteredGames.forEach(game => {
 
-        const card = document.createElement("div");
+        const card =
+          document.createElement("div");
+
 
         card.className = "game-card";
 
-        card.onclick = () => launchGame(game.link);
+
+        card.onclick = () => {
+          launchGame(game.link);
+        };
 
 
         card.innerHTML = `
@@ -605,6 +1114,7 @@
             </div>
 
           </div>
+
 
           <div class="game-info">
 
@@ -632,6 +1142,10 @@
     }
 
 
+    /* =========================
+       FILTER
+    ========================= */
+
     function filterCategory(category, button) {
 
       currentCategory = category;
@@ -652,6 +1166,10 @@
     }
 
 
+    /* =========================
+       SEARCH
+    ========================= */
+
     function searchGames() {
 
       renderGames();
@@ -659,24 +1177,34 @@
     }
 
 
+    /* =========================
+       LAUNCH GAME
+    ========================= */
+
     function launchGame(link) {
 
       if (!link || link === "#") {
 
-        alert("This game is coming soon!");
+        alert("🕷️ This game is coming soon!");
 
         return;
 
       }
+
 
       window.open(link, "_blank");
 
     }
 
 
+    /* =========================
+       HTML SAFETY
+    ========================= */
+
     function escapeHTML(text) {
 
-      const div = document.createElement("div");
+      const div =
+        document.createElement("div");
 
       div.textContent = text;
 
@@ -684,6 +1212,10 @@
 
     }
 
+
+    /* =========================
+       INITIAL LOAD
+    ========================= */
 
     renderGames();
 

@@ -3,9 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Spider Portal</title>
 
   <style>
+
+    /* ========================================
+       RESET
+    ======================================== */
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -24,219 +30,373 @@
       overflow-x: hidden;
     }
 
-    /* BACKGROUND */
+
+    /* ========================================
+       BACKGROUND
+    ======================================== */
 
     .background {
       position: fixed;
       inset: 0;
-      z-index: -5;
+      z-index: -10;
       overflow: hidden;
+
       background:
-        radial-gradient(circle at 20% 20%, rgba(120, 40, 255, .16), transparent 30%),
-        radial-gradient(circle at 80% 70%, rgba(255, 30, 150, .12), transparent 30%),
+        radial-gradient(
+          circle at 15% 15%,
+          rgba(130, 50, 255, 0.20),
+          transparent 30%
+        ),
+        radial-gradient(
+          circle at 85% 75%,
+          rgba(255, 30, 160, 0.15),
+          transparent 30%
+        ),
         #050507;
     }
 
     .grid-bg {
       position: absolute;
       inset: 0;
-      opacity: .12;
+
+      opacity: 0.12;
+
       background-image:
-        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+        linear-gradient(
+          rgba(255,255,255,0.08) 1px,
+          transparent 1px
+        ),
+        linear-gradient(
+          90deg,
+          rgba(255,255,255,0.08) 1px,
+          transparent 1px
+        );
+
       background-size: 45px 45px;
     }
 
     .orb {
       position: absolute;
-      width: 320px;
-      height: 320px;
+
+      width: 330px;
+      height: 330px;
+
       border-radius: 50%;
-      filter: blur(90px);
-      opacity: .25;
-      animation: float 8s ease-in-out infinite alternate;
+
+      filter: blur(100px);
+
+      opacity: 0.23;
+
+      animation: floatingOrb 9s ease-in-out infinite alternate;
     }
 
     .orb.one {
-      background: #7c3cff;
-      top: -100px;
-      left: -100px;
+      background: #783cff;
+
+      top: -120px;
+      left: -120px;
     }
 
     .orb.two {
-      background: #ff2090;
-      right: -120px;
-      bottom: -100px;
+      background: #ff2299;
+
+      right: -130px;
+      bottom: -120px;
+
       animation-delay: 2s;
     }
 
-    @keyframes float {
+    @keyframes floatingOrb {
+
       from {
         transform: translate(0, 0);
       }
 
       to {
-        transform: translate(70px, 50px);
+        transform: translate(80px, 55px);
       }
+
     }
 
-    /* HEADER */
+
+    /* ========================================
+       HEADER
+    ======================================== */
 
     header {
       position: sticky;
+
       top: 0;
+
       z-index: 100;
+
       height: 72px;
+
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
+
       padding: 0 7%;
-      background: rgba(5, 5, 7, .72);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid rgba(255,255,255,.08);
+
+      background: rgba(5, 5, 7, 0.75);
+
+      backdrop-filter: blur(20px);
+
+      border-bottom:
+        1px solid rgba(255,255,255,0.08);
     }
 
     .logo {
       font-size: 22px;
+
       font-weight: 900;
+
       letter-spacing: 2px;
     }
 
     .logo span {
-      background: linear-gradient(90deg, #9d5cff, #ff43ad);
+      background:
+        linear-gradient(
+          90deg,
+          #9c5cff,
+          #ff42ad
+        );
+
       -webkit-background-clip: text;
+
       color: transparent;
     }
 
     nav {
       display: flex;
+
       gap: 10px;
     }
 
     nav button {
-      border: 1px solid rgba(255,255,255,.1);
-      background: rgba(255,255,255,.05);
-      color: white;
       padding: 9px 14px;
+
+      border:
+        1px solid rgba(255,255,255,0.10);
+
       border-radius: 10px;
+
+      background:
+        rgba(255,255,255,0.05);
+
+      color: white;
+
       cursor: pointer;
-      transition: .2s;
+
+      transition: 0.2s;
     }
 
     nav button:hover {
-      background: rgba(255,255,255,.11);
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+
+      background:
+        rgba(255,255,255,0.12);
     }
 
-    /* HERO */
+
+    /* ========================================
+       HERO
+    ======================================== */
 
     .hero {
       min-height: 500px;
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
       text-align: center;
-      padding: 90px 20px 70px;
+
+      padding:
+        90px 20px 70px;
     }
 
     .hero-content {
+      width: 100%;
+
       max-width: 900px;
     }
 
     .spider {
-      font-size: 65px;
-      margin-bottom: 18px;
-      animation: bob 3s ease-in-out infinite;
+      font-size: 68px;
+
+      margin-bottom: 20px;
+
+      animation:
+        spiderFloat 3s ease-in-out infinite;
     }
 
-    @keyframes bob {
+    @keyframes spiderFloat {
+
       50% {
-        transform: translateY(-10px);
+        transform: translateY(-12px) rotate(3deg);
       }
+
     }
 
     .hero h1 {
-      font-size: clamp(48px, 9vw, 92px);
-      font-weight: 950;
-      line-height: .95;
+      font-size:
+        clamp(48px, 9vw, 94px);
+
+      line-height: 0.95;
+
       letter-spacing: -4px;
-      background: linear-gradient(90deg, #ffffff, #b47cff, #ff4db4);
+
+      font-weight: 950;
+
+      background:
+        linear-gradient(
+          90deg,
+          #ffffff,
+          #b579ff,
+          #ff4db4
+        );
+
       -webkit-background-clip: text;
+
       color: transparent;
     }
 
     .hero p {
-      color: #aaa;
+      max-width: 650px;
+
+      margin:
+        24px auto 32px;
+
+      color: #999;
+
       font-size: 18px;
-      margin: 22px auto 30px;
-      max-width: 620px;
+
       line-height: 1.6;
     }
 
     .search-box {
-      width: min(650px, 95%);
+      width: min(680px, 95%);
+
       margin: auto;
     }
 
     .search-box input {
       width: 100%;
-      height: 58px;
+
+      height: 60px;
+
       padding: 0 22px;
+
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.13);
-      background: rgba(255,255,255,.07);
-      color: white;
+
+      border:
+        1px solid rgba(255,255,255,0.13);
+
       outline: none;
+
+      background:
+        rgba(255,255,255,0.07);
+
+      color: white;
+
       font-size: 16px;
+
       backdrop-filter: blur(12px);
-      transition: .25s;
+
+      transition: 0.25s;
+    }
+
+    .search-box input::placeholder {
+      color: #777;
     }
 
     .search-box input:focus {
-      border-color: rgba(170,100,255,.7);
-      box-shadow: 0 0 30px rgba(130,70,255,.2);
+      border-color:
+        rgba(170,100,255,0.75);
+
+      box-shadow:
+        0 0 35px rgba(130,70,255,0.18);
     }
 
-    /* QUICK LINKS */
+
+    /* ========================================
+       QUICK BUTTONS
+    ======================================== */
 
     .quick-links {
       display: flex;
+
       justify-content: center;
+
+      align-items: center;
+
       flex-wrap: wrap;
+
       gap: 12px;
-      margin: -10px auto 70px;
+
+      margin:
+        -10px auto 75px;
+
       padding: 0 20px;
     }
 
     .quick-btn {
       padding: 13px 20px;
+
       border-radius: 13px;
-      border: 1px solid rgba(255,255,255,.1);
-      background: rgba(255,255,255,.055);
+
+      border:
+        1px solid rgba(255,255,255,0.10);
+
+      background:
+        rgba(255,255,255,0.055);
+
       color: white;
-      cursor: pointer;
-      transition: .25s;
+
       font-weight: 700;
+
+      cursor: pointer;
+
+      transition: 0.25s;
     }
 
     .quick-btn:hover {
-      transform: translateY(-4px) scale(1.03);
-      background: rgba(255,255,255,.1);
-      box-shadow: 0 8px 25px rgba(0,0,0,.25);
+      transform:
+        translateY(-4px)
+        scale(1.03);
+
+      background:
+        rgba(255,255,255,0.11);
+
+      box-shadow:
+        0 10px 30px rgba(0,0,0,0.25);
     }
 
-    /* SECTIONS */
+
+    /* ========================================
+       SECTIONS
+    ======================================== */
 
     section {
       width: min(1200px, 90%);
-      margin: 0 auto 90px;
+
+      margin:
+        0 auto 95px;
     }
 
     .section-heading {
       display: flex;
-      align-items: end;
+
+      align-items: flex-end;
+
       justify-content: space-between;
-      margin-bottom: 24px;
+
+      margin-bottom: 25px;
     }
 
     .section-heading h2 {
@@ -245,34 +405,276 @@
 
     .section-heading p {
       color: #777;
+
       font-size: 14px;
     }
 
-    /* GAME GRID */
+
+    /* ========================================
+       FEATURED GAMES
+    ======================================== */
+
+    .featured-grid {
+      display: grid;
+
+      grid-template-columns:
+        repeat(2, 1fr);
+
+      gap: 20px;
+    }
+
+    .featured-card {
+      position: relative;
+
+      min-height: 280px;
+
+      overflow: hidden;
+
+      border-radius: 22px;
+
+      border:
+        1px solid rgba(255,255,255,0.10);
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(255,255,255,0.08),
+          rgba(255,255,255,0.025)
+        );
+
+      cursor: pointer;
+
+      transition:
+        transform .3s ease,
+        border-color .3s ease,
+        box-shadow .3s ease;
+    }
+
+    .featured-card:hover {
+      transform:
+        translateY(-8px)
+        scale(1.015);
+
+      border-color:
+        rgba(180,100,255,0.55);
+
+      box-shadow:
+        0 25px 60px rgba(0,0,0,0.45),
+        0 0 35px rgba(140,70,255,0.16);
+    }
+
+    .featured-art {
+      position: absolute;
+
+      inset: 0;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 100px;
+
+      background:
+        radial-gradient(
+          circle at 30% 30%,
+          rgba(255,255,255,0.16),
+          transparent 30%
+        ),
+        linear-gradient(
+          135deg,
+          #20102f,
+          #4a0e54
+        );
+
+      transition:
+        transform .5s ease,
+        filter .3s ease;
+    }
+
+    .featured-card:hover .featured-art {
+      transform: scale(1.08);
+
+      filter: brightness(1.15);
+    }
+
+    .featured-overlay {
+      position: absolute;
+
+      inset: 0;
+
+      display: flex;
+
+      flex-direction: column;
+
+      justify-content: flex-end;
+
+      padding: 28px;
+
+      background:
+        linear-gradient(
+          transparent 20%,
+          rgba(0,0,0,0.88) 100%
+        );
+    }
+
+    .featured-badge {
+      width: fit-content;
+
+      padding: 6px 10px;
+
+      margin-bottom: 10px;
+
+      border-radius: 8px;
+
+      background:
+        rgba(160,80,255,0.28);
+
+      border:
+        1px solid rgba(190,120,255,0.3);
+
+      color: #d7b7ff;
+
+      font-size: 11px;
+
+      font-weight: 800;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1px;
+    }
+
+    .featured-overlay h3 {
+      font-size: 26px;
+
+      margin-bottom: 6px;
+    }
+
+    .featured-overlay p {
+      color: #aaa;
+
+      font-size: 14px;
+
+      margin-bottom: 15px;
+    }
+
+    .featured-play {
+      width: fit-content;
+
+      padding: 10px 18px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      background:
+        linear-gradient(
+          90deg,
+          #743dff,
+          #d43dff
+        );
+
+      color: white;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .featured-play:hover {
+      transform: scale(1.05);
+
+      filter: brightness(1.15);
+    }
+
+
+    /* ========================================
+       CATEGORY BAR
+    ======================================== */
+
+    .categories {
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 9px;
+
+      margin-bottom: 22px;
+    }
+
+    .category-btn {
+      padding: 9px 15px;
+
+      border-radius: 10px;
+
+      border:
+        1px solid rgba(255,255,255,0.09);
+
+      background:
+        rgba(255,255,255,0.045);
+
+      color: #aaa;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .category-btn:hover,
+    .category-btn.active {
+      color: white;
+
+      background:
+        rgba(150,80,255,0.20);
+
+      border-color:
+        rgba(170,100,255,0.4);
+    }
+
+
+    /* ========================================
+       GAME GRID
+    ======================================== */
 
     .game-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
       gap: 18px;
     }
 
-    /* GAME CARD */
+
+    /* ========================================
+       GAME CARD
+    ======================================== */
 
     .game-card {
       position: relative;
+
       overflow: hidden;
-      min-height: 250px;
+
+      min-height: 290px;
+
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.09);
+
+      border:
+        1px solid rgba(255,255,255,0.09);
 
       background:
         linear-gradient(
           145deg,
-          rgba(255,255,255,.08),
-          rgba(255,255,255,.025)
+          rgba(255,255,255,0.08),
+          rgba(255,255,255,0.025)
         );
 
-      transform: translateY(0) scale(1);
+      transform:
+        translateY(0)
+        scale(1);
 
       transition:
         transform .3s cubic-bezier(.2,.8,.2,1),
@@ -280,25 +682,27 @@
         border-color .3s ease;
     }
 
-    /* MAIN CARD HOVER */
-
     .game-card:hover {
-      transform: translateY(-10px) scale(1.025);
+      transform:
+        translateY(-10px)
+        scale(1.025);
 
-      border-color: rgba(180,100,255,.65);
+      border-color:
+        rgba(180,100,255,0.65);
 
       box-shadow:
-        0 18px 40px rgba(0,0,0,.5),
-        0 0 30px rgba(140,70,255,.18);
+        0 18px 40px rgba(0,0,0,0.50),
+        0 0 30px rgba(140,70,255,0.18);
     }
-
-    /* GLOW */
 
     .game-card::before {
       content: "";
 
       position: absolute;
+
       inset: 0;
+
+      z-index: 3;
 
       border-radius: 18px;
 
@@ -309,7 +713,7 @@
       background:
         radial-gradient(
           circle at 50% 0%,
-          rgba(190,110,255,.18),
+          rgba(190,110,255,0.18),
           transparent 55%
         );
 
@@ -320,24 +724,30 @@
       opacity: 1;
     }
 
-    /* GAME ART */
+
+    /* ========================================
+       ORIGINAL GAME ART
+    ======================================== */
 
     .game-art {
       position: relative;
-      height: 145px;
+
+      height: 155px;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
-      font-size: 55px;
-
       overflow: hidden;
+
+      font-size: 68px;
 
       background:
         radial-gradient(
           circle at 30% 30%,
-          rgba(255,255,255,.2),
+          rgba(255,255,255,0.20),
           transparent 25%
         ),
         linear-gradient(
@@ -353,70 +763,203 @@
 
     .game-card:hover .game-art {
       transform: scale(1.055);
+
       filter: brightness(1.12);
     }
-
-    /* LIGHT SWEEP */
 
     .game-art::after {
       content: "";
 
       position: absolute;
+
       inset: 0;
 
       background:
         linear-gradient(
           115deg,
           transparent 25%,
-          rgba(255,255,255,.18),
+          rgba(255,255,255,0.18),
           transparent 70%
         );
 
-      transform: translateX(-120%);
+      transform:
+        translateX(-120%);
 
-      transition: transform .65s ease;
+      transition:
+        transform .65s ease;
     }
 
     .game-card:hover .game-art::after {
-      transform: translateX(120%);
+      transform:
+        translateX(120%);
     }
 
-    /* GAME INFO */
+
+    /* DIFFERENT GAME ART */
+
+    .art-subway {
+      background:
+        radial-gradient(
+          circle at 30% 30%,
+          #ffd65a,
+          transparent 20%
+        ),
+        linear-gradient(
+          135deg,
+          #0f4c81,
+          #e56a16
+        );
+    }
+
+    .art-stickman {
+      background:
+        radial-gradient(
+          circle at 70% 20%,
+          #ffdf70,
+          transparent 18%
+        ),
+        linear-gradient(
+          135deg,
+          #172238,
+          #5132a8
+        );
+    }
+
+    .art-fnaf {
+      background:
+        radial-gradient(
+          circle at 50% 35%,
+          #8a1f45,
+          transparent 25%
+        ),
+        linear-gradient(
+          135deg,
+          #09090d,
+          #331321
+        );
+    }
+
+    .art-minecraft {
+      background:
+        radial-gradient(
+          circle at 30% 25%,
+          #7ed957,
+          transparent 20%
+        ),
+        linear-gradient(
+          135deg,
+          #164c30,
+          #253f6e
+        );
+    }
+
+    .art-geometry {
+      background:
+        radial-gradient(
+          circle at 70% 25%,
+          #56e7ff,
+          transparent 18%
+        ),
+        linear-gradient(
+          135deg,
+          #152d65,
+          #7028a8
+        );
+    }
+
+    .art-swing {
+      background:
+        radial-gradient(
+          circle at 30% 20%,
+          #ff8bdc,
+          transparent 18%
+        ),
+        linear-gradient(
+          135deg,
+          #35114f,
+          #112f5d
+        );
+    }
+
+    .art-more {
+      background:
+        radial-gradient(
+          circle at 50% 40%,
+          #9f5cff,
+          transparent 25%
+        ),
+        linear-gradient(
+          135deg,
+          #191522,
+          #29133d
+        );
+    }
+
+
+    /* ========================================
+       GAME INFO
+    ======================================== */
 
     .game-info {
       position: relative;
-      z-index: 2;
+
+      z-index: 5;
+
       padding: 17px;
     }
 
     .game-info h3 {
       font-size: 18px;
+
       margin-bottom: 6px;
+
       transition:
         transform .25s ease,
         color .25s ease;
     }
 
     .game-card:hover .game-info h3 {
-      transform: translateX(4px);
+      transform:
+        translateX(4px);
+
       color: #d7baff;
+    }
+
+    .game-category {
+      display: inline-block;
+
+      margin-bottom: 8px;
+
+      color: #9d78c8;
+
+      font-size: 10px;
+
+      font-weight: 800;
+
+      text-transform: uppercase;
+
+      letter-spacing: .8px;
     }
 
     .game-info p {
       color: #888;
+
       font-size: 13px;
+
       line-height: 1.4;
+
       min-height: 37px;
     }
 
-    /* PLAY BUTTON */
-
     .play-btn {
       width: 100%;
+
       margin-top: 13px;
+
       padding: 10px;
 
       border: none;
+
       border-radius: 10px;
 
       color: white;
@@ -440,43 +983,67 @@
 
     .game-card:hover .play-btn {
       box-shadow:
-        0 0 20px rgba(150,70,255,.35);
+        0 0 20px rgba(150,70,255,0.35);
     }
 
     .play-btn:hover {
-      transform: scale(1.045);
-      filter: brightness(1.2);
+      transform:
+        scale(1.045);
+
+      filter:
+        brightness(1.2);
     }
 
     .play-btn:active {
-      transform: scale(.97);
+      transform:
+        scale(.97);
     }
 
-    /* GENERAL CARDS */
+
+    /* ========================================
+       GENERAL CARDS
+    ======================================== */
 
     .card-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+
+      grid-template-columns:
+        repeat(3, 1fr);
+
       gap: 18px;
     }
 
     .card {
       padding: 25px;
+
       border-radius: 18px;
-      border: 1px solid rgba(255,255,255,.09);
-      background: rgba(255,255,255,.045);
+
+      border:
+        1px solid rgba(255,255,255,0.09);
+
+      background:
+        rgba(255,255,255,0.045);
+
       transition: .25s;
     }
 
     .card:hover {
-      transform: translateY(-6px);
-      background: rgba(255,255,255,.07);
-      border-color: rgba(180,100,255,.35);
-      box-shadow: 0 15px 30px rgba(0,0,0,.25);
+      transform:
+        translateY(-6px);
+
+      background:
+        rgba(255,255,255,0.07);
+
+      border-color:
+        rgba(180,100,255,0.35);
+
+      box-shadow:
+        0 15px 30px rgba(0,0,0,0.25);
     }
 
     .card-icon {
       font-size: 35px;
+
       margin-bottom: 14px;
     }
 
@@ -486,33 +1053,76 @@
 
     .card p {
       color: #888;
+
       line-height: 1.5;
+
       font-size: 14px;
     }
 
     .card button {
       margin-top: 15px;
+
       padding: 9px 14px;
+
       border: none;
+
       border-radius: 9px;
+
       color: white;
-      background: rgba(255,255,255,.1);
+
+      background:
+        rgba(255,255,255,0.10);
+
       cursor: pointer;
+
       transition: .2s;
     }
 
     .card button:hover {
-      transform: scale(1.05);
-      background: rgba(255,255,255,.16);
+      transform:
+        scale(1.05);
+
+      background:
+        rgba(255,255,255,0.16);
     }
 
-    /* FOOTER */
+
+    /* ========================================
+       NO RESULTS
+    ======================================== */
+
+    .no-results {
+      display: none;
+
+      grid-column: 1 / -1;
+
+      text-align: center;
+
+      padding: 50px 20px;
+
+      color: #777;
+
+      border:
+        1px dashed rgba(255,255,255,0.10);
+
+      border-radius: 18px;
+    }
+
+
+    /* ========================================
+       FOOTER
+    ======================================== */
 
     footer {
       text-align: center;
-      padding: 35px 20px;
-      border-top: 1px solid rgba(255,255,255,.07);
+
+      padding: 40px 20px;
+
+      border-top:
+        1px solid rgba(255,255,255,0.07);
+
       color: #666;
+
       font-size: 13px;
     }
 
@@ -520,12 +1130,20 @@
       color: #aaa;
     }
 
-    /* MOBILE */
 
-    @media (max-width: 950px) {
+    /* ========================================
+       MOBILE
+    ======================================== */
+
+    @media (max-width: 1000px) {
 
       .game-grid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .featured-grid {
+        grid-template-columns: 1fr;
       }
 
       .card-grid {
@@ -565,12 +1183,14 @@
       }
 
       .section-heading p {
-        margin-top: 5px;
+        margin-top: 6px;
+      }
+
+      .featured-card {
+        min-height: 250px;
       }
 
     }
-
-    /* REDUCE ANIMATION FOR ACCESSIBILITY */
 
     @media (prefers-reduced-motion: reduce) {
 
@@ -578,7 +1198,9 @@
       *::before,
       *::after {
         animation-duration: .01ms !important;
+
         animation-iteration-count: 1 !important;
+
         transition-duration: .01ms !important;
       }
 
@@ -587,15 +1209,28 @@
   </style>
 </head>
 
+
 <body>
 
+
+  <!-- ========================================
+       BACKGROUND
+  ======================================== -->
+
   <div class="background">
+
     <div class="grid-bg"></div>
+
     <div class="orb one"></div>
+
     <div class="orb two"></div>
+
   </div>
 
-  <!-- HEADER -->
+
+  <!-- ========================================
+       HEADER
+  ======================================== -->
 
   <header>
 
@@ -604,6 +1239,11 @@
     </div>
 
     <nav>
+
+      <button onclick="scrollToId('featured')">
+        Featured
+      </button>
+
       <button onclick="scrollToId('games')">
         Games
       </button>
@@ -615,14 +1255,18 @@
       <button onclick="scrollToId('apps')">
         Apps
       </button>
+
     </nav>
 
   </header>
 
 
-  <!-- HERO -->
-
   <main>
+
+
+    <!-- ========================================
+         HERO
+    ======================================== -->
 
     <div class="hero">
 
@@ -637,8 +1281,8 @@
         </h1>
 
         <p>
-          Your personal hub for games, media, apps and cool stuff
-          all in one place.
+          Games, media, apps and more —
+          all inside your own personal portal.
         </p>
 
         <div class="search-box">
@@ -646,7 +1290,7 @@
           <input
             id="searchInput"
             type="text"
-            placeholder="Search Spider Portal..."
+            placeholder="Search games, media, apps..."
             oninput="searchEverything()"
           >
 
@@ -657,7 +1301,9 @@
     </div>
 
 
-    <!-- QUICK LINKS -->
+    <!-- ========================================
+         QUICK LINKS
+    ======================================== -->
 
     <div class="quick-links">
 
@@ -692,23 +1338,184 @@
     </div>
 
 
-    <!-- GAMES -->
+    <!-- ========================================
+         FEATURED
+    ======================================== -->
+
+    <section id="featured">
+
+      <div class="section-heading">
+
+        <div>
+
+          <h2>
+            ⭐ Featured Games
+          </h2>
+
+          <p>
+            Jump straight into something fun.
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div class="featured-grid">
+
+
+        <div
+          class="featured-card"
+          onclick="launchGame(0)"
+        >
+
+          <div class="featured-art">
+            🏄
+          </div>
+
+          <div class="featured-overlay">
+
+            <div class="featured-badge">
+              Featured
+            </div>
+
+            <h3>
+              Subway Surfers
+            </h3>
+
+            <p>
+              Run, dodge and collect coins.
+            </p>
+
+            <button
+              class="featured-play"
+              onclick="event.stopPropagation(); launchGame(0)"
+            >
+              PLAY NOW
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="featured-card"
+          onclick="launchGame(4)"
+        >
+
+          <div class="featured-art">
+            🟦
+          </div>
+
+          <div class="featured-overlay">
+
+            <div class="featured-badge">
+              Featured
+            </div>
+
+            <h3>
+              Geometry Dash
+            </h3>
+
+            <p>
+              Jump, fly and survive challenging levels.
+            </p>
+
+            <button
+              class="featured-play"
+              onclick="event.stopPropagation(); launchGame(4)"
+            >
+              PLAY NOW
+            </button>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+    <!-- ========================================
+         GAME LIBRARY
+    ======================================== -->
 
     <section id="games">
 
       <div class="section-heading">
 
         <div>
+
           <h2>
             🎮 Game Library
           </h2>
 
           <p>
-            Pick a game and jump in.
+            Find something to play.
           </p>
+
         </div>
 
       </div>
+
+
+      <!-- CATEGORIES -->
+
+      <div class="categories">
+
+        <button
+          class="category-btn active"
+          data-category="all"
+          onclick="filterCategory('all', this)"
+        >
+          All
+        </button>
+
+        <button
+          class="category-btn"
+          data-category="arcade"
+          onclick="filterCategory('arcade', this)"
+        >
+          Arcade
+        </button>
+
+        <button
+          class="category-btn"
+          data-category="action"
+          onclick="filterCategory('action', this)"
+        >
+          Action
+        </button>
+
+        <button
+          class="category-btn"
+          data-category="horror"
+          onclick="filterCategory('horror', this)"
+        >
+          Horror
+        </button>
+
+        <button
+          class="category-btn"
+          data-category="sandbox"
+          onclick="filterCategory('sandbox', this)"
+        >
+          Sandbox
+        </button>
+
+        <button
+          class="category-btn"
+          data-category="platformer"
+          onclick="filterCategory('platformer', this)"
+        >
+          Platformer
+        </button>
+
+      </div>
+
 
       <div
         class="game-grid"
@@ -718,13 +1525,16 @@
     </section>
 
 
-    <!-- MEDIA -->
+    <!-- ========================================
+         MEDIA
+    ======================================== -->
 
     <section id="media">
 
       <div class="section-heading">
 
         <div>
+
           <h2>
             📺 Media
           </h2>
@@ -732,11 +1542,14 @@
           <p>
             Quick access to popular platforms.
           </p>
+
         </div>
 
       </div>
 
+
       <div class="card-grid">
+
 
         <div class="card">
 
@@ -749,7 +1562,8 @@
           </h3>
 
           <p>
-            Watch videos, gaming content, music and more.
+            Watch videos, gaming content,
+            music and more.
           </p>
 
           <button
@@ -795,7 +1609,7 @@
           </h3>
 
           <p>
-            More media shortcuts can be added here later.
+            More media shortcuts can be added later.
           </p>
 
           <button
@@ -806,12 +1620,15 @@
 
         </div>
 
+
       </div>
 
     </section>
 
 
-    <!-- APPS -->
+    <!-- ========================================
+         APPS
+    ======================================== -->
 
     <section id="apps">
 
@@ -834,6 +1651,7 @@
 
       <div class="card-grid">
 
+
         <div class="card">
 
           <div class="card-icon">
@@ -845,7 +1663,8 @@
           </h3>
 
           <p>
-            Open a simple calculator directly from the portal.
+            Open a simple calculator
+            directly from Spider Portal.
           </p>
 
           <button onclick="calculator()">
@@ -889,7 +1708,7 @@
           </h3>
 
           <p>
-            Add your own useful tools and websites here.
+            More useful tools can be added here.
           </p>
 
           <button
@@ -900,14 +1719,18 @@
 
         </div>
 
+
       </div>
 
     </section>
 
+
   </main>
 
 
-  <!-- FOOTER -->
+  <!-- ========================================
+       FOOTER
+  ======================================== -->
 
   <footer>
 
@@ -917,103 +1740,234 @@
 
     <br><br>
 
-    Built for your personal portal project.
+    Your personal web portal.
 
   </footer>
 
 
   <script>
 
-    /* ==============================
-       GAME LIBRARY
-    ============================== */
+
+    /* ========================================
+       GAME DATA
+    ======================================== */
 
     const games = [
 
       {
         title: "Subway Surfers",
-        description: "Run, dodge obstacles and collect coins.",
+
+        description:
+          "Run, dodge obstacles and collect coins.",
+
         icon: "🏄",
-        link: "https://play.gameograf.com/"
+
+        category: "arcade",
+
+        art: "art-subway",
+
+        link:
+          "https://play.gameograf.com/"
       },
+
 
       {
         title: "Stickman Swing",
-        description: "Swing through levels using timing and momentum.",
+
+        description:
+          "Swing through levels using timing and momentum.",
+
         icon: "🪢",
-        link: "https://eyzi.net/action/stickman-swing"
+
+        category: "action",
+
+        art: "art-stickman",
+
+        link:
+          "https://eyzi.net/action/stickman-swing"
       },
+
 
       {
         title: "FNAF",
-        description: "The original Five Nights at Freddy's.",
+
+        description:
+          "The original Five Nights at Freddy's.",
+
         icon: "🐻",
-        link: "https://play.google.com/store/apps/details?id=com.scottgames.fivenightsatfreddys"
+
+        category: "horror",
+
+        art: "art-fnaf",
+
+        link:
+          "https://play.google.com/store/apps/details?id=com.scottgames.fivenightsatfreddys"
       },
+
 
       {
         title: "Minecraft",
-        description: "Build, explore and survive your own world.",
+
+        description:
+          "Build, explore and survive your own world.",
+
         icon: "⛏️",
-        link: "https://www.minecraft.net/en-us/"
+
+        category: "sandbox",
+
+        art: "art-minecraft",
+
+        link:
+          "https://www.minecraft.net/en-us/"
       },
+
 
       {
         title: "Geometry Dash",
-        description: "Jump, fly and survive challenging levels.",
+
+        description:
+          "Jump, fly and survive challenging levels.",
+
         icon: "🟦",
-        link: "https://gdbrowser.com/"
+
+        category: "platformer",
+
+        art: "art-geometry",
+
+        link:
+          "https://gdbrowser.com/"
       },
+
 
       {
         title: "Stickman Swing 2",
-        description: "Another browser-based swinging challenge.",
+
+        description:
+          "Another swinging challenge.",
+
         icon: "🕸️",
-        link: "https://www.y8.com/games/stickman_swing"
+
+        category: "action",
+
+        art: "art-swing",
+
+        link:
+          "https://www.y8.com/games/stickman_swing"
       },
+
 
       {
         title: "More Games",
-        description: "More games can be added to Spider Portal.",
+
+        description:
+          "More games can be added to Spider Portal.",
+
         icon: "🎮",
+
+        category: "arcade",
+
+        art: "art-more",
+
         link: "#"
       },
 
+
       {
         title: "Coming Soon",
-        description: "A new game will be added here.",
+
+        description:
+          "A new game will be added here.",
+
         icon: "❓",
+
+        category: "arcade",
+
+        art: "art-more",
+
         link: "#"
       }
 
     ];
 
 
-    /* ==============================
+    /* ========================================
        RENDER GAMES
-    ============================== */
+    ======================================== */
 
-    function renderGames() {
+    function renderGames(
+      category = "all",
+      search = ""
+    ) {
 
       const gameGrid =
         document.getElementById("gameGrid");
 
       gameGrid.innerHTML = "";
 
-      games.forEach((game, index) => {
+      let visibleGames = games.filter(game => {
+
+        const matchesCategory =
+          category === "all" ||
+          game.category === category;
+
+        const searchText =
+          (
+            game.title +
+            " " +
+            game.description +
+            " " +
+            game.category
+          ).toLowerCase();
+
+        const matchesSearch =
+          searchText.includes(
+            search.toLowerCase()
+          );
+
+        return (
+          matchesCategory &&
+          matchesSearch
+        );
+
+      });
+
+
+      if (visibleGames.length === 0) {
+
+        gameGrid.innerHTML = `
+          <div class="no-results"
+               style="display:block">
+            🔎 No games found.
+          </div>
+        `;
+
+        return;
+      }
+
+
+      visibleGames.forEach(game => {
+
+        const index =
+          games.indexOf(game);
 
         const card =
           document.createElement("div");
 
-        card.className = "game-card";
+        card.className =
+          "game-card";
+
 
         card.innerHTML = `
 
-          <div class="game-art">
+          <div class="game-art ${game.art}">
             ${escapeHTML(game.icon)}
           </div>
 
           <div class="game-info">
+
+            <span class="game-category">
+              ${escapeHTML(game.category)}
+            </span>
 
             <h3>
               ${escapeHTML(game.title)}
@@ -1041,13 +1995,76 @@
     }
 
 
-    /* ==============================
+    /* ========================================
+       CATEGORY FILTER
+    ======================================== */
+
+    let currentCategory = "all";
+
+
+    function filterCategory(
+      category,
+      button
+    ) {
+
+      currentCategory = category;
+
+
+      document
+        .querySelectorAll(".category-btn")
+        .forEach(btn => {
+
+          btn.classList.remove("active");
+
+        });
+
+
+      button.classList.add("active");
+
+
+      const search =
+        document
+          .getElementById("searchInput")
+          .value;
+
+
+      renderGames(
+        currentCategory,
+        search
+      );
+
+    }
+
+
+    /* ========================================
+       SEARCH
+    ======================================== */
+
+    function searchEverything() {
+
+      const search =
+        document
+          .getElementById("searchInput")
+          .value;
+
+
+      renderGames(
+        currentCategory,
+        search
+      );
+
+    }
+
+
+    /* ========================================
        LAUNCH GAME
-    ============================== */
+    ======================================== */
 
     function launchGame(index) {
 
-      const game = games[index];
+      const game =
+        games[index];
+
 
       if (
         !game ||
@@ -1055,10 +2072,13 @@
         game.link === "#"
       ) {
 
-        alert("This game is coming soon!");
+        alert(
+          "This game is coming soon!"
+        );
 
         return;
       }
+
 
       window.open(
         game.link,
@@ -1068,52 +2088,15 @@
     }
 
 
-    /* ==============================
-       SEARCH
-    ============================== */
-
-    function searchEverything() {
-
-      const search =
-        document
-          .getElementById("searchInput")
-          .value
-          .toLowerCase()
-          .trim();
-
-      const cards =
-        document.querySelectorAll(
-          ".game-card, .card"
-        );
-
-      cards.forEach(card => {
-
-        const text =
-          card.innerText.toLowerCase();
-
-        if (text.includes(search)) {
-
-          card.style.display = "";
-
-        } else {
-
-          card.style.display = "none";
-
-        }
-
-      });
-
-    }
-
-
-    /* ==============================
+    /* ========================================
        SCROLL
-    ============================== */
+    ======================================== */
 
     function scrollToId(id) {
 
       const element =
         document.getElementById(id);
+
 
       if (element) {
 
@@ -1126,9 +2109,9 @@
     }
 
 
-    /* ==============================
+    /* ========================================
        OPEN WEBSITE
-    ============================== */
+    ======================================== */
 
     function openSite(url) {
 
@@ -1140,9 +2123,9 @@
     }
 
 
-    /* ==============================
+    /* ========================================
        CALCULATOR
-    ============================== */
+    ======================================== */
 
     function calculator() {
 
@@ -1152,9 +2135,15 @@
           "10 + 10"
         );
 
-      if (expression === null) {
+
+      if (
+        expression === null
+      ) {
+
         return;
+
       }
+
 
       try {
 
@@ -1165,11 +2154,15 @@
             ')'
           )();
 
+
         alert(
-          "Answer: " + result
+          "Answer: " +
+          result
         );
 
-      } catch {
+      }
+
+      catch {
 
         alert(
           "That calculation isn't valid."
@@ -1180,25 +2173,45 @@
     }
 
 
-    /* ==============================
-       HTML SAFETY
-    ============================== */
+    /* ========================================
+       HTML ESCAPE
+    ======================================== */
 
     function escapeHTML(text) {
 
       return String(text)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
 
     }
 
 
-    /* ==============================
+    /* ========================================
        START
-    ============================== */
+    ======================================== */
 
     renderGames();
 

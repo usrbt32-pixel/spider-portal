@@ -2,804 +2,1381 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Spider Portal</title>
+<title>Spider Portal</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #050507;
+    color: white;
+    overflow-x: hidden;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: -5;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: .18;
+}
+
+.orb.one {
+    width: 500px;
+    height: 500px;
+    background: #ff1744;
+    top: -250px;
+    left: -200px;
+}
+
+.orb.two {
+    width: 500px;
+    height: 500px;
+    background: #7137ff;
+    right: -250px;
+    bottom: -250px;
+}
+
+.grid-bg {
+    position: absolute;
+    inset: 0;
+
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.025) 1px,
+            transparent 1px
+        );
+
+    background-size: 45px 45px;
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            black,
+            transparent
+        );
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 40px;
+
+    background: rgba(5,5,7,.72);
+    backdrop-filter: blur(18px);
+
+    border-bottom: 1px solid rgba(255,255,255,.07);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+
+    font-size: 20px;
+    font-weight: 900;
+
+    letter-spacing: 1px;
+}
+
+.logo-icon {
+    width: 40px;
+    height: 40px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff1744,
+            #8a35ff
+        );
+
+    box-shadow:
+        0 0 25px rgba(255,23,68,.25);
+}
+
+.logo span {
+    color: #ff4665;
+}
+
+nav {
+    display: flex;
+    gap: 6px;
+}
+
+nav button {
+    border: none;
+    background: transparent;
+
+    color: #888;
+
+    padding: 10px 15px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+nav button:hover {
+    color: white;
+    background: rgba(255,255,255,.07);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+main {
+    width: min(1150px, 92%);
+    margin: auto;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+    min-height: 590px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    position: relative;
+}
+
+.web {
+    font-size: 60px;
+
+    margin-bottom: 25px;
+
+    animation:
+        floating 4s ease-in-out infinite;
+}
+
+@keyframes floating {
+
+    0%,100% {
+        transform: translateY(0);
     }
 
-    html {
-      scroll-behavior: smooth;
+    50% {
+        transform: translateY(-12px);
     }
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, Helvetica, sans-serif;
-      color: white;
-      background:
-        radial-gradient(circle at 50% -10%, #3a0b16 0%, transparent 35%),
-        radial-gradient(circle at 10% 80%, #190b2e 0%, transparent 30%),
-        #07070a;
-      overflow-x: hidden;
+}
+
+.hero h1 {
+    font-size: clamp(55px, 9vw, 100px);
+
+    line-height: .9;
+
+    letter-spacing: -5px;
+
+    background:
+        linear-gradient(
+            90deg,
+            #fff,
+            #ff365b,
+            #a86cff,
+            #fff
+        );
+
+    background-size: 300%;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    animation:
+        gradient 7s linear infinite;
+}
+
+@keyframes gradient {
+
+    to {
+        background-position: 300%;
     }
 
-    /* Animated background */
+}
 
-    .background {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: -1;
-    }
+.hero p {
+    margin-top: 25px;
 
-    .glow {
-      position: absolute;
-      width: 450px;
-      height: 450px;
-      border-radius: 50%;
-      filter: blur(120px);
-      opacity: .18;
-      animation: float 8s ease-in-out infinite;
-    }
+    color: #8a8a93;
 
-    .glow.one {
-      background: #ff1744;
-      top: -180px;
-      left: -150px;
-    }
+    font-size: 18px;
+}
 
-    .glow.two {
-      background: #7c3cff;
-      right: -180px;
-      bottom: -150px;
-      animation-delay: -4s;
-    }
+/* =========================
+   SEARCH
+========================= */
 
-    @keyframes float {
-      0%, 100% {
-        transform: translate(0, 0);
-      }
+.search-wrapper {
+    width: min(700px, 100%);
 
-      50% {
-        transform: translate(40px, 30px);
-      }
-    }
+    margin-top: 35px;
 
-    /* Header */
+    position: relative;
+}
+
+.search-wrapper input {
+
+    width: 100%;
+
+    height: 64px;
+
+    border-radius: 19px;
+
+    border: 1px solid rgba(255,255,255,.1);
+
+    outline: none;
+
+    background:
+        rgba(255,255,255,.055);
+
+    color: white;
+
+    padding:
+        0 25px;
+
+    font-size: 16px;
+
+    backdrop-filter: blur(15px);
+
+    transition: .25s;
+}
+
+.search-wrapper input:focus {
+
+    border-color:
+        rgba(255,55,90,.6);
+
+    box-shadow:
+        0 0 0 4px
+        rgba(255,55,90,.08),
+
+        0 0 35px
+        rgba(255,23,68,.1);
+}
+
+.search-wrapper input::placeholder {
+    color: #666;
+}
+
+/* =========================
+   QUICK ACCESS
+========================= */
+
+.quick {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 13px;
+
+    width: min(700px,100%);
+
+    margin-top: 18px;
+}
+
+.quick button {
+
+    height: 50px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius: 14px;
+
+    background:
+        rgba(255,255,255,.045);
+
+    color: #aaa;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.quick button:hover {
+
+    transform: translateY(-3px);
+
+    color: white;
+
+    border-color:
+        rgba(255,70,100,.35);
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+/* =========================
+   SECTION
+========================= */
+
+.section {
+
+    padding: 35px 0;
+}
+
+.section-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 17px;
+}
+
+.section-header h2 {
+    font-size: 21px;
+}
+
+.section-header span {
+    color: #666;
+    font-size: 13px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.cards {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 15px;
+}
+
+.card {
+
+    min-height: 170px;
+
+    padding: 22px;
+
+    border-radius: 20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.025)
+        );
+
+    cursor: pointer;
+
+    position: relative;
+
+    overflow: hidden;
+
+    transition:
+        .25s;
+}
+
+.card:hover {
+
+    transform:
+        translateY(-7px);
+
+    border-color:
+        rgba(255,70,100,.35);
+
+    box-shadow:
+        0 20px 45px
+        rgba(0,0,0,.3);
+}
+
+.card-icon {
+
+    width: 45px;
+    height: 45px;
+
+    display: grid;
+
+    place-items: center;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    font-size: 20px;
+
+    margin-bottom: 22px;
+}
+
+.card h3 {
+    font-size: 16px;
+}
+
+.card p {
+
+    margin-top: 8px;
+
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+/* =========================
+   FEATURED
+========================= */
+
+.featured {
+
+    display: grid;
+
+    grid-template-columns:
+        1.5fr 1fr;
+
+    gap: 15px;
+}
+
+.feature {
+
+    min-height: 220px;
+
+    padding: 28px;
+
+    border-radius: 22px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,23,68,.14),
+            rgba(120,45,255,.1)
+        );
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.feature h2 {
+
+    font-size: 28px;
+
+    margin-bottom: 10px;
+}
+
+.feature p {
+
+    color: #999;
+
+    max-width: 430px;
+
+    line-height: 1.6;
+}
+
+.feature button {
+
+    margin-top: 25px;
+
+    padding:
+        12px 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: white;
+
+    color: #111;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.feature button:hover {
+    transform: scale(1.04);
+}
+
+/* =========================
+   STATUS
+========================= */
+
+.status {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap: 15px;
+
+    margin-top: 15px;
+}
+
+.status-card {
+
+    padding: 20px;
+
+    border-radius: 17px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    border:
+        1px solid
+        rgba(255,255,255,.07);
+}
+
+.status-card small {
+    color: #666;
+}
+
+.status-card strong {
+
+    display: block;
+
+    margin-top: 8px;
+
+    font-size: 18px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    text-align: center;
+
+    padding: 60px 20px;
+
+    color: #4d4d55;
+
+    font-size: 13px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px) {
 
     header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      height: 72px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 0 35px;
-
-      background: rgba(7, 7, 10, .75);
-      backdrop-filter: blur(18px);
-
-      border-bottom: 1px solid rgba(255,255,255,.08);
-    }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      font-size: 21px;
-      font-weight: 900;
-      letter-spacing: 1.5px;
-    }
-
-    .logo-icon {
-      width: 38px;
-      height: 38px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 12px;
-
-      background: linear-gradient(135deg, #ff1744, #8b1cff);
-
-      box-shadow:
-        0 0 25px rgba(255, 23, 68, .25);
-    }
-
-    .logo span {
-      color: #ff4767;
+        padding: 0 18px;
     }
 
     nav {
-      display: flex;
-      gap: 6px;
+        display: none;
     }
 
-    nav button {
-      border: none;
-      outline: none;
-
-      color: #999;
-      background: transparent;
-
-      padding: 10px 14px;
-      border-radius: 10px;
-
-      cursor: pointer;
-      transition: .2s;
+    .cards {
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
-    nav button:hover {
-      color: white;
-      background: rgba(255,255,255,.08);
+    .quick {
+        grid-template-columns:
+            repeat(2,1fr);
     }
 
-    /* Main */
-
-    main {
-      width: min(1100px, 92%);
-      margin: auto;
-      padding: 90px 0 60px;
+    .featured {
+        grid-template-columns: 1fr;
     }
 
-    /* Hero */
+}
+
+@media(max-width:500px) {
 
     .hero {
-      text-align: center;
-      margin-bottom: 75px;
-    }
-
-    .spider {
-      font-size: 50px;
-      margin-bottom: 20px;
-
-      animation: spiderFloat 3s ease-in-out infinite;
-    }
-
-    @keyframes spiderFloat {
-      0%, 100% {
-        transform: translateY(0);
-      }
-
-      50% {
-        transform: translateY(-8px);
-      }
+        min-height: 500px;
     }
 
     .hero h1 {
-      font-size: clamp(48px, 8vw, 86px);
-      line-height: .95;
-
-      letter-spacing: -4px;
-
-      background: linear-gradient(
-        90deg,
-        #ffffff,
-        #ff4767,
-        #a86cff,
-        #ffffff
-      );
-
-      background-size: 250% auto;
-
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-
-      animation: gradientMove 6s linear infinite;
+        letter-spacing: -3px;
     }
 
-    @keyframes gradientMove {
-      to {
-        background-position: 250% center;
-      }
-    }
-
-    .hero p {
-      color: #8d8d96;
-      font-size: 17px;
-      margin-top: 20px;
-      margin-bottom: 32px;
-    }
-
-    /* Search */
-
-    .search {
-      width: min(680px, 100%);
-      margin: auto;
-      position: relative;
-    }
-
-    .search input {
-      width: 100%;
-      height: 60px;
-
-      padding: 0 23px;
-
-      border: 1px solid rgba(255,255,255,.1);
-      border-radius: 18px;
-
-      outline: none;
-
-      color: white;
-      background: rgba(255,255,255,.055);
-
-      font-size: 16px;
-
-      backdrop-filter: blur(10px);
-
-      transition: .25s;
-    }
-
-    .search input::placeholder {
-      color: #666;
-    }
-
-    .search input:focus {
-      border-color: rgba(255,71,103,.55);
-
-      box-shadow:
-        0 0 0 4px rgba(255,71,103,.08),
-        0 0 35px rgba(255,23,68,.08);
-    }
-
-    /* Sections */
-
-    section {
-      scroll-margin-top: 100px;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      margin: 40px 0 16px;
-    }
-
-    .section-title {
-      font-size: 21px;
-      font-weight: 800;
-    }
-
-    .section-label {
-      color: #666;
-      font-size: 13px;
-    }
-
-    /* Cards */
-
-    .grid {
-      display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
-      gap: 16px;
-    }
-
-    .card {
-      position: relative;
-
-      min-height: 155px;
-
-      padding: 23px;
-
-      overflow: hidden;
-
-      border-radius: 20px;
-
-      border: 1px solid rgba(255,255,255,.08);
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,.075),
-          rgba(255,255,255,.025)
-        );
-
-      cursor: pointer;
-
-      transition:
-        transform .25s,
-        border-color .25s,
-        box-shadow .25s,
-        background .25s;
-    }
-
-    .card::after {
-      content: "";
-
-      position: absolute;
-
-      width: 120px;
-      height: 120px;
-
-      right: -55px;
-      bottom: -55px;
-
-      border-radius: 50%;
-
-      background: #ff1744;
-
-      filter: blur(55px);
-
-      opacity: 0;
-
-      transition: .3s;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-
-      border-color: rgba(255,71,103,.35);
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,.10),
-          rgba(255,255,255,.035)
-        );
-
-      box-shadow:
-        0 15px 45px rgba(0,0,0,.3);
-    }
-
-    .card:hover::after {
-      opacity: .25;
-    }
-
-    .icon {
-      width: 46px;
-      height: 46px;
-
-      display: grid;
-      place-items: center;
-
-      border-radius: 14px;
-
-      background: rgba(255,255,255,.08);
-
-      font-size: 21px;
-
-      margin-bottom: 20px;
-
-      position: relative;
-      z-index: 1;
-    }
-
-    .card h3 {
-      position: relative;
-      z-index: 1;
-
-      font-size: 17px;
-      margin-bottom: 7px;
-    }
-
-    .card p {
-      position: relative;
-      z-index: 1;
-
-      color: #85858e;
-
-      font-size: 13px;
-      line-height: 1.5;
-    }
-
-    /* Footer */
-
-    footer {
-      text-align: center;
-
-      padding: 45px 20px;
-
-      color: #4d4d55;
-
-      font-size: 13px;
-    }
-
-    footer strong {
-      color: #777;
-    }
-
-    /* Mobile */
-
-    @media (max-width: 650px) {
-
-      header {
-        padding: 0 18px;
-      }
-
-      nav {
-        display: none;
-      }
-
-      main {
-        padding-top: 60px;
-      }
-
-      .hero {
-        margin-bottom: 55px;
-      }
-
-      .hero h1 {
-        letter-spacing: -2px;
-      }
-
-      .grid {
+    .cards {
         grid-template-columns: 1fr;
-      }
     }
-  </style>
+
+    .status {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
 </head>
+
 
 <body>
 
-  <!-- Background -->
-  <div class="background">
-    <div class="glow one"></div>
-    <div class="glow two"></div>
-  </div>
+<!-- BACKGROUND -->
+
+<div class="background">
+
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+
+    <div class="grid-bg"></div>
+
+</div>
 
 
-  <!-- Header -->
+<!-- HEADER -->
 
-  <header>
+<header>
 
     <div class="logo">
-      <div class="logo-icon">🕷️</div>
-      SPIDER<span>PORTAL</span>
+
+        <div class="logo-icon">
+            🕷️
+        </div>
+
+        SPIDER<span>PORTAL</span>
+
     </div>
 
+
     <nav>
-      <button onclick="scrollToSection('media')">
-        Media
-      </button>
 
-      <button onclick="scrollToSection('games')">
-        Games
-      </button>
+        <button onclick="scrollToId('home')">
+            Home
+        </button>
 
-      <button onclick="scrollToSection('apps')">
-        Apps
-      </button>
+        <button onclick="scrollToId('media')">
+            Media
+        </button>
+
+        <button onclick="scrollToId('games')">
+            Games
+        </button>
+
+        <button onclick="scrollToId('apps')">
+            Apps
+        </button>
+
     </nav>
 
-  </header>
+</header>
 
 
-  <!-- Main -->
+<main>
 
-  <main>
 
-    <!-- Hero -->
+<!-- HERO -->
 
-    <section class="hero">
+<section
+    class="hero"
+    id="home"
+>
 
-      <div class="spider">
+    <div class="web">
         🕷️
-      </div>
+    </div>
 
-      <h1>
+    <h1>
         Spider Portal
-      </h1>
+    </h1>
 
-      <p>
-        Your personal web hub.
-      </p>
+    <p>
+        Everything you need. One portal.
+    </p>
 
-      <div class="search">
+
+    <div class="search-wrapper">
 
         <input
-          id="searchInput"
-          type="text"
-          placeholder="Search Spider Portal..."
-          oninput="searchCards()"
+            id="search"
+            type="text"
+            placeholder="Search Spider Portal..."
+            oninput="searchCards()"
         >
 
-      </div>
-
-    </section>
+    </div>
 
 
-    <!-- Media -->
+    <div class="quick">
 
-    <section id="media">
+        <button
+            onclick="openSite('https://www.youtube.com')"
+        >
+            ▶ YouTube
+        </button>
 
-      <div class="section-header">
+        <button
+            onclick="openSite('https://www.tiktok.com')"
+        >
+            ♪ TikTok
+        </button>
 
-        <h2 class="section-title">
-          Media
+        <button
+            onclick="scrollToId('games')"
+        >
+            🎮 Games
+        </button>
+
+        <button
+            onclick="scrollToId('apps')"
+        >
+            🛠 Apps
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURED -->
+
+<section class="section">
+
+    <div class="section-header">
+
+        <h2>
+            Featured
         </h2>
 
-        <span class="section-label">
-          Watch & explore
+        <span>
+            Welcome to Spider Portal
         </span>
 
-      </div>
-
-      <div class="grid">
-
-        <div
-          class="card"
-          data-name="youtube video media"
-          onclick="openSite('https://www.youtube.com')"
-        >
-
-          <div class="icon">
-            ▶️
-          </div>
-
-          <h3>
-            YouTube
-          </h3>
-
-          <p>
-            Open YouTube.
-          </p>
-
-        </div>
+    </div>
 
 
-        <div
-          class="card"
-          data-name="tiktok videos media"
-          onclick="openSite('https://www.tiktok.com')"
-        >
+    <div class="featured">
 
-          <div class="icon">
-            🎵
-          </div>
+        <div class="feature">
 
-          <h3>
-            TikTok
-          </h3>
+            <h2>
+                🕷️ Welcome back.
+            </h2>
 
-          <p>
-            Open TikTok.
-          </p>
+            <p>
+                Spider Portal is your personal
+                web hub for games, media,
+                tools, and everything else
+                you decide to add.
+            </p>
+
+            <button
+                onclick="scrollToId('games')"
+            >
+                Explore Portal
+            </button>
 
         </div>
 
-      </div>
 
-    </section>
+        <div class="feature">
+
+            <h2>
+                ⚡ Quick Launch
+            </h2>
+
+            <p>
+                Use the buttons above to
+                jump straight to your favorite
+                sections.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
 
 
-    <!-- Games -->
+<!-- MEDIA -->
 
-    <section id="games">
+<section
+    class="section"
+    id="media"
+>
 
-      <div class="section-header">
+    <div class="section-header">
 
-        <h2 class="section-title">
-          Games
+        <h2>
+            Media
         </h2>
 
-        <span class="section-label">
-          Play
+        <span>
+            Watch & explore
         </span>
 
-      </div>
+    </div>
 
-      <div class="grid">
+
+    <div class="cards">
 
         <div
-          class="card"
-          data-name="games browser games"
-          onclick="alert('Add your game here!')"
+            class="card"
+            data-search="youtube video media"
+            onclick="openSite('https://www.youtube.com')"
         >
 
-          <div class="icon">
-            🎮
-          </div>
+            <div class="card-icon">
+                ▶️
+            </div>
 
-          <h3>
-            Game Center
-          </h3>
+            <h3>
+                YouTube
+            </h3>
 
-          <p>
-            Add your own browser games here.
-          </p>
+            <p>
+                Open YouTube.
+            </p>
 
         </div>
 
 
         <div
-          class="card"
-          data-name="mystery mayhem roblox"
-          onclick="alert('Mystery Mayhem can go here!')"
+            class="card"
+            data-search="tiktok music videos"
+            onclick="openSite('https://www.tiktok.com')"
         >
 
-          <div class="icon">
-            🕵️
-          </div>
+            <div class="card-icon">
+                🎵
+            </div>
 
-          <h3>
-            Mystery Mayhem
-          </h3>
+            <h3>
+                TikTok
+            </h3>
 
-          <p>
-            Add your game page here.
-          </p>
+            <p>
+                Open TikTok.
+            </p>
 
         </div>
 
-      </div>
 
-    </section>
+        <div
+            class="card"
+            data-search="music"
+            onclick="alert('Add your music site here!')"
+        >
+
+            <div class="card-icon">
+                🎧
+            </div>
+
+            <h3>
+                Music
+            </h3>
+
+            <p>
+                Add your favorite music service.
+            </p>
+
+        </div>
 
 
-    <!-- Apps -->
+        <div
+            class="card"
+            data-search="movies entertainment"
+            onclick="alert('Add your movie site here!')"
+        >
 
-    <section id="apps">
+            <div class="card-icon">
+                🎬
+            </div>
 
-      <div class="section-header">
+            <h3>
+                Entertainment
+            </h3>
 
-        <h2 class="section-title">
-          Apps
+            <p>
+                Add another media service.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GAMES -->
+
+<section
+    class="section"
+    id="games"
+>
+
+    <div class="section-header">
+
+        <h2>
+            Games
         </h2>
 
-        <span class="section-label">
-          Tools
+        <span>
+            Play
         </span>
 
-      </div>
+    </div>
 
-      <div class="grid">
+
+    <div class="cards">
 
         <div
-          class="card"
-          data-name="calculator math calculator"
-          onclick="openCalculator()"
+            class="card"
+            data-search="mystery mayhem roblox"
+            onclick="alert('Add your Mystery Mayhem link here!')"
         >
 
-          <div class="icon">
-            🧮
-          </div>
+            <div class="card-icon">
+                🕵️
+            </div>
 
-          <h3>
-            Calculator
-          </h3>
+            <h3>
+                Mystery Mayhem
+            </h3>
 
-          <p>
-            Quickly calculate something.
-          </p>
+            <p>
+                Your Roblox project.
+            </p>
 
         </div>
 
 
         <div
-          class="card"
-          data-name="google search"
-          onclick="openSite('https://www.google.com')"
+            class="card"
+            data-search="browser games"
+            onclick="alert('Add a browser game here!')"
         >
 
-          <div class="icon">
-            🔎
-          </div>
+            <div class="card-icon">
+                🎮
+            </div>
 
-          <h3>
-            Google
-          </h3>
+            <h3>
+                Game Center
+            </h3>
 
-          <p>
-            Open Google Search.
-          </p>
+            <p>
+                Add your browser games.
+            </p>
 
         </div>
 
-      </div>
 
-    </section>
+        <div
+            class="card"
+            data-search="arcade"
+            onclick="alert('Add an arcade game here!')"
+        >
 
-  </main>
+            <div class="card-icon">
+                🕹️
+            </div>
+
+            <h3>
+                Arcade
+            </h3>
+
+            <p>
+                Your arcade collection.
+            </p>
+
+        </div>
 
 
-  <!-- Footer -->
+        <div
+            class="card"
+            data-search="more games"
+            onclick="alert('More games coming soon!')"
+        >
 
-  <footer>
-    <strong>SPIDER PORTAL</strong>
-    <br>
-    Built with HTML, CSS & JavaScript.
-  </footer>
+            <div class="card-icon">
+                ➕
+            </div>
+
+            <h3>
+                More Games
+            </h3>
+
+            <p>
+                Add another game.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
 
 
-  <script>
+<!-- APPS -->
 
-    function openSite(url) {
-      window.open(url, "_blank");
-    }
+<section
+    class="section"
+    id="apps"
+>
+
+    <div class="section-header">
+
+        <h2>
+            Apps & Tools
+        </h2>
+
+        <span>
+            Useful stuff
+        </span>
+
+    </div>
 
 
-    function scrollToSection(id) {
+    <div class="cards">
 
-      const section = document.getElementById(id);
+        <div
+            class="card"
+            data-search="calculator math"
+            onclick="calculator()"
+        >
 
-      if (section) {
-        section.scrollIntoView({
-          behavior: "smooth"
+            <div class="card-icon">
+                🧮
+            </div>
+
+            <h3>
+                Calculator
+            </h3>
+
+            <p>
+                Quick calculations.
+            </p>
+
+        </div>
+
+
+        <div
+            class="card"
+            data-search="google search"
+            onclick="openSite('https://www.google.com')"
+        >
+
+            <div class="card-icon">
+                🔎
+            </div>
+
+            <h3>
+                Google
+            </h3>
+
+            <p>
+                Search the web.
+            </p>
+
+        </div>
+
+
+        <div
+            class="card"
+            data-search="tools"
+            onclick="alert('Add your tool here!')"
+        >
+
+            <div class="card-icon">
+                🛠️
+            </div>
+
+            <h3>
+                Tools
+            </h3>
+
+            <p>
+                Add your own tools.
+            </p>
+
+        </div>
+
+
+        <div
+            class="card"
+            data-search="settings"
+            onclick="alert('Settings coming soon!')"
+        >
+
+            <div class="card-icon">
+                ⚙️
+            </div>
+
+            <h3>
+                Settings
+            </h3>
+
+            <p>
+                Customize Spider Portal.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STATUS -->
+
+<section class="section">
+
+    <div class="status">
+
+        <div class="status-card">
+
+            <small>
+                PORTAL
+            </small>
+
+            <strong>
+                🟢 Online
+            </strong>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <small>
+                VERSION
+            </small>
+
+            <strong>
+                Spider v1.0
+            </strong>
+
+        </div>
+
+
+        <div class="status-card">
+
+            <small>
+                THEME
+            </small>
+
+            <strong>
+                🕷 Dark Web
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <strong>
+        🕷️ SPIDER PORTAL
+    </strong>
+
+    <br><br>
+
+    Your portal. Your way.
+
+</footer>
+
+
+<script>
+
+/* =========================
+   OPEN WEBSITE
+========================= */
+
+function openSite(url) {
+
+    window.open(
+        url,
+        "_blank"
+    );
+
+}
+
+
+/* =========================
+   SCROLL
+========================= */
+
+function scrollToId(id) {
+
+    const element =
+        document.getElementById(id);
+
+    if (element) {
+
+        element.scrollIntoView({
+            behavior: "smooth"
         });
-      }
 
     }
 
+}
 
-    function searchCards() {
 
-      const query =
+/* =========================
+   SEARCH
+========================= */
+
+function searchCards() {
+
+    const query =
         document
-          .getElementById("searchInput")
-          .value
-          .toLowerCase()
-          .trim();
+            .getElementById("search")
+            .value
+            .toLowerCase()
+            .trim();
 
 
-      document
+    document
         .querySelectorAll(".card")
         .forEach(card => {
 
-          const name =
-            card.dataset.name.toLowerCase();
+            const text =
+                card
+                    .dataset
+                    .search
+                    .toLowerCase();
 
-          if (name.includes(query)) {
 
-            card.style.display = "";
+            if (text.includes(query)) {
 
-          } else {
+                card.style.display = "";
 
-            card.style.display = "none";
+            } else {
 
-          }
+                card.style.display = "none";
+
+            }
 
         });
 
-    }
+}
 
 
-    function openCalculator() {
+/* =========================
+   CALCULATOR
+========================= */
 
-      const value =
-        prompt("Enter a calculation:");
+function calculator() {
 
-      if (
+    const value =
+        prompt(
+            "Enter a calculation:"
+        );
+
+
+    if (
         value === null ||
         value.trim() === ""
-      ) {
+    ) {
+
         return;
-      }
-
-
-      try {
-
-        const result =
-          Function(
-            '"use strict"; return (' +
-            value +
-            ')'
-          )();
-
-        alert("Result: " + result);
-
-      } catch {
-
-        alert("Invalid calculation.");
-
-      }
 
     }
 
-  </script>
+
+    try {
+
+        const result =
+            Function(
+                '"use strict"; return (' +
+                value +
+                ')'
+            )();
+
+
+        alert(
+            "Result: " + result
+        );
+
+    } catch {
+
+        alert(
+            "Invalid calculation."
+        );
+
+    }
+
+}
+
+</script>
 
 </body>
 </html>

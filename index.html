@@ -1,1383 +1,875 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spider Portal</title>
 
-<title>Spider Portal</title>
-
-<style>
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #050507;
-    color: white;
-    overflow-x: hidden;
-}
-
-/* =========================
-   BACKGROUND
-========================= */
-
-.background {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: -5;
-}
-
-.orb {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: .18;
-}
-
-.orb.one {
-    width: 500px;
-    height: 500px;
-    background: #ff1744;
-    top: -250px;
-    left: -200px;
-}
-
-.orb.two {
-    width: 500px;
-    height: 500px;
-    background: #7137ff;
-    right: -250px;
-    bottom: -250px;
-}
-
-.grid-bg {
-    position: absolute;
-    inset: 0;
-
-    background-image:
-        linear-gradient(
-            rgba(255,255,255,.025) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.025) 1px,
-            transparent 1px
-        );
-
-    background-size: 45px 45px;
-
-    mask-image:
-        linear-gradient(
-            to bottom,
-            black,
-            transparent
-        );
-}
-
-/* =========================
-   HEADER
-========================= */
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-
-    height: 72px;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    padding: 0 40px;
-
-    background: rgba(5,5,7,.72);
-    backdrop-filter: blur(18px);
-
-    border-bottom: 1px solid rgba(255,255,255,.07);
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 11px;
-
-    font-size: 20px;
-    font-weight: 900;
-
-    letter-spacing: 1px;
-}
-
-.logo-icon {
-    width: 40px;
-    height: 40px;
-
-    display: grid;
-    place-items: center;
-
-    border-radius: 12px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #ff1744,
-            #8a35ff
-        );
-
-    box-shadow:
-        0 0 25px rgba(255,23,68,.25);
-}
-
-.logo span {
-    color: #ff4665;
-}
-
-nav {
-    display: flex;
-    gap: 6px;
-}
-
-nav button {
-    border: none;
-    background: transparent;
-
-    color: #888;
-
-    padding: 10px 15px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-nav button:hover {
-    color: white;
-    background: rgba(255,255,255,.07);
-}
-
-/* =========================
-   MAIN
-========================= */
-
-main {
-    width: min(1150px, 92%);
-    margin: auto;
-}
-
-/* =========================
-   HERO
-========================= */
-
-.hero {
-    min-height: 590px;
-
-    display: flex;
-    flex-direction: column;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
-
-    position: relative;
-}
-
-.web {
-    font-size: 60px;
-
-    margin-bottom: 25px;
-
-    animation:
-        floating 4s ease-in-out infinite;
-}
-
-@keyframes floating {
-
-    0%,100% {
-        transform: translateY(0);
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    50% {
-        transform: translateY(-12px);
+    html {
+      scroll-behavior: smooth;
     }
 
-}
-
-.hero h1 {
-    font-size: clamp(55px, 9vw, 100px);
-
-    line-height: .9;
-
-    letter-spacing: -5px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #fff,
-            #ff365b,
-            #a86cff,
-            #fff
-        );
-
-    background-size: 300%;
-
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    color: transparent;
-
-    animation:
-        gradient 7s linear infinite;
-}
-
-@keyframes gradient {
-
-    to {
-        background-position: 300%;
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #050507;
+      color: white;
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-}
-
-.hero p {
-    margin-top: 25px;
-
-    color: #8a8a93;
-
-    font-size: 18px;
-}
-
-/* =========================
-   SEARCH
-========================= */
-
-.search-wrapper {
-    width: min(700px, 100%);
-
-    margin-top: 35px;
-
-    position: relative;
-}
-
-.search-wrapper input {
-
-    width: 100%;
-
-    height: 64px;
-
-    border-radius: 19px;
-
-    border: 1px solid rgba(255,255,255,.1);
-
-    outline: none;
-
-    background:
-        rgba(255,255,255,.055);
-
-    color: white;
-
-    padding:
-        0 25px;
-
-    font-size: 16px;
-
-    backdrop-filter: blur(15px);
-
-    transition: .25s;
-}
-
-.search-wrapper input:focus {
-
-    border-color:
-        rgba(255,55,90,.6);
-
-    box-shadow:
-        0 0 0 4px
-        rgba(255,55,90,.08),
-
-        0 0 35px
-        rgba(255,23,68,.1);
-}
-
-.search-wrapper input::placeholder {
-    color: #666;
-}
-
-/* =========================
-   QUICK ACCESS
-========================= */
-
-.quick {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap: 13px;
-
-    width: min(700px,100%);
-
-    margin-top: 18px;
-}
-
-.quick button {
-
-    height: 50px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    border-radius: 14px;
-
-    background:
-        rgba(255,255,255,.045);
-
-    color: #aaa;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.quick button:hover {
-
-    transform: translateY(-3px);
-
-    color: white;
-
-    border-color:
-        rgba(255,70,100,.35);
-
-    background:
-        rgba(255,255,255,.08);
-}
-
-/* =========================
-   SECTION
-========================= */
-
-.section {
-
-    padding: 35px 0;
-}
-
-.section-header {
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-between;
-
-    margin-bottom: 17px;
-}
-
-.section-header h2 {
-    font-size: 21px;
-}
-
-.section-header span {
-    color: #666;
-    font-size: 13px;
-}
-
-/* =========================
-   CARDS
-========================= */
-
-.cards {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(4,1fr);
-
-    gap: 15px;
-}
-
-.card {
-
-    min-height: 170px;
-
-    padding: 22px;
-
-    border-radius: 20px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.07),
-            rgba(255,255,255,.025)
-        );
-
-    cursor: pointer;
-
-    position: relative;
-
-    overflow: hidden;
-
-    transition:
-        .25s;
-}
-
-.card:hover {
-
-    transform:
-        translateY(-7px);
-
-    border-color:
-        rgba(255,70,100,.35);
-
-    box-shadow:
-        0 20px 45px
-        rgba(0,0,0,.3);
-}
-
-.card-icon {
-
-    width: 45px;
-    height: 45px;
-
-    display: grid;
-
-    place-items: center;
-
-    border-radius: 13px;
-
-    background:
-        rgba(255,255,255,.08);
-
-    font-size: 20px;
-
-    margin-bottom: 22px;
-}
-
-.card h3 {
-    font-size: 16px;
-}
-
-.card p {
-
-    margin-top: 8px;
-
-    color: #777;
-
-    font-size: 13px;
-
-    line-height: 1.5;
-}
-
-/* =========================
-   FEATURED
-========================= */
-
-.featured {
-
-    display: grid;
-
-    grid-template-columns:
-        1.5fr 1fr;
-
-    gap: 15px;
-}
-
-.feature {
-
-    min-height: 220px;
-
-    padding: 28px;
-
-    border-radius: 22px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,23,68,.14),
-            rgba(120,45,255,.1)
-        );
-
-    position: relative;
-
-    overflow: hidden;
-}
-
-.feature h2 {
-
-    font-size: 28px;
-
-    margin-bottom: 10px;
-}
-
-.feature p {
-
-    color: #999;
-
-    max-width: 430px;
-
-    line-height: 1.6;
-}
-
-.feature button {
-
-    margin-top: 25px;
-
-    padding:
-        12px 18px;
-
-    border: none;
-
-    border-radius: 12px;
-
-    background: white;
-
-    color: #111;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.feature button:hover {
-    transform: scale(1.04);
-}
-
-/* =========================
-   STATUS
-========================= */
-
-.status {
-
-    display: grid;
-
-    grid-template-columns:
-        repeat(3,1fr);
-
-    gap: 15px;
-
-    margin-top: 15px;
-}
-
-.status-card {
-
-    padding: 20px;
-
-    border-radius: 17px;
-
-    background:
-        rgba(255,255,255,.04);
-
-    border:
-        1px solid
-        rgba(255,255,255,.07);
-}
-
-.status-card small {
-    color: #666;
-}
-
-.status-card strong {
-
-    display: block;
-
-    margin-top: 8px;
-
-    font-size: 18px;
-}
-
-/* =========================
-   FOOTER
-========================= */
-
-footer {
-
-    text-align: center;
-
-    padding: 60px 20px;
-
-    color: #4d4d55;
-
-    font-size: 13px;
-}
-
-/* =========================
-   MOBILE
-========================= */
-
-@media(max-width:800px) {
-
+    /* BACKGROUND */
+    .background {
+      position: fixed;
+      inset: 0;
+      z-index: -5;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(120, 40, 255, .16), transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(255, 30, 150, .12), transparent 30%),
+        #050507;
+    }
+
+    .grid-bg {
+      position: absolute;
+      inset: 0;
+      opacity: .12;
+      background-image:
+        linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+      background-size: 45px 45px;
+    }
+
+    .orb {
+      position: absolute;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .25;
+      animation: float 8s ease-in-out infinite alternate;
+    }
+
+    .orb.one {
+      background: #7c3cff;
+      top: -100px;
+      left: -100px;
+    }
+
+    .orb.two {
+      background: #ff2090;
+      right: -120px;
+      bottom: -100px;
+      animation-delay: 2s;
+    }
+
+    @keyframes float {
+      from {
+        transform: translate(0, 0);
+      }
+      to {
+        transform: translate(70px, 50px);
+      }
+    }
+
+    /* HEADER */
     header {
-        padding: 0 18px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7%;
+      background: rgba(5, 5, 7, .72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 2px;
+    }
+
+    .logo span {
+      background: linear-gradient(90deg, #9d5cff, #ff43ad);
+      -webkit-background-clip: text;
+      color: transparent;
     }
 
     nav {
-        display: none;
+      display: flex;
+      gap: 10px;
     }
 
-    .cards {
-        grid-template-columns:
-            repeat(2,1fr);
+    nav button {
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.05);
+      color: white;
+      padding: 9px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: .2s;
     }
 
-    .quick {
-        grid-template-columns:
-            repeat(2,1fr);
+    nav button:hover {
+      background: rgba(255,255,255,.11);
+      transform: translateY(-2px);
     }
 
-    .featured {
-        grid-template-columns: 1fr;
-    }
-
-}
-
-@media(max-width:500px) {
-
+    /* HERO */
     .hero {
-        min-height: 500px;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 90px 20px 70px;
+    }
+
+    .hero-content {
+      max-width: 900px;
+    }
+
+    .spider {
+      font-size: 65px;
+      margin-bottom: 18px;
+      animation: bob 3s ease-in-out infinite;
+    }
+
+    @keyframes bob {
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
     .hero h1 {
-        letter-spacing: -3px;
+      font-size: clamp(48px, 9vw, 92px);
+      font-weight: 950;
+      line-height: .95;
+      letter-spacing: -4px;
+      background: linear-gradient(90deg, #ffffff, #b47cff, #ff4db4);
+      -webkit-background-clip: text;
+      color: transparent;
     }
 
-    .cards {
+    .hero p {
+      color: #aaa;
+      font-size: 18px;
+      margin: 22px auto 30px;
+      max-width: 620px;
+      line-height: 1.6;
+    }
+
+    .search-box {
+      width: min(650px, 95%);
+      margin: auto;
+      position: relative;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 58px;
+      padding: 0 22px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.13);
+      background: rgba(255,255,255,.07);
+      color: white;
+      outline: none;
+      font-size: 16px;
+      backdrop-filter: blur(12px);
+    }
+
+    .search-box input:focus {
+      border-color: rgba(170,100,255,.7);
+      box-shadow: 0 0 30px rgba(130,70,255,.15);
+    }
+
+    /* QUICK LINKS */
+    .quick-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: -10px auto 70px;
+      padding: 0 20px;
+    }
+
+    .quick-btn {
+      padding: 13px 20px;
+      border-radius: 13px;
+      border: 1px solid rgba(255,255,255,.1);
+      background: rgba(255,255,255,.055);
+      color: white;
+      cursor: pointer;
+      transition: .2s;
+      font-weight: 700;
+    }
+
+    .quick-btn:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.1);
+    }
+
+    /* SECTIONS */
+    section {
+      width: min(1200px, 90%);
+      margin: 0 auto 90px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      margin-bottom: 24px;
+    }
+
+    .section-heading h2 {
+      font-size: 32px;
+    }
+
+    .section-heading p {
+      color: #777;
+      font-size: 14px;
+    }
+
+    /* GAME GRID */
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .game-card {
+      position: relative;
+      overflow: hidden;
+      min-height: 250px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.09);
+      background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
+      transition: .25s;
+    }
+
+    .game-card:hover {
+      transform: translateY(-7px);
+      border-color: rgba(180,120,255,.4);
+      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+    }
+
+    .game-art {
+      height: 145px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 55px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.2), transparent 25%),
+        linear-gradient(135deg, #18121f, #30104c);
+    }
+
+    .game-info {
+      padding: 17px;
+    }
+
+    .game-info h3 {
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .game-info p {
+      color: #888;
+      font-size: 13px;
+      line-height: 1.4;
+      min-height: 37px;
+    }
+
+    .play-btn {
+      width: 100%;
+      margin-top: 13px;
+      padding: 10px;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-weight: 800;
+      cursor: pointer;
+      background: linear-gradient(90deg, #743dff, #d43dff);
+      transition: .2s;
+    }
+
+    .play-btn:hover {
+      filter: brightness(1.15);
+      transform: scale(1.02);
+    }
+
+    /* GENERAL CARDS */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      padding: 25px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.09);
+      background: rgba(255,255,255,.045);
+      transition: .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,.07);
+    }
+
+    .card-icon {
+      font-size: 35px;
+      margin-bottom: 14px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #888;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .card button {
+      margin-top: 15px;
+      padding: 9px 14px;
+      border: none;
+      border-radius: 9px;
+      color: white;
+      background: rgba(255,255,255,.1);
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 35px 20px;
+      border-top: 1px solid rgba(255,255,255,.07);
+      color: #666;
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: #aaa;
+    }
+
+    /* MOBILE */
+    @media (max-width: 950px) {
+      .game-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .card-grid {
         grid-template-columns: 1fr;
+      }
     }
 
-    .status {
+    @media (max-width: 600px) {
+      header {
+        padding: 0 18px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      .hero {
+        padding-top: 60px;
+      }
+
+      .hero h1 {
+        letter-spacing: -2px;
+      }
+
+      .game-grid {
         grid-template-columns: 1fr;
+      }
+
+      section {
+        width: 92%;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        margin-top: 5px;
+      }
     }
-
-}
-
-</style>
+  </style>
 </head>
-
 
 <body>
 
-<!-- BACKGROUND -->
-
-<div class="background">
-
+  <div class="background">
+    <div class="grid-bg"></div>
     <div class="orb one"></div>
     <div class="orb two"></div>
+  </div>
 
-    <div class="grid-bg"></div>
-
-</div>
-
-
-<!-- HEADER -->
-
-<header>
-
+  <!-- HEADER -->
+  <header>
     <div class="logo">
-
-        <div class="logo-icon">
-            🕷️
-        </div>
-
-        SPIDER<span>PORTAL</span>
-
+      <span>SPIDER</span>PORTAL
     </div>
-
 
     <nav>
-
-        <button onclick="scrollToId('home')">
-            Home
-        </button>
-
-        <button onclick="scrollToId('media')">
-            Media
-        </button>
-
-        <button onclick="scrollToId('games')">
-            Games
-        </button>
-
-        <button onclick="scrollToId('apps')">
-            Apps
-        </button>
-
+      <button onclick="scrollToId('games')">Games</button>
+      <button onclick="scrollToId('media')">Media</button>
+      <button onclick="scrollToId('apps')">Apps</button>
     </nav>
+  </header>
 
-</header>
+  <!-- HERO -->
+  <main>
 
+    <div class="hero">
+      <div class="hero-content">
 
-<main>
+        <div class="spider">🕷️</div>
 
+        <h1>Spider Portal</h1>
 
-<!-- HERO -->
+        <p>
+          Your personal hub for games, media, apps and cool stuff
+          all in one place.
+        </p>
 
-<section
-    class="hero"
-    id="home"
->
-
-    <div class="web">
-        🕷️
-    </div>
-
-    <h1>
-        Spider Portal
-    </h1>
-
-    <p>
-        Everything you need. One portal.
-    </p>
-
-
-    <div class="search-wrapper">
-
-        <input
-            id="search"
+        <div class="search-box">
+          <input
+            id="searchInput"
             type="text"
             placeholder="Search Spider Portal..."
-            oninput="searchCards()"
-        >
+            oninput="searchEverything()"
+          >
+        </div>
+
+      </div>
+    </div>
+
+    <!-- QUICK LINKS -->
+    <div class="quick-links">
+
+      <button class="quick-btn" onclick="openSite('https://www.youtube.com')">
+        ▶️ YouTube
+      </button>
+
+      <button class="quick-btn" onclick="openSite('https://www.tiktok.com')">
+        🎵 TikTok
+      </button>
+
+      <button class="quick-btn" onclick="scrollToId('games')">
+        🎮 Games
+      </button>
+
+      <button class="quick-btn" onclick="scrollToId('apps')">
+        🧩 Apps
+      </button>
 
     </div>
 
+    <!-- GAMES -->
+    <section id="games">
 
-    <div class="quick">
+      <div class="section-heading">
+        <div>
+          <h2>🎮 Game Library</h2>
+          <p>Pick a game and jump in.</p>
+        </div>
+      </div>
 
-        <button
-            onclick="openSite('https://www.youtube.com')"
-        >
-            ▶ YouTube
-        </button>
+      <div class="game-grid" id="gameGrid"></div>
 
-        <button
-            onclick="openSite('https://www.tiktok.com')"
-        >
-            ♪ TikTok
-        </button>
+    </section>
 
-        <button
-            onclick="scrollToId('games')"
-        >
-            🎮 Games
-        </button>
+    <!-- MEDIA -->
+    <section id="media">
 
-        <button
-            onclick="scrollToId('apps')"
-        >
-            🛠 Apps
-        </button>
+      <div class="section-heading">
+        <div>
+          <h2>📺 Media</h2>
+          <p>Quick access to popular platforms.</p>
+        </div>
+      </div>
 
-    </div>
+      <div class="card-grid">
 
-</section>
+        <div class="card">
+          <div class="card-icon">▶️</div>
+          <h3>YouTube</h3>
+          <p>Watch videos, gaming content, music and more.</p>
+          <button onclick="openSite('https://www.youtube.com')">
+            Open
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🎵</div>
+          <h3>TikTok</h3>
+          <p>Short-form videos and creator content.</p>
+          <button onclick="openSite('https://www.tiktok.com')">
+            Open
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🎬</div>
+          <h3>Media Hub</h3>
+          <p>More media shortcuts can be added here later.</p>
+          <button onclick="alert('More media coming soon!')">
+            Coming Soon
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- APPS -->
+    <section id="apps">
+
+      <div class="section-heading">
+        <div>
+          <h2>🧩 Apps</h2>
+          <p>Useful websites and tools.</p>
+        </div>
+      </div>
+
+      <div class="card-grid">
+
+        <div class="card">
+          <div class="card-icon">🧮</div>
+          <h3>Calculator</h3>
+          <p>Open a simple calculator directly from the portal.</p>
+          <button onclick="calculator()">
+            Launch
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🌐</div>
+          <h3>Google</h3>
+          <p>Search the web normally.</p>
+          <button onclick="openSite('https://www.google.com')">
+            Open
+          </button>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📦</div>
+          <h3>More Apps</h3>
+          <p>Add your own useful tools and websites here.</p>
+          <button onclick="alert('More apps coming soon!')">
+            Coming Soon
+          </button>
+        </div>
+
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <strong>🕷️ Spider Portal</strong>
+    <br><br>
+    Built for your personal portal project.
+  </footer>
 
 
-<!-- FEATURED -->
+  <script>
 
-<section class="section">
+    /*
+      ==============================
+      GAME LIBRARY
+      ==============================
+    */
 
-    <div class="section-header">
+    const games = [
 
-        <h2>
-            Featured
-        </h2>
+      {
+        title: "Subway Surfers",
+        description: "Run, dodge obstacles and collect coins.",
+        icon: "🏄",
+        link: "https://play.gameograf.com/"
+      },
 
-        <span>
-            Welcome to Spider Portal
-        </span>
+      {
+        title: "Stickman Swing",
+        description: "Swing through levels using timing and momentum.",
+        icon: "🪢",
+        link: "https://eyzi.net/action/stickman-swing"
+      },
 
-    </div>
+      {
+        title: "FNAF",
+        description: "The original Five Nights at Freddy's.",
+        icon: "🐻",
+        link: "https://play.google.com/store/apps/details?id=com.scottgames.fivenightsatfreddys"
+      },
+
+      {
+        title: "Minecraft",
+        description: "Build, explore and survive your own world.",
+        icon: "⛏️",
+        link: "https://www.minecraft.net/en-us/"
+      },
+
+      {
+        title: "Geometry Dash",
+        description: "Jump, fly and survive challenging levels.",
+        icon: "🟦",
+        link: "https://gdbrowser.com/"
+      },
+
+      {
+        title: "Stickman Swing 2",
+        description: "Another browser-based swinging challenge.",
+        icon: "🕸️",
+        link: "https://www.y8.com/games/stickman_swing"
+      },
+
+      {
+        title: "More Games",
+        description: "More games can be added to Spider Portal.",
+        icon: "🎮",
+        link: "#"
+      },
+
+      {
+        title: "Coming Soon",
+        description: "A new game will be added here.",
+        icon: "❓",
+        link: "#"
+      }
+
+    ];
 
 
-    <div class="featured">
+    /*
+      ==============================
+      RENDER GAMES
+      ==============================
+    */
 
-        <div class="feature">
+    function renderGames() {
 
-            <h2>
-                🕷️ Welcome back.
-            </h2>
+      const gameGrid = document.getElementById("gameGrid");
+
+      gameGrid.innerHTML = "";
+
+      games.forEach((game, index) => {
+
+        const card = document.createElement("div");
+
+        card.className = "game-card";
+
+        card.innerHTML = `
+          <div class="game-art">
+            ${escapeHTML(game.icon)}
+          </div>
+
+          <div class="game-info">
+
+            <h3>${escapeHTML(game.title)}</h3>
 
             <p>
-                Spider Portal is your personal
-                web hub for games, media,
-                tools, and everything else
-                you decide to add.
+              ${escapeHTML(game.description)}
             </p>
 
             <button
-                onclick="scrollToId('games')"
+              class="play-btn"
+              onclick="launchGame(${index})"
             >
-                Explore Portal
+              PLAY
             </button>
 
-        </div>
+          </div>
+        `;
 
+        gameGrid.appendChild(card);
 
-        <div class="feature">
-
-            <h2>
-                ⚡ Quick Launch
-            </h2>
-
-            <p>
-                Use the buttons above to
-                jump straight to your favorite
-                sections.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- MEDIA -->
-
-<section
-    class="section"
-    id="media"
->
-
-    <div class="section-header">
-
-        <h2>
-            Media
-        </h2>
-
-        <span>
-            Watch & explore
-        </span>
-
-    </div>
-
-
-    <div class="cards">
-
-        <div
-            class="card"
-            data-search="youtube video media"
-            onclick="openSite('https://www.youtube.com')"
-        >
-
-            <div class="card-icon">
-                ▶️
-            </div>
-
-            <h3>
-                YouTube
-            </h3>
-
-            <p>
-                Open YouTube.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card"
-            data-search="tiktok music videos"
-            onclick="openSite('https://www.tiktok.com')"
-        >
-
-            <div class="card-icon">
-                🎵
-            </div>
-
-            <h3>
-                TikTok
-            </h3>
-
-            <p>
-                Open TikTok.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card"
-            data-search="music"
-            onclick="alert('Add your music site here!')"
-        >
-
-            <div class="card-icon">
-                🎧
-            </div>
-
-            <h3>
-                Music
-            </h3>
-
-            <p>
-                Add your favorite music service.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card"
-            data-search="movies entertainment"
-            onclick="alert('Add your movie site here!')"
-        >
-
-            <div class="card-icon">
-                🎬
-            </div>
-
-            <h3>
-                Entertainment
-            </h3>
-
-            <p>
-                Add another media service.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- GAMES -->
-
-<section
-    class="section"
-    id="games"
->
-
-    <div class="section-header">
-
-        <h2>
-            Games
-        </h2>
-
-        <span>
-            Play
-        </span>
-
-    </div>
-
-
-    <div class="cards">
-
-        <div
-            class="card"
-            data-search="mystery mayhem roblox"
-            onclick="alert('Add your Mystery Mayhem link here!')"
-        >
-
-            <div class="card-icon">
-                🕵️
-            </div>
-
-            <h3>
-                Mystery Mayhem
-            </h3>
-
-            <p>
-                Your Roblox project.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card"
-            data-search="browser games"
-            onclick="alert('Add a browser game here!')"
-        >
-
-            <div class="card-icon">
-                🎮
-            </div>
-
-            <h3>
-                Game Center
-            </h3>
-
-            <p>
-                Add your browser games.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card"
-            data-search="arcade"
-            onclick="alert('Add an arcade game here!')"
-        >
-
-            <div class="card-icon">
-                🕹️
-            </div>
-
-            <h3>
-                Arcade
-            </h3>
-
-            <p>
-                Your arcade collection.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card"
-            data-search="more games"
-            onclick="alert('More games coming soon!')"
-        >
-
-            <div class="card-icon">
-                ➕
-            </div>
-
-            <h3>
-                More Games
-            </h3>
-
-            <p>
-                Add another game.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- APPS -->
-
-<section
-    class="section"
-    id="apps"
->
-
-    <div class="section-header">
-
-        <h2>
-            Apps & Tools
-        </h2>
-
-        <span>
-            Useful stuff
-        </span>
-
-    </div>
-
-
-    <div class="cards">
-
-        <div
-            class="card"
-            data-search="calculator math"
-            onclick="calculator()"
-        >
-
-            <div class="card-icon">
-                🧮
-            </div>
-
-            <h3>
-                Calculator
-            </h3>
-
-            <p>
-                Quick calculations.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card"
-            data-search="google search"
-            onclick="openSite('https://www.google.com')"
-        >
-
-            <div class="card-icon">
-                🔎
-            </div>
-
-            <h3>
-                Google
-            </h3>
-
-            <p>
-                Search the web.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card"
-            data-search="tools"
-            onclick="alert('Add your tool here!')"
-        >
-
-            <div class="card-icon">
-                🛠️
-            </div>
-
-            <h3>
-                Tools
-            </h3>
-
-            <p>
-                Add your own tools.
-            </p>
-
-        </div>
-
-
-        <div
-            class="card"
-            data-search="settings"
-            onclick="alert('Settings coming soon!')"
-        >
-
-            <div class="card-icon">
-                ⚙️
-            </div>
-
-            <h3>
-                Settings
-            </h3>
-
-            <p>
-                Customize Spider Portal.
-            </p>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-<!-- STATUS -->
-
-<section class="section">
-
-    <div class="status">
-
-        <div class="status-card">
-
-            <small>
-                PORTAL
-            </small>
-
-            <strong>
-                🟢 Online
-            </strong>
-
-        </div>
-
-
-        <div class="status-card">
-
-            <small>
-                VERSION
-            </small>
-
-            <strong>
-                Spider v1.0
-            </strong>
-
-        </div>
-
-
-        <div class="status-card">
-
-            <small>
-                THEME
-            </small>
-
-            <strong>
-                🕷 Dark Web
-            </strong>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-</main>
-
-
-<!-- FOOTER -->
-
-<footer>
-
-    <strong>
-        🕷️ SPIDER PORTAL
-    </strong>
-
-    <br><br>
-
-    Your portal. Your way.
-
-</footer>
-
-
-<script>
-
-/* =========================
-   OPEN WEBSITE
-========================= */
-
-function openSite(url) {
-
-    window.open(
-        url,
-        "_blank"
-    );
-
-}
-
-
-/* =========================
-   SCROLL
-========================= */
-
-function scrollToId(id) {
-
-    const element =
-        document.getElementById(id);
-
-    if (element) {
-
-        element.scrollIntoView({
-            behavior: "smooth"
-        });
+      });
 
     }
 
-}
 
+    /*
+      ==============================
+      LAUNCH GAME
+      ==============================
+    */
 
-/* =========================
-   SEARCH
-========================= */
+    function launchGame(index) {
 
-function searchCards() {
+      const game = games[index];
 
-    const query =
-        document
-            .getElementById("search")
-            .value
-            .toLowerCase()
-            .trim();
+      if (!game || !game.link || game.link === "#") {
 
-
-    document
-        .querySelectorAll(".card")
-        .forEach(card => {
-
-            const text =
-                card
-                    .dataset
-                    .search
-                    .toLowerCase();
-
-
-            if (text.includes(query)) {
-
-                card.style.display = "";
-
-            } else {
-
-                card.style.display = "none";
-
-            }
-
-        });
-
-}
-
-
-/* =========================
-   CALCULATOR
-========================= */
-
-function calculator() {
-
-    const value =
-        prompt(
-            "Enter a calculation:"
-        );
-
-
-    if (
-        value === null ||
-        value.trim() === ""
-    ) {
+        alert("This game is coming soon!");
 
         return;
+      }
+
+      window.open(game.link, "_blank");
 
     }
 
 
-    try {
+    /*
+      ==============================
+      SEARCH
+      ==============================
+    */
+
+    function searchEverything() {
+
+      const search =
+        document
+          .getElementById("searchInput")
+          .value
+          .toLowerCase()
+          .trim();
+
+      const cards =
+        document.querySelectorAll(
+          ".game-card, .card"
+        );
+
+      cards.forEach(card => {
+
+        const text =
+          card.innerText.toLowerCase();
+
+        if (text.includes(search)) {
+
+          card.style.display = "";
+
+        } else {
+
+          card.style.display = "none";
+
+        }
+
+      });
+
+    }
+
+
+    /*
+      ==============================
+      SCROLL
+      ==============================
+    */
+
+    function scrollToId(id) {
+
+      const element =
+        document.getElementById(id);
+
+      if (element) {
+
+        element.scrollIntoView({
+          behavior: "smooth"
+        });
+
+      }
+
+    }
+
+
+    /*
+      ==============================
+      OPEN WEBSITE
+      ==============================
+    */
+
+    function openSite(url) {
+
+      window.open(url, "_blank");
+
+    }
+
+
+    /*
+      ==============================
+      CALCULATOR
+      ==============================
+    */
+
+    function calculator() {
+
+      const expression =
+        prompt(
+          "Enter a calculation:",
+          "10 + 10"
+        );
+
+      if (expression === null) return;
+
+      try {
 
         const result =
-            Function(
-                '"use strict"; return (' +
-                value +
-                ')'
-            )();
+          Function(
+            '"use strict"; return (' +
+            expression +
+            ')'
+          )();
 
+        alert("Answer: " + result);
 
-        alert(
-            "Result: " + result
-        );
+      } catch {
 
-    } catch {
+        alert("That calculation isn't valid.");
 
-        alert(
-            "Invalid calculation."
-        );
+      }
 
     }
 
-}
 
-</script>
+    /*
+      ==============================
+      HTML SAFETY
+      ==============================
+    */
+
+    function escapeHTML(text) {
+
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+    }
+
+
+    /*
+      ==============================
+      START
+      ==============================
+    */
+
+    renderGames();
+
+  </script>
 
 </body>
 </html>
-```

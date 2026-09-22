@@ -25,6 +25,7 @@
     }
 
     /* BACKGROUND */
+
     .background {
       position: fixed;
       inset: 0;
@@ -73,12 +74,14 @@
       from {
         transform: translate(0, 0);
       }
+
       to {
         transform: translate(70px, 50px);
       }
     }
 
     /* HEADER */
+
     header {
       position: sticky;
       top: 0;
@@ -126,6 +129,7 @@
     }
 
     /* HERO */
+
     .hero {
       min-height: 500px;
       display: flex;
@@ -172,7 +176,6 @@
     .search-box {
       width: min(650px, 95%);
       margin: auto;
-      position: relative;
     }
 
     .search-box input {
@@ -186,14 +189,16 @@
       outline: none;
       font-size: 16px;
       backdrop-filter: blur(12px);
+      transition: .25s;
     }
 
     .search-box input:focus {
       border-color: rgba(170,100,255,.7);
-      box-shadow: 0 0 30px rgba(130,70,255,.15);
+      box-shadow: 0 0 30px rgba(130,70,255,.2);
     }
 
     /* QUICK LINKS */
+
     .quick-links {
       display: flex;
       justify-content: center;
@@ -210,16 +215,18 @@
       background: rgba(255,255,255,.055);
       color: white;
       cursor: pointer;
-      transition: .2s;
+      transition: .25s;
       font-weight: 700;
     }
 
     .quick-btn:hover {
-      transform: translateY(-3px);
+      transform: translateY(-4px) scale(1.03);
       background: rgba(255,255,255,.1);
+      box-shadow: 0 8px 25px rgba(0,0,0,.25);
     }
 
     /* SECTIONS */
+
     section {
       width: min(1200px, 90%);
       margin: 0 auto 90px;
@@ -242,11 +249,14 @@
     }
 
     /* GAME GRID */
+
     .game-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 18px;
     }
+
+    /* GAME CARD */
 
     .game-card {
       position: relative;
@@ -254,34 +264,142 @@
       min-height: 250px;
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.09);
-      background: linear-gradient(145deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
-      transition: .25s;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(255,255,255,.08),
+          rgba(255,255,255,.025)
+        );
+
+      transform: translateY(0) scale(1);
+
+      transition:
+        transform .3s cubic-bezier(.2,.8,.2,1),
+        box-shadow .3s ease,
+        border-color .3s ease;
     }
+
+    /* MAIN CARD HOVER */
 
     .game-card:hover {
-      transform: translateY(-7px);
-      border-color: rgba(180,120,255,.4);
-      box-shadow: 0 20px 50px rgba(0,0,0,.35);
+      transform: translateY(-10px) scale(1.025);
+
+      border-color: rgba(180,100,255,.65);
+
+      box-shadow:
+        0 18px 40px rgba(0,0,0,.5),
+        0 0 30px rgba(140,70,255,.18);
     }
 
+    /* GLOW */
+
+    .game-card::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      border-radius: 18px;
+
+      pointer-events: none;
+
+      opacity: 0;
+
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(190,110,255,.18),
+          transparent 55%
+        );
+
+      transition: opacity .3s ease;
+    }
+
+    .game-card:hover::before {
+      opacity: 1;
+    }
+
+    /* GAME ART */
+
     .game-art {
+      position: relative;
       height: 145px;
+
       display: flex;
       align-items: center;
       justify-content: center;
+
       font-size: 55px;
+
+      overflow: hidden;
+
       background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.2), transparent 25%),
-        linear-gradient(135deg, #18121f, #30104c);
+        radial-gradient(
+          circle at 30% 30%,
+          rgba(255,255,255,.2),
+          transparent 25%
+        ),
+        linear-gradient(
+          135deg,
+          #18121f,
+          #30104c
+        );
+
+      transition:
+        transform .4s cubic-bezier(.2,.8,.2,1),
+        filter .3s ease;
     }
 
+    .game-card:hover .game-art {
+      transform: scale(1.055);
+      filter: brightness(1.12);
+    }
+
+    /* LIGHT SWEEP */
+
+    .game-art::after {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          115deg,
+          transparent 25%,
+          rgba(255,255,255,.18),
+          transparent 70%
+        );
+
+      transform: translateX(-120%);
+
+      transition: transform .65s ease;
+    }
+
+    .game-card:hover .game-art::after {
+      transform: translateX(120%);
+    }
+
+    /* GAME INFO */
+
     .game-info {
+      position: relative;
+      z-index: 2;
       padding: 17px;
     }
 
     .game-info h3 {
       font-size: 18px;
       margin-bottom: 6px;
+      transition:
+        transform .25s ease,
+        color .25s ease;
+    }
+
+    .game-card:hover .game-info h3 {
+      transform: translateX(4px);
+      color: #d7baff;
     }
 
     .game-info p {
@@ -291,25 +409,51 @@
       min-height: 37px;
     }
 
+    /* PLAY BUTTON */
+
     .play-btn {
       width: 100%;
       margin-top: 13px;
       padding: 10px;
+
       border: none;
       border-radius: 10px;
+
       color: white;
+
       font-weight: 800;
+
       cursor: pointer;
-      background: linear-gradient(90deg, #743dff, #d43dff);
-      transition: .2s;
+
+      background:
+        linear-gradient(
+          90deg,
+          #743dff,
+          #d43dff
+        );
+
+      transition:
+        transform .2s ease,
+        filter .2s ease,
+        box-shadow .2s ease;
+    }
+
+    .game-card:hover .play-btn {
+      box-shadow:
+        0 0 20px rgba(150,70,255,.35);
     }
 
     .play-btn:hover {
-      filter: brightness(1.15);
-      transform: scale(1.02);
+      transform: scale(1.045);
+      filter: brightness(1.2);
+    }
+
+    .play-btn:active {
+      transform: scale(.97);
     }
 
     /* GENERAL CARDS */
+
     .card-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -321,12 +465,14 @@
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.09);
       background: rgba(255,255,255,.045);
-      transition: .2s;
+      transition: .25s;
     }
 
     .card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-6px);
       background: rgba(255,255,255,.07);
+      border-color: rgba(180,100,255,.35);
+      box-shadow: 0 15px 30px rgba(0,0,0,.25);
     }
 
     .card-icon {
@@ -352,9 +498,16 @@
       color: white;
       background: rgba(255,255,255,.1);
       cursor: pointer;
+      transition: .2s;
+    }
+
+    .card button:hover {
+      transform: scale(1.05);
+      background: rgba(255,255,255,.16);
     }
 
     /* FOOTER */
+
     footer {
       text-align: center;
       padding: 35px 20px;
@@ -368,7 +521,9 @@
     }
 
     /* MOBILE */
+
     @media (max-width: 950px) {
+
       .game-grid {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -376,9 +531,11 @@
       .card-grid {
         grid-template-columns: 1fr;
       }
+
     }
 
     @media (max-width: 600px) {
+
       header {
         padding: 0 18px;
       }
@@ -410,7 +567,23 @@
       .section-heading p {
         margin-top: 5px;
       }
+
     }
+
+    /* REDUCE ANIMATION FOR ACCESSIBILITY */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+
+    }
+
   </style>
 </head>
 
@@ -423,27 +596,45 @@
   </div>
 
   <!-- HEADER -->
+
   <header>
+
     <div class="logo">
       <span>SPIDER</span>PORTAL
     </div>
 
     <nav>
-      <button onclick="scrollToId('games')">Games</button>
-      <button onclick="scrollToId('media')">Media</button>
-      <button onclick="scrollToId('apps')">Apps</button>
+      <button onclick="scrollToId('games')">
+        Games
+      </button>
+
+      <button onclick="scrollToId('media')">
+        Media
+      </button>
+
+      <button onclick="scrollToId('apps')">
+        Apps
+      </button>
     </nav>
+
   </header>
 
+
   <!-- HERO -->
+
   <main>
 
     <div class="hero">
+
       <div class="hero-content">
 
-        <div class="spider">🕷️</div>
+        <div class="spider">
+          🕷️
+        </div>
 
-        <h1>Spider Portal</h1>
+        <h1>
+          Spider Portal
+        </h1>
 
         <p>
           Your personal hub for games, media, apps and cool stuff
@@ -451,132 +642,262 @@
         </p>
 
         <div class="search-box">
+
           <input
             id="searchInput"
             type="text"
             placeholder="Search Spider Portal..."
             oninput="searchEverything()"
           >
+
         </div>
 
       </div>
+
     </div>
 
+
     <!-- QUICK LINKS -->
+
     <div class="quick-links">
 
-      <button class="quick-btn" onclick="openSite('https://www.youtube.com')">
+      <button
+        class="quick-btn"
+        onclick="openSite('https://www.youtube.com')"
+      >
         ▶️ YouTube
       </button>
 
-      <button class="quick-btn" onclick="openSite('https://www.tiktok.com')">
+      <button
+        class="quick-btn"
+        onclick="openSite('https://www.tiktok.com')"
+      >
         🎵 TikTok
       </button>
 
-      <button class="quick-btn" onclick="scrollToId('games')">
+      <button
+        class="quick-btn"
+        onclick="scrollToId('games')"
+      >
         🎮 Games
       </button>
 
-      <button class="quick-btn" onclick="scrollToId('apps')">
+      <button
+        class="quick-btn"
+        onclick="scrollToId('apps')"
+      >
         🧩 Apps
       </button>
 
     </div>
 
+
     <!-- GAMES -->
+
     <section id="games">
 
       <div class="section-heading">
+
         <div>
-          <h2>🎮 Game Library</h2>
-          <p>Pick a game and jump in.</p>
+          <h2>
+            🎮 Game Library
+          </h2>
+
+          <p>
+            Pick a game and jump in.
+          </p>
         </div>
+
       </div>
 
-      <div class="game-grid" id="gameGrid"></div>
+      <div
+        class="game-grid"
+        id="gameGrid"
+      ></div>
 
     </section>
 
+
     <!-- MEDIA -->
+
     <section id="media">
 
       <div class="section-heading">
+
         <div>
-          <h2>📺 Media</h2>
-          <p>Quick access to popular platforms.</p>
+          <h2>
+            📺 Media
+          </h2>
+
+          <p>
+            Quick access to popular platforms.
+          </p>
         </div>
+
       </div>
 
       <div class="card-grid">
 
         <div class="card">
-          <div class="card-icon">▶️</div>
-          <h3>YouTube</h3>
-          <p>Watch videos, gaming content, music and more.</p>
-          <button onclick="openSite('https://www.youtube.com')">
+
+          <div class="card-icon">
+            ▶️
+          </div>
+
+          <h3>
+            YouTube
+          </h3>
+
+          <p>
+            Watch videos, gaming content, music and more.
+          </p>
+
+          <button
+            onclick="openSite('https://www.youtube.com')"
+          >
             Open
           </button>
+
         </div>
 
+
         <div class="card">
-          <div class="card-icon">🎵</div>
-          <h3>TikTok</h3>
-          <p>Short-form videos and creator content.</p>
-          <button onclick="openSite('https://www.tiktok.com')">
+
+          <div class="card-icon">
+            🎵
+          </div>
+
+          <h3>
+            TikTok
+          </h3>
+
+          <p>
+            Short-form videos and creator content.
+          </p>
+
+          <button
+            onclick="openSite('https://www.tiktok.com')"
+          >
             Open
           </button>
+
         </div>
 
+
         <div class="card">
-          <div class="card-icon">🎬</div>
-          <h3>Media Hub</h3>
-          <p>More media shortcuts can be added here later.</p>
-          <button onclick="alert('More media coming soon!')">
+
+          <div class="card-icon">
+            🎬
+          </div>
+
+          <h3>
+            Media Hub
+          </h3>
+
+          <p>
+            More media shortcuts can be added here later.
+          </p>
+
+          <button
+            onclick="alert('More media coming soon!')"
+          >
             Coming Soon
           </button>
+
         </div>
 
       </div>
 
     </section>
 
+
     <!-- APPS -->
+
     <section id="apps">
 
       <div class="section-heading">
+
         <div>
-          <h2>🧩 Apps</h2>
-          <p>Useful websites and tools.</p>
+
+          <h2>
+            🧩 Apps
+          </h2>
+
+          <p>
+            Useful websites and tools.
+          </p>
+
         </div>
+
       </div>
+
 
       <div class="card-grid">
 
         <div class="card">
-          <div class="card-icon">🧮</div>
-          <h3>Calculator</h3>
-          <p>Open a simple calculator directly from the portal.</p>
+
+          <div class="card-icon">
+            🧮
+          </div>
+
+          <h3>
+            Calculator
+          </h3>
+
+          <p>
+            Open a simple calculator directly from the portal.
+          </p>
+
           <button onclick="calculator()">
             Launch
           </button>
+
         </div>
 
+
         <div class="card">
-          <div class="card-icon">🌐</div>
-          <h3>Google</h3>
-          <p>Search the web normally.</p>
-          <button onclick="openSite('https://www.google.com')">
+
+          <div class="card-icon">
+            🌐
+          </div>
+
+          <h3>
+            Google
+          </h3>
+
+          <p>
+            Search the web normally.
+          </p>
+
+          <button
+            onclick="openSite('https://www.google.com')"
+          >
             Open
           </button>
+
         </div>
 
+
         <div class="card">
-          <div class="card-icon">📦</div>
-          <h3>More Apps</h3>
-          <p>Add your own useful tools and websites here.</p>
-          <button onclick="alert('More apps coming soon!')">
+
+          <div class="card-icon">
+            📦
+          </div>
+
+          <h3>
+            More Apps
+          </h3>
+
+          <p>
+            Add your own useful tools and websites here.
+          </p>
+
+          <button
+            onclick="alert('More apps coming soon!')"
+          >
             Coming Soon
           </button>
+
         </div>
 
       </div>
@@ -585,21 +906,27 @@
 
   </main>
 
+
   <!-- FOOTER -->
+
   <footer>
-    <strong>🕷️ Spider Portal</strong>
+
+    <strong>
+      🕷️ Spider Portal
+    </strong>
+
     <br><br>
+
     Built for your personal portal project.
+
   </footer>
 
 
   <script>
 
-    /*
-      ==============================
-      GAME LIBRARY
-      ==============================
-    */
+    /* ==============================
+       GAME LIBRARY
+    ============================== */
 
     const games = [
 
@@ -662,32 +989,35 @@
     ];
 
 
-    /*
-      ==============================
-      RENDER GAMES
-      ==============================
-    */
+    /* ==============================
+       RENDER GAMES
+    ============================== */
 
     function renderGames() {
 
-      const gameGrid = document.getElementById("gameGrid");
+      const gameGrid =
+        document.getElementById("gameGrid");
 
       gameGrid.innerHTML = "";
 
       games.forEach((game, index) => {
 
-        const card = document.createElement("div");
+        const card =
+          document.createElement("div");
 
         card.className = "game-card";
 
         card.innerHTML = `
+
           <div class="game-art">
             ${escapeHTML(game.icon)}
           </div>
 
           <div class="game-info">
 
-            <h3>${escapeHTML(game.title)}</h3>
+            <h3>
+              ${escapeHTML(game.title)}
+            </h3>
 
             <p>
               ${escapeHTML(game.description)}
@@ -701,6 +1031,7 @@
             </button>
 
           </div>
+
         `;
 
         gameGrid.appendChild(card);
@@ -710,33 +1041,36 @@
     }
 
 
-    /*
-      ==============================
-      LAUNCH GAME
-      ==============================
-    */
+    /* ==============================
+       LAUNCH GAME
+    ============================== */
 
     function launchGame(index) {
 
       const game = games[index];
 
-      if (!game || !game.link || game.link === "#") {
+      if (
+        !game ||
+        !game.link ||
+        game.link === "#"
+      ) {
 
         alert("This game is coming soon!");
 
         return;
       }
 
-      window.open(game.link, "_blank");
+      window.open(
+        game.link,
+        "_blank"
+      );
 
     }
 
 
-    /*
-      ==============================
-      SEARCH
-      ==============================
-    */
+    /* ==============================
+       SEARCH
+    ============================== */
 
     function searchEverything() {
 
@@ -772,11 +1106,9 @@
     }
 
 
-    /*
-      ==============================
-      SCROLL
-      ==============================
-    */
+    /* ==============================
+       SCROLL
+    ============================== */
 
     function scrollToId(id) {
 
@@ -794,24 +1126,23 @@
     }
 
 
-    /*
-      ==============================
-      OPEN WEBSITE
-      ==============================
-    */
+    /* ==============================
+       OPEN WEBSITE
+    ============================== */
 
     function openSite(url) {
 
-      window.open(url, "_blank");
+      window.open(
+        url,
+        "_blank"
+      );
 
     }
 
 
-    /*
-      ==============================
-      CALCULATOR
-      ==============================
-    */
+    /* ==============================
+       CALCULATOR
+    ============================== */
 
     function calculator() {
 
@@ -821,7 +1152,9 @@
           "10 + 10"
         );
 
-      if (expression === null) return;
+      if (expression === null) {
+        return;
+      }
 
       try {
 
@@ -832,22 +1165,24 @@
             ')'
           )();
 
-        alert("Answer: " + result);
+        alert(
+          "Answer: " + result
+        );
 
       } catch {
 
-        alert("That calculation isn't valid.");
+        alert(
+          "That calculation isn't valid."
+        );
 
       }
 
     }
 
 
-    /*
-      ==============================
-      HTML SAFETY
-      ==============================
-    */
+    /* ==============================
+       HTML SAFETY
+    ============================== */
 
     function escapeHTML(text) {
 
@@ -861,11 +1196,9 @@
     }
 
 
-    /*
-      ==============================
-      START
-      ==============================
-    */
+    /* ==============================
+       START
+    ============================== */
 
     renderGames();
 

@@ -1,0 +1,345 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nova Portal</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #09090d;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(100, 70, 255, .12), transparent 30%),
+        radial-gradient(circle at 80% 70%, rgba(0, 180, 255, .08), transparent 30%);
+      pointer-events: none;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 35px;
+      background: rgba(9, 9, 13, .82);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      opacity: .45;
+    }
+
+    nav {
+      display: flex;
+      gap: 8px;
+    }
+
+    nav button {
+      border: 0;
+      background: transparent;
+      color: #aaa;
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    nav button:hover {
+      color: white;
+      background: rgba(255,255,255,.08);
+    }
+
+    main {
+      width: min(1100px, 92%);
+      margin: auto;
+      padding: 90px 0;
+      position: relative;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 55px;
+    }
+
+    .hero h1 {
+      font-size: clamp(42px, 7vw, 78px);
+      line-height: 1;
+      margin-bottom: 18px;
+      letter-spacing: -3px;
+    }
+
+    .hero p {
+      color: #999;
+      font-size: 17px;
+      margin-bottom: 30px;
+    }
+
+    .search {
+      width: min(650px, 100%);
+      margin: auto;
+      position: relative;
+    }
+
+    .search input {
+      width: 100%;
+      height: 58px;
+      padding: 0 22px;
+      border-radius: 17px;
+      border: 1px solid rgba(255,255,255,.1);
+      outline: none;
+      background: rgba(255,255,255,.06);
+      color: white;
+      font-size: 16px;
+      transition: .2s;
+    }
+
+    .search input:focus {
+      border-color: rgba(130,100,255,.7);
+      background: rgba(255,255,255,.09);
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin: 35px 0 16px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 145px;
+      padding: 23px;
+      border-radius: 18px;
+      background: rgba(255,255,255,.055);
+      border: 1px solid rgba(255,255,255,.08);
+      cursor: pointer;
+      transition: transform .2s, background .2s, border-color .2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,.09);
+      border-color: rgba(255,255,255,.16);
+    }
+
+    .icon {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(255,255,255,.09);
+      margin-bottom: 18px;
+      font-size: 20px;
+    }
+
+    .card h3 {
+      margin-bottom: 7px;
+      font-size: 17px;
+    }
+
+    .card p {
+      color: #888;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #555;
+      font-size: 13px;
+    }
+
+    @media (max-width: 650px) {
+      header {
+        padding: 0 18px;
+      }
+
+      nav {
+        display: none;
+      }
+
+      main {
+        padding-top: 60px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">NOVA<span>PORTAL</span></div>
+
+    <nav>
+      <button onclick="scrollToSection('media')">Media</button>
+      <button onclick="scrollToSection('games')">Games</button>
+      <button onclick="scrollToSection('apps')">Apps</button>
+    </nav>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <h1>Nova Portal</h1>
+      <p>Your personal web hub.</p>
+
+      <div class="search">
+        <input
+          id="searchInput"
+          type="text"
+          placeholder="Search the portal..."
+          oninput="searchCards()"
+        >
+      </div>
+    </section>
+
+    <section id="media">
+      <h2 class="section-title">Media</h2>
+
+      <div class="grid">
+
+        <div class="card" data-name="youtube"
+             onclick="openSite('https://www.youtube.com')">
+          <div class="icon">▶</div>
+          <h3>YouTube</h3>
+          <p>Open YouTube.</p>
+        </div>
+
+        <div class="card" data-name="tiktok"
+             onclick="openSite('https://www.tiktok.com')">
+          <div class="icon">♪</div>
+          <h3>TikTok</h3>
+          <p>Open TikTok.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="games">
+      <h2 class="section-title">Games</h2>
+
+      <div class="grid">
+
+        <div class="card" data-name="game launcher"
+             onclick="alert('Add your game here!')">
+          <div class="icon">🎮</div>
+          <h3>Game Launcher</h3>
+          <p>Add your own browser games here.</p>
+        </div>
+
+        <div class="card" data-name="mystery mayhem"
+             onclick="alert('Mystery Mayhem can go here!')">
+          <div class="icon">🔪</div>
+          <h3>Mystery Mayhem</h3>
+          <p>Launch your own Roblox project page.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="apps">
+      <h2 class="section-title">Apps</h2>
+
+      <div class="grid">
+
+        <div class="card" data-name="calculator"
+             onclick="openCalculator()">
+          <div class="icon">🧮</div>
+          <h3>Calculator</h3>
+          <p>Quick calculator.</p>
+        </div>
+
+        <div class="card" data-name="google"
+             onclick="openSite('https://www.google.com')">
+          <div class="icon">G</div>
+          <h3>Google</h3>
+          <p>Open Google.</p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    Nova Portal · Built with HTML, CSS & JavaScript
+  </footer>
+
+  <script>
+    function openSite(url) {
+      window.open(url, "_blank");
+    }
+
+    function scrollToSection(id) {
+      document.getElementById(id).scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+
+    function searchCards() {
+      const query =
+        document.getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+      document.querySelectorAll(".card").forEach(card => {
+        const name = card.dataset.name || "";
+
+        card.style.display =
+          name.includes(query) ? "" : "none";
+      });
+    }
+
+    function openCalculator() {
+      const value = prompt("Enter a calculation:");
+
+      if (value === null || value.trim() === "") {
+        return;
+      }
+
+      try {
+        const result = Function(
+          '"use strict"; return (' + value + ')'
+        )();
+
+        alert("Result: " + result);
+      } catch {
+        alert("Invalid calculation.");
+      }
+    }
+  </script>
+
+</body>
+</html>
+```

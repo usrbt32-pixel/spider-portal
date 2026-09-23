@@ -1,2152 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Spider Portal</title>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #050507;
-      color: white;
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* ========================================
-       BACKGROUND
-    ======================================== */
-
-    .background {
-      position: fixed;
-      inset: 0;
-      z-index: -10;
-      overflow: hidden;
-
-      background:
-        radial-gradient(
-          circle at 15% 15%,
-          rgba(130, 50, 255, 0.20),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 85% 75%,
-          rgba(255, 30, 160, 0.15),
-          transparent 30%
-        ),
-        #050507;
-    }
-
-    .grid-bg {
-      position: absolute;
-      inset: 0;
-      opacity: 0.12;
-
-      background-image:
-        linear-gradient(
-          rgba(255,255,255,0.08) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          rgba(255,255,255,0.08) 1px,
-          transparent 1px
-        );
-
-      background-size: 45px 45px;
-    }
-
-    .orb {
-      position: absolute;
-      width: 330px;
-      height: 330px;
-      border-radius: 50%;
-      filter: blur(100px);
-      opacity: 0.23;
-
-      animation:
-        floatingOrb 9s ease-in-out infinite alternate;
-    }
-
-    .orb.one {
-      background: #783cff;
-      top: -120px;
-      left: -120px;
-    }
-
-    .orb.two {
-      background: #ff2299;
-      right: -130px;
-      bottom: -120px;
-      animation-delay: 2s;
-    }
-
-    @keyframes floatingOrb {
-
-      from {
-        transform: translate(0, 0);
-      }
-
-      to {
-        transform: translate(80px, 55px);
-      }
-
-    }
-
-    /* ========================================
-       HEADER
-    ======================================== */
-
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      height: 72px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 0 7%;
-
-      background: rgba(5, 5, 7, 0.75);
-
-      backdrop-filter: blur(20px);
-
-      border-bottom:
-        1px solid rgba(255,255,255,0.08);
-    }
-
-    .logo {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 2px;
-    }
-
-    .logo span {
-      background:
-        linear-gradient(
-          90deg,
-          #9c5cff,
-          #ff42ad
-        );
-
-      -webkit-background-clip: text;
-      color: transparent;
-    }
-
-    nav {
-      display: flex;
-      gap: 10px;
-    }
-
-    nav button {
-      padding: 9px 14px;
-
-      border:
-        1px solid rgba(255,255,255,0.10);
-
-      border-radius: 10px;
-
-      background:
-        rgba(255,255,255,0.05);
-
-      color: white;
-
-      cursor: pointer;
-
-      transition: 0.2s;
-    }
-
-    nav button:hover {
-      transform: translateY(-3px);
-
-      background:
-        rgba(255,255,255,0.12);
-
-      border-color:
-        rgba(180,100,255,0.4);
-
-      box-shadow:
-        0 8px 25px rgba(120,60,255,0.12);
-    }
-
-    /* ========================================
-       HERO
-    ======================================== */
-
-    .hero {
-      min-height: 500px;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      text-align: center;
-
-      padding:
-        90px 20px 70px;
-    }
-
-    .hero-content {
-      width: 100%;
-      max-width: 900px;
-    }
-
-    .spider {
-      font-size: 68px;
-      margin-bottom: 20px;
-
-      animation:
-        spiderFloat 3s ease-in-out infinite;
-    }
-
-    @keyframes spiderFloat {
-
-      50% {
-        transform:
-          translateY(-12px)
-          rotate(3deg);
-      }
-
-    }
-
-    .hero h1 {
-      font-size:
-        clamp(48px, 9vw, 94px);
-
-      line-height: 0.95;
-
-      letter-spacing: -4px;
-
-      font-weight: 950;
-
-      background:
-        linear-gradient(
-          90deg,
-          #ffffff,
-          #b579ff,
-          #ff4db4
-        );
-
-      -webkit-background-clip: text;
-
-      color: transparent;
-    }
-
-    .hero p {
-      max-width: 650px;
-
-      margin:
-        24px auto 32px;
-
-      color: #999;
-
-      font-size: 18px;
-
-      line-height: 1.6;
-    }
-
-    .search-box {
-      width: min(680px, 95%);
-      margin: auto;
-    }
-
-    .search-box input {
-      width: 100%;
-
-      height: 60px;
-
-      padding: 0 22px;
-
-      border-radius: 18px;
-
-      border:
-        1px solid rgba(255,255,255,0.13);
-
-      outline: none;
-
-      background:
-        rgba(255,255,255,0.07);
-
-      color: white;
-
-      font-size: 16px;
-
-      backdrop-filter: blur(12px);
-
-      transition: 0.25s;
-    }
-
-    .search-box input::placeholder {
-      color: #777;
-    }
-
-    .search-box input:focus {
-      border-color:
-        rgba(170,100,255,0.75);
-
-      box-shadow:
-        0 0 35px rgba(130,70,255,0.18);
-    }
-
-    /* ========================================
-       QUICK BUTTONS
-    ======================================== */
-
-    .quick-links {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: wrap;
-
-      gap: 12px;
-
-      margin:
-        -10px auto 75px;
-
-      padding: 0 20px;
-    }
-
-    .quick-btn {
-      padding: 13px 20px;
-
-      border-radius: 13px;
-
-      border:
-        1px solid rgba(255,255,255,0.10);
-
-      background:
-        rgba(255,255,255,0.055);
-
-      color: white;
-
-      font-weight: 700;
-
-      cursor: pointer;
-
-      transition: 0.25s;
-
-      text-decoration: none;
-
-      display: inline-block;
-    }
-
-    .quick-btn:hover {
-      transform:
-        translateY(-4px)
-        scale(1.03);
-
-      background:
-        rgba(255,255,255,0.11);
-
-      box-shadow:
-        0 10px 30px rgba(0,0,0,0.25);
-
-      border-color:
-        rgba(180,100,255,0.35);
-    }
-
-    /* ========================================
-       SECTIONS
-    ======================================== */
-
-    section {
-      width: min(1200px, 90%);
-      margin:
-        0 auto 95px;
-    }
-
-    .section-heading {
-      display: flex;
-
-      align-items: flex-end;
-
-      justify-content: space-between;
-
-      margin-bottom: 25px;
-    }
-
-    .section-heading h2 {
-      font-size: 32px;
-    }
-
-    .section-heading p {
-      color: #777;
-      font-size: 14px;
-    }
-
-    /* ========================================
-       FEATURED GAMES
-    ======================================== */
-
-    .featured-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(2, 1fr);
-
-      gap: 20px;
-    }
-
-    .featured-card {
-      position: relative;
-
-      min-height: 280px;
-
-      overflow: hidden;
-
-      border-radius: 22px;
-
-      border:
-        1px solid rgba(255,255,255,0.10);
-
-      background:
-        linear-gradient(
-          135deg,
-          rgba(255,255,255,0.08),
-          rgba(255,255,255,0.025)
-        );
-
-      cursor: pointer;
-
-      transition:
-        transform .3s ease,
-        border-color .3s ease,
-        box-shadow .3s ease;
-    }
-
-    .featured-card:hover {
-      transform:
-        translateY(-8px)
-        scale(1.015);
-
-      border-color:
-        rgba(180,100,255,0.55);
-
-      box-shadow:
-        0 25px 60px rgba(0,0,0,0.45),
-        0 0 35px rgba(140,70,255,0.16);
-    }
-
-    .featured-art {
-      position: absolute;
-
-      inset: 0;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      font-size: 100px;
-
-      background:
-        radial-gradient(
-          circle at 30% 30%,
-          rgba(255,255,255,0.16),
-          transparent 30%
-        ),
-        linear-gradient(
-          135deg,
-          #20102f,
-          #4a0e54
-        );
-
-      transition:
-        transform .5s ease,
-        filter .3s ease;
-    }
-
-    .featured-card:hover .featured-art {
-      transform: scale(1.08);
-      filter: brightness(1.15);
-    }
-
-    .featured-overlay {
-      position: absolute;
-
-      inset: 0;
-
-      display: flex;
-
-      flex-direction: column;
-
-      justify-content: flex-end;
-
-      padding: 28px;
-
-      background:
-        linear-gradient(
-          transparent 20%,
-          rgba(0,0,0,0.88) 100%
-        );
-    }
-
-    .featured-badge {
-      width: fit-content;
-
-      padding: 6px 10px;
-
-      margin-bottom: 10px;
-
-      border-radius: 8px;
-
-      background:
-        rgba(160,80,255,0.28);
-
-      border:
-        1px solid rgba(190,120,255,0.3);
-
-      color: #d7b7ff;
-
-      font-size: 11px;
-
-      font-weight: 800;
-
-      text-transform: uppercase;
-
-      letter-spacing: 1px;
-    }
-
-    .featured-overlay h3 {
-      font-size: 26px;
-      margin-bottom: 6px;
-    }
-
-    .featured-overlay p {
-      color: #aaa;
-      font-size: 14px;
-      margin-bottom: 15px;
-    }
-
-    .featured-play {
-      width: fit-content;
-
-      padding: 10px 18px;
-
-      border: none;
-
-      border-radius: 10px;
-
-      background:
-        linear-gradient(
-          90deg,
-          #743dff,
-          #d43dff
-        );
-
-      color: white;
-
-      font-weight: 800;
-
-      cursor: pointer;
-
-      transition: .2s;
-    }
-
-    .featured-play:hover {
-      transform: scale(1.05);
-      filter: brightness(1.15);
-    }
-
-    /* ========================================
-       GAME PAGE BUTTON
-    ======================================== */
-
-    .view-games {
-      margin-top: 25px;
-
-      display: flex;
-      justify-content: center;
-    }
-
-    .view-games-btn {
-      padding: 14px 25px;
-
-      border: 1px solid
-        rgba(180,100,255,0.35);
-
-      border-radius: 13px;
-
-      color: white;
-
-      background:
-        linear-gradient(
-          90deg,
-          rgba(116,61,255,0.25),
-          rgba(212,61,255,0.20)
-        );
-
-      font-weight: 800;
-
-      cursor: pointer;
-
-      text-decoration: none;
-
-      transition: .25s;
-    }
-
-    .view-games-btn:hover {
-      transform:
-        translateY(-4px)
-        scale(1.03);
-
-      background:
-        linear-gradient(
-          90deg,
-          rgba(116,61,255,0.38),
-          rgba(212,61,255,0.32)
-        );
-
-      box-shadow:
-        0 12px 35px
-        rgba(130,70,255,0.18);
-    }
-
-    /* ========================================
-       CATEGORY BAR
-    ======================================== */
-
-    .categories {
-      display: flex;
-
-      flex-wrap: wrap;
-
-      gap: 9px;
-
-      margin-bottom: 22px;
-    }
-
-    .category-btn {
-      padding: 9px 15px;
-
-      border-radius: 10px;
-
-      border:
-        1px solid rgba(255,255,255,0.09);
-
-      background:
-        rgba(255,255,255,0.045);
-
-      color: #aaa;
-
-      cursor: pointer;
-
-      transition: .2s;
-    }
-
-    .category-btn:hover,
-    .category-btn.active {
-      color: white;
-
-      background:
-        rgba(150,80,255,0.20);
-
-      border-color:
-        rgba(170,100,255,0.4);
-    }
-
-    /* ========================================
-       GAME GRID
-    ======================================== */
-
-    .game-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(4, 1fr);
-
-      gap: 18px;
-    }
-
-    /* ========================================
-       GAME CARD
-    ======================================== */
-
-    .game-card {
-      position: relative;
-
-      overflow: hidden;
-
-      min-height: 290px;
-
-      border-radius: 18px;
-
-      border:
-        1px solid rgba(255,255,255,0.09);
-
-      background:
-        linear-gradient(
-          145deg,
-          rgba(255,255,255,0.08),
-          rgba(255,255,255,0.025)
-        );
-
-      transform:
-        translateY(0)
-        scale(1);
-
-      transition:
-        transform .3s cubic-bezier(.2,.8,.2,1),
-        box-shadow .3s ease,
-        border-color .3s ease;
-    }
-
-    .game-card:hover {
-      transform:
-        translateY(-10px)
-        scale(1.025);
-
-      border-color:
-        rgba(180,100,255,0.65);
-
-      box-shadow:
-        0 18px 40px rgba(0,0,0,0.50),
-        0 0 30px rgba(140,70,255,0.18);
-    }
-
-    .game-card::before {
-      content: "";
-
-      position: absolute;
-
-      inset: 0;
-
-      z-index: 3;
-
-      border-radius: 18px;
-
-      pointer-events: none;
-
-      opacity: 0;
-
-      background:
-        radial-gradient(
-          circle at 50% 0%,
-          rgba(190,110,255,0.18),
-          transparent 55%
-        );
-
-      transition: opacity .3s ease;
-    }
-
-    .game-card:hover::before {
-      opacity: 1;
-    }
-
-    /* ========================================
-       GAME ART
-    ======================================== */
-
-    .game-art {
-      position: relative;
-
-      height: 155px;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      overflow: hidden;
-
-      font-size: 68px;
-
-      background:
-        radial-gradient(
-          circle at 30% 30%,
-          rgba(255,255,255,0.20),
-          transparent 25%
-        ),
-        linear-gradient(
-          135deg,
-          #18121f,
-          #30104c
-        );
-
-      transition:
-        transform .4s cubic-bezier(.2,.8,.2,1),
-        filter .3s ease;
-    }
-
-    .game-card:hover .game-art {
-      transform: scale(1.055);
-      filter: brightness(1.12);
-    }
-
-    .game-art::after {
-      content: "";
-
-      position: absolute;
-
-      inset: 0;
-
-      background:
-        linear-gradient(
-          115deg,
-          transparent 25%,
-          rgba(255,255,255,0.18),
-          transparent 70%
-        );
-
-      transform:
-        translateX(-120%);
-
-      transition:
-        transform .65s ease;
-    }
-
-    .game-card:hover .game-art::after {
-      transform:
-        translateX(120%);
-    }
-
-    .art-subway {
-      background:
-        radial-gradient(
-          circle at 30% 30%,
-          #ffd65a,
-          transparent 20%
-        ),
-        linear-gradient(
-          135deg,
-          #0f4c81,
-          #e56a16
-        );
-    }
-
-    .art-stickman {
-      background:
-        radial-gradient(
-          circle at 70% 20%,
-          #ffdf70,
-          transparent 18%
-        ),
-        linear-gradient(
-          135deg,
-          #172238,
-          #5132a8
-        );
-    }
-
-    .art-fnaf {
-      background:
-        radial-gradient(
-          circle at 50% 35%,
-          #8a1f45,
-          transparent 25%
-        ),
-        linear-gradient(
-          135deg,
-          #09090d,
-          #331321
-        );
-    }
-
-    .art-minecraft {
-      background:
-        radial-gradient(
-          circle at 30% 25%,
-          #7ed957,
-          transparent 20%
-        ),
-        linear-gradient(
-          135deg,
-          #164c30,
-          #253f6e
-        );
-    }
-
-    .art-geometry {
-      background:
-        radial-gradient(
-          circle at 70% 25%,
-          #56e7ff,
-          transparent 18%
-        ),
-        linear-gradient(
-          135deg,
-          #152d65,
-          #7028a8
-        );
-    }
-
-    .art-swing {
-      background:
-        radial-gradient(
-          circle at 30% 20%,
-          #ff8bdc,
-          transparent 18%
-        ),
-        linear-gradient(
-          135deg,
-          #35114f,
-          #112f5d
-        );
-    }
-
-    .art-more {
-      background:
-        radial-gradient(
-          circle at 50% 40%,
-          #9f5cff,
-          transparent 25%
-        ),
-        linear-gradient(
-          135deg,
-          #191522,
-          #29133d
-        );
-    }
-
-    /* ========================================
-       GAME INFO
-    ======================================== */
-
-    .game-info {
-      position: relative;
-
-      z-index: 5;
-
-      padding: 17px;
-    }
-
-    .game-info h3 {
-      font-size: 18px;
-
-      margin-bottom: 6px;
-
-      transition:
-        transform .25s ease,
-        color .25s ease;
-    }
-
-    .game-card:hover .game-info h3 {
-      transform:
-        translateX(4px);
-
-      color: #d7baff;
-    }
-
-    .game-category {
-      display: inline-block;
-
-      margin-bottom: 8px;
-
-      color: #9d78c8;
-
-      font-size: 10px;
-
-      font-weight: 800;
-
-      text-transform: uppercase;
-
-      letter-spacing: .8px;
-    }
-
-    .game-info p {
-      color: #888;
-
-      font-size: 13px;
-
-      line-height: 1.4;
-
-      min-height: 37px;
-    }
-
-    .play-btn {
-      width: 100%;
-
-      margin-top: 13px;
-
-      padding: 10px;
-
-      border: none;
-
-      border-radius: 10px;
-
-      color: white;
-
-      font-weight: 800;
-
-      cursor: pointer;
-
-      background:
-        linear-gradient(
-          90deg,
-          #743dff,
-          #d43dff
-        );
-
-      transition:
-        transform .2s ease,
-        filter .2s ease,
-        box-shadow .2s ease;
-    }
-
-    .game-card:hover .play-btn {
-      box-shadow:
-        0 0 20px rgba(150,70,255,0.35);
-    }
-
-    .play-btn:hover {
-      transform:
-        scale(1.045);
-
-      filter:
-        brightness(1.2);
-    }
-
-    .play-btn:active {
-      transform:
-        scale(.97);
-    }
-
-    /* ========================================
-       GENERAL CARDS
-    ======================================== */
-
-    .card-grid {
-      display: grid;
-
-      grid-template-columns:
-        repeat(3, 1fr);
-
-      gap: 18px;
-    }
-
-    .card {
-      padding: 25px;
-
-      border-radius: 18px;
-
-      border:
-        1px solid rgba(255,255,255,0.09);
-
-      background:
-        rgba(255,255,255,0.045);
-
-      transition: .25s;
-    }
-
-    .card:hover {
-      transform:
-        translateY(-6px);
-
-      background:
-        rgba(255,255,255,0.07);
-
-      border-color:
-        rgba(180,100,255,0.35);
-
-      box-shadow:
-        0 15px 30px rgba(0,0,0,0.25);
-    }
-
-    .card-icon {
-      font-size: 35px;
-      margin-bottom: 14px;
-    }
-
-    .card h3 {
-      margin-bottom: 8px;
-    }
-
-    .card p {
-      color: #888;
-
-      line-height: 1.5;
-
-      font-size: 14px;
-    }
-
-    .card button {
-      margin-top: 15px;
-
-      padding: 9px 14px;
-
-      border: none;
-
-      border-radius: 9px;
-
-      color: white;
-
-      background:
-        rgba(255,255,255,0.10);
-
-      cursor: pointer;
-
-      transition: .2s;
-    }
-
-    .card button:hover {
-      transform:
-        scale(1.05);
-
-      background:
-        rgba(255,255,255,0.16);
-    }
-
-    /* ========================================
-       NO RESULTS
-    ======================================== */
-
-    .no-results {
-      display: none;
-
-      grid-column: 1 / -1;
-
-      text-align: center;
-
-      padding: 50px 20px;
-
-      color: #777;
-
-      border:
-        1px dashed rgba(255,255,255,0.10);
-
-      border-radius: 18px;
-    }
-
-    /* ========================================
-       FOOTER
-    ======================================== */
-
-    footer {
-      text-align: center;
-
-      padding: 40px 20px;
-
-      border-top:
-        1px solid rgba(255,255,255,0.07);
-
-      color: #666;
-
-      font-size: 13px;
-    }
-
-    footer strong {
-      color: #aaa;
-    }
-
-    @media (max-width: 1100px) {
-
-      .game-grid {
-        grid-template-columns:
-          repeat(3, 1fr);
-      }
-
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-
-      *,
-      *::before,
-      *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-      }
-
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 50% 20%, rgba(150, 0, 0, 0.18), transparent 35%),
+                #050505;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.08;
+            background-image:
+                linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+            background-size: 45px 45px;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: rgba(5, 5, 5, 0.75);
+            backdrop-filter: blur(14px);
+
+            border-bottom: 1px solid rgba(255, 0, 0, 0.15);
+        }
+
+        .logo {
+            color: white;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #ff1b1b;
+            text-shadow: 0 0 15px rgba(255, 0, 0, .8);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: .25s;
+        }
+
+        .nav-links a:hover {
+            color: #ff3030;
+            text-shadow: 0 0 12px rgba(255, 0, 0, .6);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            padding: 120px 20px 80px;
+
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .spider-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+
+            filter:
+                drop-shadow(0 0 10px rgba(255,0,0,.8))
+                drop-shadow(0 0 35px rgba(255,0,0,.4));
+
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 10vw, 110px);
+            font-weight: 1000;
+            letter-spacing: -5px;
+            line-height: .9;
+
+            background: linear-gradient(
+                180deg,
+                #ffffff,
+                #ff3030
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            filter: drop-shadow(0 0 25px rgba(255,0,0,.25));
+        }
+
+        .hero p {
+            margin-top: 28px;
+            color: #999;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
+            transition: .25s;
+        }
+
+        .primary {
+            background: #e50914;
+            color: white;
+            box-shadow: 0 0 25px rgba(229, 9, 20, .35);
+        }
+
+        .primary:hover {
+            transform: translateY(-3px);
+            background: #ff1f2d;
+            box-shadow: 0 0 35px rgba(255, 0, 0, .6);
+        }
+
+        .secondary {
+            border: 1px solid #333;
+            color: white;
+            background: rgba(255,255,255,.03);
+        }
+
+        .secondary:hover {
+            border-color: #e50914;
+            background: rgba(229,9,20,.08);
+            transform: translateY(-3px);
+        }
+
+        /* FEATURES */
+
+        .section {
+            padding: 100px 7%;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .section-title span {
+            color: #ff1c1c;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 50px;
+        }
+
+        .cards {
+            max-width: 1100px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            padding: 30px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.055),
+                    rgba(255,0,0,.025)
+                );
+
+            border: 1px solid #1c1c1c;
+            border-radius: 16px;
+
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,0,0,.45);
+            box-shadow: 0 15px 50px rgba(0,0,0,.5);
+        }
+
+        .card-icon {
+            font-size: 35px;
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .card p {
+            color: #888;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid #171717;
+            padding: 30px 7%;
+            text-align: center;
+            color: #555;
+            font-size: 13px;
+        }
+
+        footer span {
+            color: #e50914;
+        }
+
+        @media(max-width: 800px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                letter-spacing: -3px;
+            }
+        }
+
+        @media(max-width: 550px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .logo {
+                font-size: 17px;
+            }
+        }
+    </style>
 </head>
-
 
 <body>
 
+<nav>
+    <a href="index.html" class="logo">
+        🕷 <span>SPIDER</span> PORTAL
+    </a>
 
-  <div class="background">
+    <ul class="nav-links">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="games.html">GAMES</a></li>
+    </ul>
+</nav>
 
-    <div class="grid-bg"></div>
+<section class="hero">
 
-    <div class="orb one"></div>
+    <div class="hero-content">
 
-    <div class="orb two"></div>
+        <div class="spider-icon">🕷️</div>
 
-  </div>
-
-
-  <!-- HEADER -->
-
-  <header>
-
-    <div class="logo">
-      <span>SPIDER</span>PORTAL
-    </div>
-
-    <nav>
-
-      <button onclick="scrollToId('featured')">
-        Featured
-      </button>
-
-      <button onclick="goToGames()">
-        Games
-      </button>
-
-      <button onclick="scrollToId('media')">
-        Media
-      </button>
-
-      <button onclick="scrollToId('apps')">
-        Apps
-      </button>
-
-    </nav>
-
-  </header>
-
-
-  <main>
-
-
-    <!-- HERO -->
-
-    <div class="hero">
-
-      <div class="hero-content">
-
-        <div class="spider">
-          🕷️
-        </div>
-
-        <h1>
-          Spider Portal
-        </h1>
+        <h1>SPIDER<br>PORTAL</h1>
 
         <p>
-          Games, media, apps and more —
-          all inside your own personal portal.
+            Your gateway to games, projects, and everything inside
+            the Spider Portal.
         </p>
 
-        <div class="search-box">
+        <div class="buttons">
+            <a href="games.html" class="btn primary">
+                ENTER PORTAL
+            </a>
 
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Search games, media, apps..."
-            oninput="searchEverything()"
-          >
-
+            <a href="#features" class="btn secondary">
+                EXPLORE
+            </a>
         </div>
-
-      </div>
 
     </div>
 
+</section>
 
-    <!-- QUICK LINKS -->
+<section class="section" id="features">
 
-    <div class="quick-links">
+    <h2 class="section-title">
+        THE <span>PORTAL</span>
+    </h2>
 
-      <button
-        class="quick-btn"
-        onclick="openSite('https://www.youtube.com')"
-      >
-        ▶️ YouTube
-      </button>
+    <p class="section-subtitle">
+        Built to be more than just another website.
+    </p>
 
-      <button
-        class="quick-btn"
-        onclick="openSite('https://www.tiktok.com')"
-      >
-        🎵 TikTok
-      </button>
+    <div class="cards">
 
-      <button
-        class="quick-btn"
-        onclick="goToGames()"
-      >
-        🎮 Games
-      </button>
+        <div class="card">
+            <div class="card-icon">🎮</div>
+            <h3>Games</h3>
+            <p>
+                Jump into the games available inside Spider Portal.
+            </p>
+        </div>
 
-      <button
-        class="quick-btn"
-        onclick="scrollToId('apps')"
-      >
-        🧩 Apps
-      </button>
+        <div class="card">
+            <div class="card-icon">🕸️</div>
+            <h3>Projects</h3>
+            <p>
+                Discover projects and creations connected to the portal.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Fast Access</h3>
+            <p>
+                Everything is organized into one clean and easy-to-use portal.
+            </p>
+        </div>
 
     </div>
 
-
-    <!-- FEATURED -->
-
-    <section id="featured">
-
-      <div class="section-heading">
-
-        <div>
-
-          <h2>
-            ⭐ Featured Games
-          </h2>
-
-          <p>
-            Jump straight into something fun.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="featured-grid">
-
-
-        <div
-          class="featured-card"
-          onclick="launchGame(0)"
-        >
-
-          <div class="featured-art">
-            🏄
-          </div>
-
-          <div class="featured-overlay">
-
-            <div class="featured-badge">
-              Featured
-            </div>
-
-            <h3>
-              Subway Surfers
-            </h3>
-
-            <p>
-              Run, dodge and collect coins.
-            </p>
-
-            <button
-              class="featured-play"
-              onclick="event.stopPropagation(); launchGame(0)"
-            >
-              PLAY NOW
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <div
-          class="featured-card"
-          onclick="launchGame(4)"
-        >
-
-          <div class="featured-art">
-            🟦
-          </div>
-
-          <div class="featured-overlay">
-
-            <div class="featured-badge">
-              Featured
-            </div>
-
-            <h3>
-              Geometry Dash
-            </h3>
-
-            <p>
-              Jump, fly and survive challenging levels.
-            </p>
-
-            <button
-              class="featured-play"
-              onclick="event.stopPropagation(); launchGame(4)"
-            >
-              PLAY NOW
-            </button>
-
-          </div>
-
-        </div>
-
-
-      </div>
-
-
-      <!-- NEW GAMES PAGE BUTTON -->
-
-      <div class="view-games">
-
-        <a
-          href="games.html"
-          class="view-games-btn"
-        >
-          🎮 VIEW ALL GAMES →
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- GAME LIBRARY PREVIEW -->
-
-    <section id="games">
-
-      <div class="section-heading">
-
-        <div>
-
-          <h2>
-            🎮 Game Library
-          </h2>
-
-          <p>
-            A small preview of the collection.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="categories">
-
-        <button
-          class="category-btn active"
-          data-category="all"
-          onclick="filterCategory('all', this)"
-        >
-          All
-        </button>
-
-        <button
-          class="category-btn"
-          data-category="arcade"
-          onclick="filterCategory('arcade', this)"
-        >
-          Arcade
-        </button>
-
-        <button
-          class="category-btn"
-          data-category="action"
-          onclick="filterCategory('action', this)"
-        >
-          Action
-        </button>
-
-        <button
-          class="category-btn"
-          data-category="horror"
-          onclick="filterCategory('horror', this)"
-        >
-          Horror
-        </button>
-
-        <button
-          class="category-btn"
-          data-category="sandbox"
-          onclick="filterCategory('sandbox', this)"
-        >
-          Sandbox
-        </button>
-
-        <button
-          class="category-btn"
-          data-category="platformer"
-          onclick="filterCategory('platformer', this)"
-        >
-          Platformer
-        </button>
-
-      </div>
-
-
-      <div
-        class="game-grid"
-        id="gameGrid"
-      ></div>
-
-
-      <div class="view-games">
-
-        <a
-          href="games.html"
-          class="view-games-btn"
-        >
-          🕹️ OPEN FULL GAME ZONE →
-        </a>
-
-      </div>
-
-    </section>
-
-
-    <!-- MEDIA -->
-
-    <section id="media">
-
-      <div class="section-heading">
-
-        <div>
-
-          <h2>
-            📺 Media
-          </h2>
-
-          <p>
-            Quick access to popular platforms.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="card-grid">
-
-
-        <div class="card">
-
-          <div class="card-icon">
-            ▶️
-          </div>
-
-          <h3>
-            YouTube
-          </h3>
-
-          <p>
-            Watch videos, gaming content,
-            music and more.
-          </p>
-
-          <button
-            onclick="openSite('https://www.youtube.com')"
-          >
-            Open
-          </button>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-icon">
-            🎵
-          </div>
-
-          <h3>
-            TikTok
-          </h3>
-
-          <p>
-            Short-form videos and creator content.
-          </p>
-
-          <button
-            onclick="openSite('https://www.tiktok.com')"
-          >
-            Open
-          </button>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-icon">
-            🎬
-          </div>
-
-          <h3>
-            Media Hub
-          </h3>
-
-          <p>
-            More media shortcuts can be added later.
-          </p>
-
-          <button
-            onclick="alert('More media coming soon!')"
-          >
-            Coming Soon
-          </button>
-
-        </div>
-
-
-      </div>
-
-    </section>
-
-
-    <!-- APPS -->
-
-    <section id="apps">
-
-      <div class="section-heading">
-
-        <div>
-
-          <h2>
-            🧩 Apps
-          </h2>
-
-          <p>
-            Useful websites and tools.
-          </p>
-
-        </div>
-
-      </div>
-
-
-      <div class="card-grid">
-
-
-        <div class="card">
-
-          <div class="card-icon">
-            🧮
-          </div>
-
-          <h3>
-            Calculator
-          </h3>
-
-          <p>
-            Open a simple calculator
-            directly from Spider Portal.
-          </p>
-
-          <button onclick="calculator()">
-            Launch
-          </button>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-icon">
-            🌐
-          </div>
-
-          <h3>
-            Google
-          </h3>
-
-          <p>
-            Search the web normally.
-          </p>
-
-          <button
-            onclick="openSite('https://www.google.com')"
-          >
-            Open
-          </button>
-
-        </div>
-
-
-        <div class="card">
-
-          <div class="card-icon">
-            📦
-          </div>
-
-          <h3>
-            More Apps
-          </h3>
-
-          <p>
-            More useful tools can be added here.
-          </p>
-
-          <button
-            onclick="alert('More apps coming soon!')"
-          >
-            Coming Soon
-          </button>
-
-        </div>
-
-
-      </div>
-
-    </section>
-
-
-  </main>
-
-
-  <!-- FOOTER -->
-
-  <footer>
-
-    <strong>
-      🕷️ Spider Portal
-    </strong>
-
-    <br><br>
-
-    Your personal web portal.
-
-  </footer>
-
-
-  <script>
-
-    /* ========================================
-       GAME DATA
-    ======================================== */
-
-    const games = [
-
-      {
-        title: "Subway Surfers",
-        description:
-          "Run, dodge obstacles and collect coins.",
-        icon: "🏄",
-        category: "arcade",
-        art: "art-subway",
-        link:
-          "https://play.gameograf.com/"
-      },
-
-      {
-        title: "Stickman Swing",
-        description:
-          "Swing through levels using timing and momentum.",
-        icon: "🪢",
-        category: "action",
-        art: "art-stickman",
-        link:
-          "https://eyzi.net/action/stickman-swing"
-      },
-
-      {
-        title: "FNAF",
-        description:
-          "The original Five Nights at Freddy's.",
-        icon: "🐻",
-        category: "horror",
-        art: "art-fnaf",
-        link:
-          "https://play.google.com/store/apps/details?id=com.scottgames.fivenightsatfreddys"
-      },
-
-      {
-        title: "Minecraft",
-        description:
-          "Build, explore and survive your own world.",
-        icon: "⛏️",
-        category: "sandbox",
-        art: "art-minecraft",
-        link:
-          "https://www.minecraft.net/en-us/"
-      },
-
-      {
-        title: "Geometry Dash",
-        description:
-          "Jump, fly and survive challenging levels.",
-        icon: "🟦",
-        category: "platformer",
-        art: "art-geometry",
-        link:
-          "https://gdbrowser.com/"
-      },
-
-      {
-        title: "Stickman Swing 2",
-        description:
-          "Another swinging challenge.",
-        icon: "🕸️",
-        category: "action",
-        art: "art-swing",
-        link:
-          "https://www.y8.com/games/stickman_swing"
-      },
-
-      {
-        title: "More Games",
-        description:
-          "More games can be added to Spider Portal.",
-        icon: "🎮",
-        category: "arcade",
-        art: "art-more",
-        link: "#"
-      },
-
-      {
-        title: "Coming Soon",
-        description:
-          "A new game will be added here.",
-        icon: "❓",
-        category: "arcade",
-        art: "art-more",
-        link: "#"
-      }
-
-    ];
-
-
-    /* ========================================
-       RENDER GAMES
-    ======================================== */
-
-    function renderGames(
-      category = "all",
-      search = ""
-    ) {
-
-      const gameGrid =
-        document.getElementById("gameGrid");
-
-      gameGrid.innerHTML = "";
-
-      const visibleGames =
-        games.filter(game => {
-
-          const matchesCategory =
-            category === "all" ||
-            game.category === category;
-
-          const searchText =
-            (
-              game.title +
-              " " +
-              game.description +
-              " " +
-              game.category
-            ).toLowerCase();
-
-          const matchesSearch =
-            searchText.includes(
-              search.toLowerCase()
-            );
-
-          return (
-            matchesCategory &&
-            matchesSearch
-          );
-
-        });
-
-
-      if (visibleGames.length === 0) {
-
-        gameGrid.innerHTML = `
-          <div
-            class="no-results"
-            style="display:block"
-          >
-            🔎 No games found.
-          </div>
-        `;
-
-        return;
-      }
-
-
-      visibleGames.forEach(game => {
-
-        const index =
-          games.indexOf(game);
-
-        const card =
-          document.createElement("div");
-
-        card.className =
-          "game-card";
-
-
-        card.innerHTML = `
-
-          <div class="game-art ${game.art}">
-            ${escapeHTML(game.icon)}
-          </div>
-
-          <div class="game-info">
-
-            <span class="game-category">
-              ${escapeHTML(game.category)}
-            </span>
-
-            <h3>
-              ${escapeHTML(game.title)}
-            </h3>
-
-            <p>
-              ${escapeHTML(game.description)}
-            </p>
-
-            <button
-              class="play-btn"
-              onclick="launchGame(${index})"
-            >
-              PLAY
-            </button>
-
-          </div>
-
-        `;
-
-        gameGrid.appendChild(card);
-
-      });
-
-    }
-
-
-    /* ========================================
-       CATEGORY FILTER
-    ======================================== */
-
-    let currentCategory = "all";
-
-
-    function filterCategory(
-      category,
-      button
-    ) {
-
-      currentCategory = category;
-
-
-      document
-        .querySelectorAll(".category-btn")
-        .forEach(btn => {
-
-          btn.classList.remove("active");
-
-        });
-
-
-      button.classList.add("active");
-
-
-      const search =
-        document
-          .getElementById("searchInput")
-          .value;
-
-
-      renderGames(
-        currentCategory,
-        search
-      );
-
-    }
-
-
-    /* ========================================
-       SEARCH
-    ======================================== */
-
-    function searchEverything() {
-
-      const search =
-        document
-          .getElementById("searchInput")
-          .value;
-
-
-      renderGames(
-        currentCategory,
-        search
-      );
-
-    }
-
-
-    /* ========================================
-       LAUNCH GAME
-    ======================================== */
-
-    function launchGame(index) {
-
-      const game =
-        games[index];
-
-
-      if (
-        !game ||
-        !game.link ||
-        game.link === "#"
-      ) {
-
-        alert(
-          "This game is coming soon!"
-        );
-
-        return;
-      }
-
-
-      window.open(
-        game.link,
-        "_blank"
-      );
-
-    }
-
-
-    /* ========================================
-       GO TO FULL GAMES PAGE
-    ======================================== */
-
-    function goToGames() {
-
-      window.location.href =
-        "games.html";
-
-    }
-
-
-    /* ========================================
-       SCROLL
-    ======================================== */
-
-    function scrollToId(id) {
-
-      const element =
-        document.getElementById(id);
-
-
-      if (element) {
-
-        element.scrollIntoView({
-          behavior: "smooth"
-        });
-
-      }
-
-    }
-
-
-    /* ========================================
-       OPEN WEBSITE
-    ======================================== */
-
-    function openSite(url) {
-
-      window.open(
-        url,
-        "_blank"
-      );
-
-    }
-
-
-    /* ========================================
-       CALCULATOR
-    ======================================== */
-
-    function calculator() {
-
-      const expression =
-        prompt(
-          "Enter a calculation:",
-          "10 + 10"
-        );
-
-
-      if (
-        expression === null
-      ) {
-
-        return;
-
-      }
-
-
-      try {
-
-        const result =
-          Function(
-            '"use strict"; return (' +
-            expression +
-            ')'
-          )();
-
-
-        alert(
-          "Answer: " +
-          result
-        );
-
-      }
-
-      catch {
-
-        alert(
-          "That calculation isn't valid."
-        );
-
-      }
-
-    }
-
-
-    /* ========================================
-       HTML ESCAPE
-    ======================================== */
-
-    function escapeHTML(text) {
-
-      return String(text)
-
-        .replaceAll(
-          "&",
-          "&amp;"
-        )
-
-        .replaceAll(
-          "<",
-          "&lt;"
-        )
-
-        .replaceAll(
-          ">",
-          "&gt;"
-        )
-
-        .replaceAll(
-          '"',
-          "&quot;"
-        )
-
-        .replaceAll(
-          "'",
-          "&#039;"
-        );
-
-    }
-
-
-    /* ========================================
-       START
-    ======================================== */
-
-    renderGames();
-
-  </script>
+</section>
+
+<footer>
+    © 2026 <span>Spider Portal</span> — Enter the web.
+</footer>
 
 </body>
 </html>

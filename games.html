@@ -1,386 +1,1568 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spider Portal</title>
 
-    <title>Games — Spider Portal</title>
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+body {
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+        radial-gradient(circle at 50% 20%, rgba(130, 0, 0, .25), transparent 35%),
+        #050505;
+    color: white;
+    overflow-x: hidden;
+}
 
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background:
-                radial-gradient(
-                    circle at 50% 0%,
-                    rgba(170, 0, 0, .2),
-                    transparent 40%
-                ),
-                #050505;
+/* WEB BACKGROUND */
 
-            color: white;
-            min-height: 100vh;
-        }
+.web {
+    position: fixed;
+    inset: -50%;
+    width: 200%;
+    height: 200%;
+    pointer-events: none;
+    opacity: .22;
+    background:
+        repeating-radial-gradient(
+            circle at center,
+            transparent 0 70px,
+            rgba(255, 0, 0, .25) 72px 74px,
+            transparent 76px 110px
+        );
+    animation: webSpin 35s linear infinite;
+}
 
-        /* NAV */
+@keyframes webSpin {
+    from {
+        transform: rotate(0deg);
+    }
 
-        nav {
-            height: 72px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+    to {
+        transform: rotate(360deg);
+    }
+}
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+/* PARTICLES */
 
-            padding: 0 7%;
+.particle {
+    position: fixed;
+    width: 4px;
+    height: 4px;
+    background: #ff2020;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #ff0000;
+    pointer-events: none;
+    animation: float 6s infinite ease-in-out;
+}
 
-            background: rgba(5,5,5,.8);
-            backdrop-filter: blur(15px);
+.p1 { left: 10%; top: 30%; animation-delay: 0s; }
+.p2 { left: 80%; top: 20%; animation-delay: 1s; }
+.p3 { left: 60%; top: 75%; animation-delay: 2s; }
+.p4 { left: 25%; top: 80%; animation-delay: 3s; }
+.p5 { left: 90%; top: 65%; animation-delay: 4s; }
 
-            border-bottom: 1px solid rgba(255,0,0,.15);
-        }
+@keyframes float {
+    0%,100% {
+        transform: translateY(0);
+        opacity: .3;
+    }
 
-        .logo {
-            color: white;
-            text-decoration: none;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 2px;
-        }
+    50% {
+        transform: translateY(-35px);
+        opacity: 1;
+    }
+}
 
-        .logo span {
-            color: #ff1b1b;
-            text-shadow: 0 0 15px rgba(255,0,0,.7);
-        }
+/* NAV */
 
-        nav a {
-            color: #999;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: bold;
-            transition: .2s;
-        }
+nav {
+    position: relative;
+    z-index: 5;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    border-bottom: 1px solid rgba(255,0,0,.15);
+    background: rgba(0,0,0,.75);
+    backdrop-filter: blur(12px);
+}
 
-        nav a:hover {
-            color: #ff2222;
-        }
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 23px;
+    font-weight: 900;
+    letter-spacing: 2px;
+}
 
-        /* HEADER */
+.logoSpider {
+    font-size: 30px;
+    filter: drop-shadow(0 0 8px red);
+}
 
-        .header {
-            text-align: center;
-            padding: 110px 20px 70px;
-        }
+.navLinks {
+    display: flex;
+    gap: 28px;
+}
 
-        .header .icon {
-            font-size: 55px;
-            filter: drop-shadow(0 0 20px rgba(255,0,0,.7));
-        }
+.navLinks button {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 15px;
+    cursor: pointer;
+    transition: .2s;
+}
 
-        .header h1 {
-            margin-top: 15px;
-            font-size: clamp(45px, 8vw, 80px);
-            font-weight: 1000;
-            letter-spacing: -3px;
-        }
+.navLinks button:hover,
+.navLinks .active {
+    color: #ff3030;
+}
 
-        .header h1 span {
-            color: #ed1111;
-            text-shadow: 0 0 25px rgba(255,0,0,.3);
-        }
+/* MAIN */
 
-        .header p {
-            margin-top: 15px;
-            color: #777;
-        }
+main {
+    position: relative;
+    z-index: 2;
+    width: min(1200px, 92%);
+    margin: auto;
+    padding: 65px 0;
+}
 
-        /* GAMES */
+.hero {
+    text-align: center;
+    margin-bottom: 55px;
+}
 
-        .games-container {
-            width: 86%;
-            max-width: 1150px;
-            margin: auto;
+.hero h1 {
+    font-size: clamp(45px, 8vw, 90px);
+    font-weight: 1000;
+    letter-spacing: -3px;
+    text-shadow:
+        0 0 10px rgba(255,0,0,.7),
+        0 0 35px rgba(255,0,0,.35);
+}
 
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
+.hero h1 span {
+    color: #ff1616;
+}
 
-            padding-bottom: 100px;
-        }
+.hero p {
+    color: #999;
+    margin-top: 15px;
+    font-size: 17px;
+}
 
-        .game {
-            position: relative;
-            overflow: hidden;
+/* SECTION */
 
-            min-height: 300px;
+.sectionTitle {
+    font-size: 27px;
+    margin-bottom: 22px;
+}
 
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
+.sectionTitle span {
+    color: #ff1b1b;
+}
 
-            padding: 25px;
+/* YOUTUBE */
 
-            border-radius: 18px;
-            border: 1px solid #202020;
+.youtubeBox {
+    background: rgba(15,15,18,.92);
+    border: 1px solid rgba(255,0,0,.25);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 0 35px rgba(255,0,0,.08);
+    margin-bottom: 60px;
+}
 
-            background:
-                linear-gradient(
-                    145deg,
-                    #161616,
-                    #090909
-                );
+.youtubeInputRow {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 22px;
+}
 
-            transition: .3s;
-        }
+.youtubeInput {
+    flex: 1;
+    min-width: 0;
+    padding: 16px 18px;
+    border-radius: 10px;
+    border: 1px solid #333;
+    outline: none;
+    background: #090909;
+    color: white;
+    font-size: 15px;
+}
 
-        .game::before {
-            content: "";
+.youtubeInput:focus {
+    border-color: #ff2020;
+    box-shadow: 0 0 15px rgba(255,0,0,.2);
+}
 
-            position: absolute;
-            inset: 0;
+.watchButton {
+    border: none;
+    border-radius: 10px;
+    padding: 0 28px;
+    background: linear-gradient(135deg,#ff2424,#a90000);
+    color: white;
+    font-weight: 900;
+    cursor: pointer;
+    box-shadow: 0 0 18px rgba(255,0,0,.25);
+    transition: .2s;
+}
 
-            background:
-                radial-gradient(
-                    circle at 80% 20%,
-                    rgba(255,0,0,.22),
-                    transparent 35%
-                );
+.watchButton:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 28px rgba(255,0,0,.45);
+}
 
-            pointer-events: none;
-        }
+.videoContainer {
+    display: none;
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid rgba(255,0,0,.25);
+}
 
-        .game:hover {
-            transform: translateY(-8px);
-            border-color: rgba(255,0,0,.55);
+.videoContainer.show {
+    display: block;
+}
 
-            box-shadow:
-                0 20px 60px rgba(0,0,0,.6),
-                0 0 35px rgba(255,0,0,.08);
-        }
+.videoContainer iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
 
-        .game-icon {
-            position: absolute;
-            top: 30px;
-            right: 30px;
+.videoMessage {
+    color: #888;
+    margin-top: 12px;
+    font-size: 13px;
+}
 
-            font-size: 65px;
+/* GAME GRID */
 
-            filter:
-                drop-shadow(0 0 12px rgba(255,0,0,.7));
-        }
+.gameGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 20px;
+}
 
-        .game-content {
-            position: relative;
-            z-index: 2;
-        }
+.gameCard {
+    position: relative;
+    min-height: 220px;
+    padding: 25px;
+    background:
+        linear-gradient(145deg, rgba(28,28,32,.95), rgba(8,8,9,.95));
+    border: 1px solid rgba(255,0,0,.2);
+    border-radius: 17px;
+    overflow: hidden;
+    transition: .25s;
+}
 
-        .game h2 {
-            font-size: 27px;
-            margin-bottom: 10px;
-        }
+.gameCard::before {
+    content: "";
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    background: #ff0000;
+    filter: blur(70px);
+    opacity: .12;
+    right: -30px;
+    top: -30px;
+}
 
-        .game p {
-            color: #888;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
+.gameCard:hover {
+    transform: translateY(-6px);
+    border-color: rgba(255,0,0,.6);
+    box-shadow: 0 15px 40px rgba(255,0,0,.15);
+}
 
-        .play {
-            display: inline-block;
+.gameIcon {
+    font-size: 43px;
+    margin-bottom: 18px;
+}
 
-            padding: 12px 20px;
+.gameCard h3 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
 
-            border-radius: 8px;
+.gameCard p {
+    color: #888;
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 42px;
+}
 
-            background: #e50914;
-            color: white;
+.playButton {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    border-radius: 9px;
+    border: 1px solid rgba(255,0,0,.4);
+    background: #130606;
+    color: #ff3434;
+    font-weight: 900;
+    cursor: pointer;
+    transition: .2s;
+}
 
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 900;
+.playButton:hover {
+    background: #e50000;
+    color: white;
+    box-shadow: 0 0 20px rgba(255,0,0,.35);
+}
 
-            transition: .2s;
+/* MODAL */
 
-            box-shadow: 0 0 20px rgba(229,9,20,.2);
-        }
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    background: rgba(0,0,0,.82);
+    backdrop-filter: blur(8px);
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
 
-        .play:hover {
-            background: #ff1d29;
-            box-shadow: 0 0 25px rgba(255,0,0,.45);
-            transform: translateY(-2px);
-        }
+.modal.show {
+    display: flex;
+}
 
-        /* EMPTY CARD */
+.gameWindow {
+    width: min(850px, 95vw);
+    max-height: 92vh;
+    overflow: auto;
+    background: #101012;
+    border: 1px solid rgba(255,0,0,.35);
+    border-radius: 18px;
+    box-shadow: 0 0 70px rgba(255,0,0,.2);
+    padding: 20px;
+}
 
-        .coming {
-            opacity: .6;
-        }
+.gameTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
 
-        .coming .play {
-            background: #222;
-            color: #777;
-            box-shadow: none;
-            pointer-events: none;
-        }
+.gameTop h2 {
+    color: #ff2626;
+}
 
-        /* FOOTER */
+.closeButton {
+    border: none;
+    background: #220808;
+    color: #ff4b4b;
+    width: 38px;
+    height: 38px;
+    border-radius: 9px;
+    font-size: 20px;
+    cursor: pointer;
+}
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            border-top: 1px solid #171717;
-            color: #555;
-            font-size: 13px;
-        }
+#gameCanvas {
+    display: block;
+    width: 100%;
+    max-width: 760px;
+    margin: auto;
+    background: #030303;
+    border: 1px solid rgba(255,0,0,.3);
+    border-radius: 10px;
+}
 
-        footer span {
-            color: #e50914;
-        }
+.gameInfo {
+    text-align: center;
+    color: #aaa;
+    margin-top: 12px;
+}
 
-        @media(max-width: 850px) {
-            .games-container {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
+.restart {
+    display: block;
+    margin: 15px auto 0;
+    border: none;
+    padding: 11px 22px;
+    border-radius: 9px;
+    background: #d60000;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
 
-        @media(max-width: 550px) {
-            .games-container {
-                grid-template-columns: 1fr;
-            }
+/* MEMORY */
 
-            nav {
-                padding: 0 20px;
-            }
+.memoryGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 500px;
+    margin: auto;
+}
 
-            .logo {
-                font-size: 17px;
-            }
-        }
-    </style>
+.memoryCard {
+    aspect-ratio: 1;
+    border: 1px solid #4b1010;
+    border-radius: 10px;
+    background: #160606;
+    color: transparent;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+.memoryCard.flipped,
+.memoryCard.matched {
+    background: #280909;
+    color: white;
+}
+
+.memoryCard.matched {
+    border-color: #ff2525;
+    box-shadow: 0 0 12px rgba(255,0,0,.25);
+}
+
+/* TARGET */
+
+.targetArea {
+    height: 450px;
+    position: relative;
+    background: #030303;
+    border: 1px solid rgba(255,0,0,.3);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.target {
+    display: none;
+    position: absolute;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    border: 5px solid white;
+    background: #e00000;
+    box-shadow: 0 0 25px red;
+    cursor: pointer;
+}
+
+/* FOOTER */
+
+footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 45px;
+    color: #555;
+    border-top: 1px solid rgba(255,0,0,.1);
+    margin-top: 60px;
+}
+
+/* MOBILE */
+
+@media(max-width:600px) {
+    .navLinks {
+        gap: 12px;
+    }
+
+    .navLinks button {
+        font-size: 12px;
+    }
+
+    .youtubeInputRow {
+        flex-direction: column;
+    }
+
+    .watchButton {
+        height: 48px;
+    }
+
+    .gameWindow {
+        padding: 13px;
+    }
+}
+</style>
 </head>
 
 <body>
 
+<div class="web"></div>
+
+<div class="particle p1"></div>
+<div class="particle p2"></div>
+<div class="particle p3"></div>
+<div class="particle p4"></div>
+<div class="particle p5"></div>
+
 <nav>
+    <div class="logo">
+        <div class="logoSpider">🕷</div>
+        SPIDER PORTAL
+    </div>
 
-    <a href="index.html" class="logo">
-        🕷 <span>SPIDER</span> PORTAL
-    </a>
-
-    <a href="index.html">
-        ← HOME
-    </a>
-
+    <div class="navLinks">
+        <button onclick="scrollToSection('youtube')">YouTube</button>
+        <button onclick="scrollToSection('games')">Games</button>
+    </div>
 </nav>
 
-<section class="header">
+<main>
 
-    <div class="icon">🕷️</div>
+    <section class="hero">
+        <h1>SPIDER <span>PORTAL</span></h1>
+        <p>Your gaming and entertainment hub.</p>
+    </section>
 
-    <h1>
-        SPIDER <span>GAMES</span>
-    </h1>
+    <!-- YOUTUBE -->
 
-    <p>
-        Choose your destination and enter the web.
-    </p>
+    <section id="youtube">
 
-</section>
+        <h2 class="sectionTitle">
+            <span>▶</span> Watch YouTube
+        </h2>
 
-<section class="games-container">
+        <div class="youtubeBox">
 
-    <!-- GAME 1 -->
+            <div class="youtubeInputRow">
 
-    <div class="game">
+                <input
+                    id="youtubeInput"
+                    class="youtubeInput"
+                    type="text"
+                    placeholder="Paste a YouTube link..."
+                    autocomplete="off"
+                >
 
-        <div class="game-icon">
-            🎭
-        </div>
+                <button class="watchButton" onclick="loadYouTube()">
+                    WATCH
+                </button>
 
-        <div class="game-content">
+            </div>
 
-            <h2>Mystery Mayhem</h2>
+            <div id="videoContainer" class="videoContainer">
+                <iframe
+                    id="youtubePlayer"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen>
+                </iframe>
+            </div>
 
-            <p>
-                A mystery-based Roblox experience filled
-                with secrets, roles, and chaos.
-            </p>
-
-            <a
-                href="#"
-                class="play"
-            >
-                PLAY NOW →
-            </a>
-
-        </div>
-
-    </div>
-
-
-    <!-- GAME 2 -->
-
-    <div class="game coming">
-
-        <div class="game-icon">
-            🕸️
-        </div>
-
-        <div class="game-content">
-
-            <h2>Coming Soon</h2>
-
-            <p>
-                Another game is currently making its way
-                through the Spider Portal.
-            </p>
-
-            <a class="play">
-                COMING SOON
-            </a>
+            <div id="videoMessage" class="videoMessage">
+                Paste a YouTube video link above to start watching.
+            </div>
 
         </div>
 
-    </div>
+    </section>
 
+    <!-- GAMES -->
 
-    <!-- GAME 3 -->
+    <section id="games">
 
-    <div class="game coming">
+        <h2 class="sectionTitle">
+            <span>◆</span> Play Games
+        </h2>
 
-        <div class="game-icon">
-            ⚡
+        <div class="gameGrid">
+
+            <div class="gameCard">
+                <div class="gameIcon">🐍</div>
+                <h3>Neon Serpent</h3>
+                <p>Eat the glowing orbs and grow as long as possible.</p>
+                <button class="playButton" onclick="openGame('snake')">
+                    PLAY NOW
+                </button>
+            </div>
+
+            <div class="gameCard">
+                <div class="gameIcon">🧱</div>
+                <h3>Brick Break</h3>
+                <p>Destroy every brick without letting the ball fall.</p>
+                <button class="playButton" onclick="openGame('breakout')">
+                    PLAY NOW
+                </button>
+            </div>
+
+            <div class="gameCard">
+                <div class="gameIcon">🎯</div>
+                <h3>Red Target</h3>
+                <p>Hit the targets as quickly as possible.</p>
+                <button class="playButton" onclick="openGame('target')">
+                    PLAY NOW
+                </button>
+            </div>
+
+            <div class="gameCard">
+                <div class="gameIcon">🧠</div>
+                <h3>Web Memory</h3>
+                <p>Match all the symbols with as few moves as possible.</p>
+                <button class="playButton" onclick="openGame('memory')">
+                    PLAY NOW
+                </button>
+            </div>
+
         </div>
 
-        <div class="game-content">
+    </section>
 
-            <h2>Unknown</h2>
-
-            <p>
-                Something is hiding inside the web...
-            </p>
-
-            <a class="play">
-                LOCKED
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
+</main>
 
 <footer>
-    © 2026 <span>Spider Portal</span> — Enter the web.
+    SPIDER PORTAL • ENTER THE WEB
 </footer>
+
+
+<!-- GAME MODAL -->
+
+<div id="gameModal" class="modal">
+
+    <div class="gameWindow">
+
+        <div class="gameTop">
+            <h2 id="gameTitle">GAME</h2>
+
+            <button class="closeButton" onclick="closeGame()">
+                ✕
+            </button>
+        </div>
+
+        <canvas id="gameCanvas" width="760" height="500"></canvas>
+
+        <div id="gameExtra"></div>
+
+        <div id="gameInfo" class="gameInfo"></div>
+
+        <button class="restart" onclick="restartCurrentGame()">
+            RESTART
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({
+        behavior: "smooth"
+    });
+}
+
+
+/* =========================
+   YOUTUBE
+========================= */
+
+function extractYouTubeID(url) {
+
+    url = url.trim();
+
+    let match;
+
+    /*
+       Normal:
+       youtube.com/watch?v=VIDEO
+    */
+
+    match = url.match(
+        /(?:youtube\.com\/watch\?v=|youtube\.com\/shorts\/|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    );
+
+    if (match) {
+        return match[1];
+    }
+
+    /*
+       Embedded URL
+    */
+
+    match = url.match(
+        /youtube\.com\/embed\/([a-zA-Z0-9_-]{11})/
+    );
+
+    if (match) {
+        return match[1];
+    }
+
+    /*
+       If user just pastes the ID
+    */
+
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url)) {
+        return url;
+    }
+
+    return null;
+}
+
+
+function loadYouTube() {
+
+    const input = document.getElementById("youtubeInput");
+    const container = document.getElementById("videoContainer");
+    const player = document.getElementById("youtubePlayer");
+    const message = document.getElementById("videoMessage");
+
+    const videoID = extractYouTubeID(input.value);
+
+    if (!videoID) {
+
+        container.classList.remove("show");
+
+        message.textContent =
+            "That doesn't look like a valid YouTube video link.";
+
+        message.style.color = "#ff3030";
+
+        return;
+    }
+
+    /*
+       Official YouTube embed format.
+    */
+
+    player.src =
+        "https://www.youtube.com/embed/" +
+        encodeURIComponent(videoID) +
+        "?rel=0&playsinline=1";
+
+    container.classList.add("show");
+
+    message.textContent =
+        "Video loaded inside Spider Portal.";
+
+    message.style.color = "#777";
+}
+
+
+/* Press Enter */
+
+document
+    .getElementById("youtubeInput")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            loadYouTube();
+        }
+
+    });
+
+
+/* =========================
+   GAME SYSTEM
+========================= */
+
+const modal = document.getElementById("gameModal");
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+let currentGame = null;
+let gameLoop = null;
+
+function openGame(game) {
+
+    currentGame = game;
+
+    modal.classList.add("show");
+
+    stopGame();
+
+    if (game === "snake") {
+        startSnake();
+    }
+
+    if (game === "breakout") {
+        startBreakout();
+    }
+
+    if (game === "target") {
+        startTarget();
+    }
+
+    if (game === "memory") {
+        startMemory();
+    }
+}
+
+
+function closeGame() {
+
+    modal.classList.remove("show");
+
+    stopGame();
+
+    document.getElementById("gameExtra").innerHTML = "";
+
+    canvas.style.display = "block";
+}
+
+
+function stopGame() {
+
+    if (gameLoop) {
+        clearInterval(gameLoop);
+        gameLoop = null;
+    }
+
+    document.onkeydown = null;
+
+    canvas.onclick = null;
+}
+
+
+function restartCurrentGame() {
+
+    if (currentGame) {
+        openGame(currentGame);
+    }
+
+}
+
+
+/* =========================
+   NEON SERPENT
+========================= */
+
+let snake;
+let food;
+let direction;
+let nextDirection;
+let snakeScore = 0;
+
+function startSnake() {
+
+    document.getElementById("gameTitle").textContent =
+        "NEON SERPENT";
+
+    document.getElementById("gameInfo").textContent =
+        "Use Arrow Keys or WASD • Score: 0";
+
+    snake = [
+        {x: 10, y: 10},
+        {x: 9, y: 10},
+        {x: 8, y: 10}
+    ];
+
+    direction = {x: 1, y: 0};
+    nextDirection = direction;
+
+    snakeScore = 0;
+
+    spawnFood();
+
+    document.onkeydown = snakeKey;
+
+    gameLoop = setInterval(updateSnake, 100);
+
+}
+
+
+function spawnFood() {
+
+    food = {
+        x: Math.floor(Math.random() * 30),
+        y: Math.floor(Math.random() * 20)
+    };
+
+    for (const part of snake) {
+
+        if (part.x === food.x && part.y === food.y) {
+            spawnFood();
+            return;
+        }
+
+    }
+
+}
+
+
+function snakeKey(e) {
+
+    const key = e.key.toLowerCase();
+
+    if ((key === "arrowup" || key === "w") &&
+        direction.y !== 1) {
+
+        nextDirection = {x:0,y:-1};
+
+    }
+
+    if ((key === "arrowdown" || key === "s") &&
+        direction.y !== -1) {
+
+        nextDirection = {x:0,y:1};
+
+    }
+
+    if ((key === "arrowleft" || key === "a") &&
+        direction.x !== 1) {
+
+        nextDirection = {x:-1,y:0};
+
+    }
+
+    if ((key === "arrowright" || key === "d") &&
+        direction.x !== -1) {
+
+        nextDirection = {x:1,y:0};
+
+    }
+
+}
+
+
+function updateSnake() {
+
+    direction = nextDirection;
+
+    const head = {
+        x: snake[0].x + direction.x,
+        y: snake[0].y + direction.y
+    };
+
+    if (
+        head.x < 0 ||
+        head.x >= 30 ||
+        head.y < 0 ||
+        head.y >= 20
+    ) {
+
+        snakeGameOver();
+        return;
+
+    }
+
+    for (const part of snake) {
+
+        if (
+            head.x === part.x &&
+            head.y === part.y
+        ) {
+
+            snakeGameOver();
+            return;
+
+        }
+
+    }
+
+    snake.unshift(head);
+
+    if (
+        head.x === food.x &&
+        head.y === food.y
+    ) {
+
+        snakeScore++;
+
+        spawnFood();
+
+    } else {
+
+        snake.pop();
+
+    }
+
+    drawSnake();
+
+    document.getElementById("gameInfo").textContent =
+        "Use Arrow Keys or WASD • Score: " + snakeScore;
+
+}
+
+
+function drawSnake() {
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    const cellW = canvas.width / 30;
+    const cellH = canvas.height / 20;
+
+    ctx.fillStyle = "#030303";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#ff1515";
+
+    ctx.beginPath();
+
+    ctx.arc(
+        food.x * cellW + cellW/2,
+        food.y * cellH + cellH/2,
+        Math.min(cellW,cellH)/3,
+        0,
+        Math.PI * 2
+    );
+
+    ctx.fill();
+
+    snake.forEach((part,index) => {
+
+        ctx.fillStyle =
+            index === 0 ? "#ff3030" : "#a50000";
+
+        ctx.fillRect(
+            part.x * cellW + 2,
+            part.y * cellH + 2,
+            cellW - 4,
+            cellH - 4
+        );
+
+    });
+
+}
+
+
+function snakeGameOver() {
+
+    stopGame();
+
+    ctx.fillStyle = "rgba(0,0,0,.7)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "white";
+    ctx.textAlign = "center";
+    ctx.font = "bold 40px Arial";
+
+    ctx.fillText(
+        "GAME OVER",
+        canvas.width/2,
+        canvas.height/2
+    );
+
+    ctx.font = "20px Arial";
+
+    ctx.fillText(
+        "Score: " + snakeScore,
+        canvas.width/2,
+        canvas.height/2 + 40
+    );
+
+}
+
+
+/* =========================
+   BRICK BREAK
+========================= */
+
+let paddle;
+let ball;
+let bricks;
+let breakoutScore = 0;
+
+function startBreakout() {
+
+    document.getElementById("gameTitle").textContent =
+        "BRICK BREAK";
+
+    document.getElementById("gameInfo").textContent =
+        "Move with ← → or A/D • Score: 0";
+
+    paddle = {
+        x: canvas.width/2 - 60,
+        y: canvas.height - 30,
+        width: 120,
+        height: 12,
+        speed: 8
+    };
+
+    ball = {
+        x: canvas.width/2,
+        y: canvas.height - 55,
+        dx: 4,
+        dy: -4,
+        radius: 8
+    };
+
+    breakoutScore = 0;
+
+    bricks = [];
+
+    for (let row=0; row<5; row++) {
+
+        for (let col=0; col<10; col++) {
+
+            bricks.push({
+                x: 30 + col * 70,
+                y: 40 + row * 30,
+                width: 60,
+                height: 18,
+                alive: true
+            });
+
+        }
+
+    }
+
+    document.onkeydown = function(e) {
+
+        if (
+            e.key === "ArrowLeft" ||
+            e.key.toLowerCase() === "a"
+        ) {
+
+            paddle.x -= paddle.speed;
+
+        }
+
+        if (
+            e.key === "ArrowRight" ||
+            e.key.toLowerCase() === "d"
+        ) {
+
+            paddle.x += paddle.speed;
+
+        }
+
+        paddle.x = Math.max(
+            0,
+            Math.min(canvas.width - paddle.width,paddle.x)
+        );
+
+    };
+
+    gameLoop = setInterval(updateBreakout,16);
+
+}
+
+
+function updateBreakout() {
+
+    ball.x += ball.dx;
+    ball.y += ball.dy;
+
+    if (
+        ball.x - ball.radius < 0 ||
+        ball.x + ball.radius > canvas.width
+    ) {
+
+        ball.dx *= -1;
+
+    }
+
+    if (ball.y - ball.radius < 0) {
+        ball.dy *= -1;
+    }
+
+    if (
+        ball.y + ball.radius >= paddle.y &&
+        ball.x >= paddle.x &&
+        ball.x <= paddle.x + paddle.width
+    ) {
+
+        ball.dy = -Math.abs(ball.dy);
+
+    }
+
+    if (ball.y > canvas.height) {
+
+        stopGame();
+
+        drawBreakout();
+
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.font = "bold 35px Arial";
+
+        ctx.fillText(
+            "GAME OVER",
+            canvas.width/2,
+            canvas.height/2
+        );
+
+        return;
+
+    }
+
+    for (const brick of bricks) {
+
+        if (
+            brick.alive &&
+            ball.x > brick.x &&
+            ball.x < brick.x + brick.width &&
+            ball.y > brick.y &&
+            ball.y < brick.y + brick.height
+        ) {
+
+            brick.alive = false;
+
+            ball.dy *= -1;
+
+            breakoutScore++;
+
+        }
+
+    }
+
+    if (bricks.every(b => !b.alive)) {
+
+        stopGame();
+
+        drawBreakout();
+
+        ctx.fillStyle = "white";
+        ctx.textAlign = "center";
+        ctx.font = "bold 35px Arial";
+
+        ctx.fillText(
+            "YOU WIN!",
+            canvas.width/2,
+            canvas.height/2
+        );
+
+        return;
+
+    }
+
+    drawBreakout();
+
+    document.getElementById("gameInfo").textContent =
+        "Move with ← → or A/D • Score: " + breakoutScore;
+
+}
+
+
+function drawBreakout() {
+
+    ctx.fillStyle = "#030303";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle = "#ff1717";
+
+    for (const brick of bricks) {
+
+        if (!brick.alive) continue;
+
+        ctx.fillRect(
+            brick.x,
+            brick.y,
+            brick.width,
+            brick.height
+        );
+
+    }
+
+    ctx.fillStyle = "#ffffff";
+
+    ctx.fillRect(
+        paddle.x,
+        paddle.y,
+        paddle.width,
+        paddle.height
+    );
+
+    ctx.beginPath();
+
+    ctx.arc(
+        ball.x,
+        ball.y,
+        ball.radius,
+        0,
+        Math.PI*2
+    );
+
+    ctx.fill();
+
+}
+
+
+/* =========================
+   RED TARGET
+========================= */
+
+let targetScore = 0;
+let targetTime = 20;
+let targetTimer;
+
+function startTarget() {
+
+    document.getElementById("gameTitle").textContent =
+        "RED TARGET";
+
+    canvas.style.display = "none";
+
+    const extra = document.getElementById("gameExtra");
+
+    extra.innerHTML = `
+        <div class="targetArea">
+            <button class="target" id="target"></button>
+        </div>
+    `;
+
+    targetScore = 0;
+    targetTime = 20;
+
+    const target = document.getElementById("target");
+
+    target.style.display = "block";
+
+    target.onclick = function() {
+
+        targetScore++;
+
+        moveTarget();
+
+    };
+
+    moveTarget();
+
+    updateTargetInfo();
+
+    targetTimer = setInterval(() => {
+
+        targetTime--;
+
+        updateTargetInfo();
+
+        if (targetTime <= 0) {
+
+            clearInterval(targetTimer);
+
+            target.style.display = "none";
+
+            document.getElementById("gameInfo").textContent =
+                "TIME! Final score: " + targetScore;
+
+        }
+
+    },1000);
+
+}
+
+
+function moveTarget() {
+
+    const area =
+        document.querySelector(".targetArea");
+
+    const target =
+        document.getElementById("target");
+
+    if (!area || !target) return;
+
+    const maxX =
+        area.clientWidth - target.offsetWidth;
+
+    const maxY =
+        area.clientHeight - target.offsetHeight;
+
+    target.style.left =
+        Math.random() * maxX + "px";
+
+    target.style.top =
+        Math.random() * maxY + "px";
+
+}
+
+
+function updateTargetInfo() {
+
+    document.getElementById("gameInfo").textContent =
+        "Time: " + targetTime +
+        "s • Hits: " + targetScore;
+
+}
+
+
+/* =========================
+   MEMORY
+========================= */
+
+let memoryFirst = null;
+let memorySecond = null;
+let memoryLocked = false;
+let memoryMoves = 0;
+
+function startMemory() {
+
+    document.getElementById("gameTitle").textContent =
+        "WEB MEMORY";
+
+    canvas.style.display = "none";
+
+    const extra = document.getElementById("gameExtra");
+
+    const symbols = [
+        "🕷","🕸","🔥","👁",
+        "⚡","💀","🌙","🔴"
+    ];
+
+    const cards = [...symbols,...symbols];
+
+    cards.sort(() => Math.random() - .5);
+
+    memoryFirst = null;
+    memorySecond = null;
+    memoryLocked = false;
+    memoryMoves = 0;
+
+    extra.innerHTML =
+        `<div class="memoryGrid"></div>`;
+
+    const grid =
+        extra.querySelector(".memoryGrid");
+
+    cards.forEach(symbol => {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "memoryCard";
+        button.textContent = symbol;
+
+        button.onclick = () =>
+            flipMemoryCard(button);
+
+        grid.appendChild(button);
+
+    });
+
+    updateMemoryInfo();
+
+}
+
+
+function flipMemoryCard(card) {
+
+    if (
+        memoryLocked ||
+        card.classList.contains("flipped") ||
+        card.classList.contains("matched")
+    ) return;
+
+    card.classList.add("flipped");
+
+    if (!memoryFirst) {
+
+        memoryFirst = card;
+        return;
+
+    }
+
+    memorySecond = card;
+
+    memoryMoves++;
+
+    const firstSymbol =
+        memoryFirst.textContent;
+
+    const secondSymbol =
+        memorySecond.textContent;
+
+    if (firstSymbol === secondSymbol) {
+
+        memoryFirst.classList.add("matched");
+        memorySecond.classList.add("matched");
+
+        memoryFirst = null;
+        memorySecond = null;
+
+        updateMemoryInfo();
+
+        if (
+            document.querySelectorAll(".memoryCard.matched").length === 16
+        ) {
+
+            document.getElementById("gameInfo").textContent =
+                "YOU WON! Moves: " + memoryMoves;
+
+        }
+
+    } else {
+
+        memoryLocked = true;
+
+        setTimeout(() => {
+
+            memoryFirst.classList.remove("flipped");
+            memorySecond.classList.remove("flipped");
+
+            memoryFirst = null;
+            memorySecond = null;
+
+            memoryLocked = false;
+
+            updateMemoryInfo();
+
+        },700);
+
+    }
+
+}
+
+
+function updateMemoryInfo() {
+
+    document.getElementById("gameInfo").textContent =
+        "Moves: " + memoryMoves;
+
+}
+
+
+/* =========================
+   CLEAN UP TARGET TIMER
+========================= */
+
+const originalStopGame = stopGame;
+
+stopGame = function() {
+
+    originalStopGame();
+
+    if (targetTimer) {
+
+        clearInterval(targetTimer);
+        targetTimer = null;
+
+    }
+
+};
+
+
+/* =========================
+   ESCAPE TO CLOSE
+========================= */
+
+document.addEventListener("keydown", function(e) {
+
+    if (e.key === "Escape") {
+        closeGame();
+    }
+
+});
+
+
+/* =========================
+   CLOSE MODAL BACKGROUND
+========================= */
+
+modal.addEventListener("click", function(e) {
+
+    if (e.target === modal) {
+        closeGame();
+    }
+
+});
+
+</script>
 
 </body>
 </html>

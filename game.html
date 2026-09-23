@@ -1,694 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Game • Spider Portal</title>
-
-  <style>
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-
-      background:
-        radial-gradient(
-          circle at 20% 10%,
-          rgba(255,0,153,.18),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 85% 15%,
-          rgba(120,0,255,.20),
-          transparent 32%
-        ),
-        #09070f;
-
-      color: white;
-
-      min-height: 100vh;
-    }
-
-
-    header {
-
-      height: 76px;
-
-      padding: 0 44px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      background: rgba(9,7,15,.85);
-
-      backdrop-filter: blur(18px);
-
-      border-bottom:
-        1px solid rgba(255,255,255,.08);
-    }
-
-
-    .logo {
-
-      font-size: 24px;
-
-      font-weight: 900;
-
-      letter-spacing: -1px;
-    }
-
-
-    .logo span {
-
-      background:
-        linear-gradient(
-          90deg,
-          #ff2ca8,
-          #9d4dff
-        );
-
-      -webkit-background-clip: text;
-
-      color: transparent;
-    }
-
-
-    .back {
-
-      color: white;
-
-      text-decoration: none;
-
-      padding: 12px 18px;
-
-      border-radius: 12px;
-
-      background:
-        rgba(255,255,255,.06);
-
-      border:
-        1px solid rgba(255,255,255,.10);
-
-      font-size: 14px;
-
-      font-weight: 800;
-
-      transition: .2s ease;
-    }
-
-
-    .back:hover {
-
-      background:
-        rgba(255,255,255,.12);
-
-      transform:
-        translateY(-2px);
-    }
-
-
-    .launcher {
-
-      width: 1100px;
-
-      margin: 55px auto 90px;
-
-      padding: 35px;
-
-      border-radius: 28px;
-
-      background:
-        rgba(255,255,255,.045);
-
-      border:
-        1px solid rgba(255,255,255,.09);
-
-      box-shadow:
-        0 30px 80px rgba(0,0,0,.35);
-    }
-
-
-    .crumb {
-
-      color: #80798b;
-
-      font-size: 13px;
-
-      margin-bottom: 22px;
-    }
-
-
-    .game-preview {
-
-      height: 380px;
-
-      border-radius: 22px;
-
-      overflow: hidden;
-
-      position: relative;
-
-      display: flex;
-
-      align-items: center;
-
-      justify-content: center;
-
-      background:
-        linear-gradient(
-          135deg,
-          #ff2ca8,
-          #7d38ff
-        );
-
-      border:
-        1px solid rgba(255,255,255,.10);
-    }
-
-
-    .game-preview::after {
-
-      content: "";
-
-      position: absolute;
-
-      inset: 0;
-
-      background:
-        radial-gradient(
-          circle,
-          rgba(255,255,255,.18),
-          transparent 35%
-        );
-    }
-
-
-    .preview-icon {
-
-      position: relative;
-
-      z-index: 2;
-
-      font-size: 120px;
-
-      filter:
-        drop-shadow(
-          0 20px 30px
-          rgba(0,0,0,.35)
-        );
-    }
-
-
-    .game-info {
-
-      padding-top: 30px;
-
-      display: flex;
-
-      justify-content: space-between;
-
-      gap: 40px;
-    }
-
-
-    .details {
-
-      max-width: 700px;
-    }
-
-
-    .category {
-
-      color: #ff5db8;
-
-      font-size: 12px;
-
-      font-weight: 900;
-
-      text-transform: uppercase;
-
-      letter-spacing: 1.5px;
-
-      margin-bottom: 10px;
-    }
-
-
-    h1 {
-
-      font-size: 48px;
-
-      letter-spacing: -2px;
-
-      margin-bottom: 12px;
-    }
-
-
-    .description {
-
-      color: #9d96a8;
-
-      font-size: 16px;
-
-      line-height: 1.6;
-    }
-
-
-    .actions {
-
-      display: flex;
-
-      align-items: center;
-    }
-
-
-    .play {
-
-      border: none;
-
-      cursor: pointer;
-
-      text-decoration: none;
-
-      color: white;
-
-      font-size: 17px;
-
-      font-weight: 900;
-
-      padding: 17px 30px;
-
-      border-radius: 14px;
-
-      background:
-        linear-gradient(
-          90deg,
-          #ff2ca8,
-          #913cff
-        );
-
-      box-shadow:
-        0 12px 30px
-        rgba(170,40,255,.25);
-
-      transition: .2s ease;
-    }
-
-
-    .play:hover {
-
-      transform:
-        translateY(-3px)
-        scale(1.02);
-
-      box-shadow:
-        0 18px 40px
-        rgba(170,40,255,.35);
-    }
-
-
-    .notice {
-
-      margin-top: 30px;
-
-      padding: 17px 20px;
-
-      border-radius: 14px;
-
-      background:
-        rgba(255,255,255,.04);
-
-      border:
-        1px solid rgba(255,255,255,.07);
-
-      color: #77717f;
-
-      font-size: 13px;
-
-      line-height: 1.5;
-    }
-
-
-    footer {
-
-      border-top:
-        1px solid rgba(255,255,255,.08);
-
-      padding: 35px 50px;
-
-      text-align: center;
-
-      color: #77717f;
-
-      font-size: 14px;
-    }
-
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider Portal</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background:
+                radial-gradient(circle at 50% 20%, rgba(150, 0, 0, 0.18), transparent 35%),
+                #050505;
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.08;
+            background-image:
+                linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+            background-size: 45px 45px;
+        }
+
+        /* NAVBAR */
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            z-index: 1000;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 7%;
+
+            background: rgba(5, 5, 5, 0.75);
+            backdrop-filter: blur(14px);
+
+            border-bottom: 1px solid rgba(255, 0, 0, 0.15);
+        }
+
+        .logo {
+            color: white;
+            font-size: 23px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #ff1b1b;
+            text-shadow: 0 0 15px rgba(255, 0, 0, .8);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #aaa;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            transition: .25s;
+        }
+
+        .nav-links a:hover {
+            color: #ff3030;
+            text-shadow: 0 0 12px rgba(255, 0, 0, .6);
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+
+            padding: 120px 20px 80px;
+
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .spider-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+
+            filter:
+                drop-shadow(0 0 10px rgba(255,0,0,.8))
+                drop-shadow(0 0 35px rgba(255,0,0,.4));
+
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(55px, 10vw, 110px);
+            font-weight: 1000;
+            letter-spacing: -5px;
+            line-height: .9;
+
+            background: linear-gradient(
+                180deg,
+                #ffffff,
+                #ff3030
+            );
+
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            filter: drop-shadow(0 0 25px rgba(255,0,0,.25));
+        }
+
+        .hero p {
+            margin-top: 28px;
+            color: #999;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            margin-top: 35px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 28px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 14px;
+            transition: .25s;
+        }
+
+        .primary {
+            background: #e50914;
+            color: white;
+            box-shadow: 0 0 25px rgba(229, 9, 20, .35);
+        }
+
+        .primary:hover {
+            transform: translateY(-3px);
+            background: #ff1f2d;
+            box-shadow: 0 0 35px rgba(255, 0, 0, .6);
+        }
+
+        .secondary {
+            border: 1px solid #333;
+            color: white;
+            background: rgba(255,255,255,.03);
+        }
+
+        .secondary:hover {
+            border-color: #e50914;
+            background: rgba(229,9,20,.08);
+            transform: translateY(-3px);
+        }
+
+        /* FEATURES */
+
+        .section {
+            padding: 100px 7%;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .section-title span {
+            color: #ff1c1c;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 50px;
+        }
+
+        .cards {
+            max-width: 1100px;
+            margin: auto;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            padding: 30px;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.055),
+                    rgba(255,0,0,.025)
+                );
+
+            border: 1px solid #1c1c1c;
+            border-radius: 16px;
+
+            transition: .3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,0,0,.45);
+            box-shadow: 0 15px 50px rgba(0,0,0,.5);
+        }
+
+        .card-icon {
+            font-size: 35px;
+            margin-bottom: 18px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .card p {
+            color: #888;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid #171717;
+            padding: 30px 7%;
+            text-align: center;
+            color: #555;
+            font-size: 13px;
+        }
+
+        footer span {
+            color: #e50914;
+        }
+
+        @media(max-width: 800px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .hero h1 {
+                letter-spacing: -3px;
+            }
+        }
+
+        @media(max-width: 550px) {
+            nav {
+                padding: 0 20px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .logo {
+                font-size: 17px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-
-  <header>
-
-    <div class="logo">
-      <span>SPIDER</span> PORTAL
-    </div>
-
-
-    <a
-      href="games.html"
-      class="back"
-    >
-      ← Game Library
+<nav>
+    <a href="index.html" class="logo">
+        🕷 <span>SPIDER</span> PORTAL
     </a>
 
-  </header>
+    <ul class="nav-links">
+        <li><a href="index.html">HOME</a></li>
+        <li><a href="games.html">GAMES</a></li>
+    </ul>
+</nav>
 
+<section class="hero">
 
-  <main class="launcher">
+    <div class="hero-content">
 
-    <div class="crumb">
-      🕷️ Spider Portal / Game Launcher
-    </div>
+        <div class="spider-icon">🕷️</div>
 
+        <h1>SPIDER<br>PORTAL</h1>
 
-    <div class="game-preview">
-
-      <div
-        class="preview-icon"
-        id="previewIcon"
-      >
-        🎮
-      </div>
-
-    </div>
-
-
-    <div class="game-info">
-
-      <div class="details">
-
-        <div
-          class="category"
-          id="gameCategory"
-        >
-          GAME
-        </div>
-
-
-        <h1 id="gameTitle">
-          Loading...
-        </h1>
-
-
-        <p
-          class="description"
-          id="gameDescription"
-        >
-          Loading game information...
+        <p>
+            Your gateway to games, projects, and everything inside
+            the Spider Portal.
         </p>
 
-      </div>
+        <div class="buttons">
+            <a href="games.html" class="btn primary">
+                ENTER PORTAL
+            </a>
 
-
-      <div class="actions">
-
-        <a
-          id="playButton"
-          class="play"
-          href="#"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          ▶ PLAY NOW
-        </a>
-
-      </div>
+            <a href="#features" class="btn secondary">
+                EXPLORE
+            </a>
+        </div>
 
     </div>
 
+</section>
 
-    <div class="notice">
-      Clicking PLAY NOW opens the selected game's available
-      webpage in a new tab.
+<section class="section" id="features">
+
+    <h2 class="section-title">
+        THE <span>PORTAL</span>
+    </h2>
+
+    <p class="section-subtitle">
+        Built to be more than just another website.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+            <div class="card-icon">🎮</div>
+            <h3>Games</h3>
+            <p>
+                Jump into the games available inside Spider Portal.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">🕸️</div>
+            <h3>Projects</h3>
+            <p>
+                Discover projects and creations connected to the portal.
+            </p>
+        </div>
+
+        <div class="card">
+            <div class="card-icon">⚡</div>
+            <h3>Fast Access</h3>
+            <p>
+                Everything is organized into one clean and easy-to-use portal.
+            </p>
+        </div>
+
     </div>
 
-  </main>
-
-
-  <footer>
-    🕷️ Spider Portal • Game Launcher
-  </footer>
-
-
-  <script>
-
-    const games = {
-
-      "Subway Surfers": {
-        category: "Arcade • Endless Runner",
-        icon: "🚇",
-        description:
-          "Run, dodge obstacles, and keep moving in this endless arcade adventure.",
-        link:
-          "https://play.gameograf.com/"
-      },
-
-
-      "Stickman Swing": {
-        category: "Action",
-        icon: "🕴️",
-        description:
-          "Swing your way through challenging levels and avoid the obstacles.",
-        link:
-          "https://eyzi.net/action/stickman-swing"
-      },
-
-
-      "Five Nights at Freddy's": {
-        category: "Horror",
-        icon: "🐻",
-        description:
-          "A horror survival game set inside a mysterious restaurant.",
-        link:
-          "https://play.google.com/store/apps/details?id=com.scottgames.fivenightsatfreddys"
-      },
-
-
-      "Minecraft": {
-        category: "Sandbox",
-        icon: "⛏️",
-        description:
-          "Explore, build, craft, and create your own blocky world.",
-        link:
-          "https://www.minecraft.net/en-us/"
-      },
-
-
-      "Geometry Dash": {
-        category: "Platformer • Rhythm",
-        icon: "🟨",
-        description:
-          "Jump, fly, and survive challenging rhythm-based levels.",
-        link:
-          "https://gdbrowser.com/"
-      },
-
-
-      "Stickman Swing 2": {
-        category: "Action",
-        icon: "🪢",
-        description:
-          "Swing through another collection of stickman obstacle courses.",
-        link:
-          "https://www.y8.com/games/stickman_swing"
-      },
-
-
-      "Flappy Bird": {
-        category: "Arcade",
-        icon: "🐦",
-        description:
-          "Guide the bird through the pipes and try to keep your score climbing.",
-        link:
-          "https://flappybird.io/"
-      },
-
-
-      "Temple Run": {
-        category: "Arcade",
-        icon: "🏃",
-        description:
-          "Run through dangerous paths while collecting coins and avoiding obstacles.",
-        link:
-          "https://www.coolmathgames.com/0-temple-run-2"
-      },
-
-
-      "Platform Adventure": {
-        category: "Platformer",
-        icon: "🧱",
-        description:
-          "A new platforming adventure coming to Spider Portal.",
-        link: "#"
-      },
-
-
-      "Puzzle Challenge": {
-        category: "Puzzle",
-        icon: "🧩",
-        description:
-          "Test your brain with a collection of upcoming puzzle challenges.",
-        link: "#"
-      },
-
-
-      "Action Arena": {
-        category: "Action",
-        icon: "⚔️",
-        description:
-          "A fast-paced action experience coming soon.",
-        link: "#"
-      },
-
-
-      "More Games": {
-        category: "Arcade",
-        icon: "🎮",
-        description:
-          "More games are being prepared for the Spider Portal library.",
-        link: "#"
-      },
-
-
-      "Coming Soon": {
-        category: "Coming Soon",
-        icon: "✨",
-        description:
-          "Something new is coming to Spider Portal.",
-        link: "#"
-      }
-
-    };
-
-
-    const params =
-      new URLSearchParams(
-        window.location.search
-      );
-
-
-    const gameName =
-      params.get("game");
-
-
-    const game =
-      games[gameName];
-
-
-    if (game) {
-
-      document.title =
-        gameName + " • Spider Portal";
-
-
-      document.getElementById(
-        "gameTitle"
-      ).textContent =
-        gameName;
-
-
-      document.getElementById(
-        "gameCategory"
-      ).textContent =
-        game.category;
-
-
-      document.getElementById(
-        "gameDescription"
-      ).textContent =
-        game.description;
-
-
-      document.getElementById(
-        "previewIcon"
-      ).textContent =
-        game.icon;
-
-
-      const playButton =
-        document.getElementById(
-          "playButton"
-        );
-
-
-      if (game.link === "#") {
-
-        playButton.textContent =
-          "COMING SOON";
-
-        playButton.removeAttribute(
-          "target"
-        );
-
-        playButton.onclick = function(event) {
-
-          event.preventDefault();
-
-          alert(
-            "🕷️ This game is coming soon!"
-          );
-
-        };
-
-      } else {
-
-        playButton.href =
-          game.link;
-
-      }
-
-    } else {
-
-      document.getElementById(
-        "gameTitle"
-      ).textContent =
-        "Game Not Found";
-
-
-      document.getElementById(
-        "gameCategory"
-      ).textContent =
-        "SPIDER PORTAL";
-
-
-      document.getElementById(
-        "gameDescription"
-      ).textContent =
-        "We couldn't find that game. Head back to the Game Library and choose another one.";
-
-
-      document.getElementById(
-        "previewIcon"
-      ).textContent =
-        "🕷️";
-
-
-      document.getElementById(
-        "playButton"
-      ).style.display =
-        "none";
-
-    }
-
-  </script>
+</section>
+
+<footer>
+    © 2026 <span>Spider Portal</span> — Enter the web.
+</footer>
 
 </body>
 </html>
